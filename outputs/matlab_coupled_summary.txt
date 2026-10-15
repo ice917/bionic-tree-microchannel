@@ -1,0 +1,16 @@
+Coupled-growth tree (MATLAB, vectorised)
+nodes=400 edges=399
+degree1=39
+degree2=326
+degree3=33
+degree4=2
+forks=35
+radius_min=0.5000
+radius_max=1.6956
+radius_mean=0.6393
+frac_capillary_le_0p6=0.5450
+centroid_x=23.8675
+centroid_y=18.4275
+bbox_x=1 48
+bbox_y=1 46
+material_mm2=656.6744
