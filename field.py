@@ -20,6 +20,14 @@ import numpy as np
 # 1 mm grid spacing -> grid cells * PITCH_MM = plate size (see PROJECT.md 2.1)
 PITCH_MM = 1.0
 
+# Real-unit calibration (REPORT.md §11). The default run is dimensionless
+# (k=1, q in grid units); PHYSICAL below holds the published constants the
+# dimensionless numbers were mapped onto, with sources.
+K_SILICON = 148.0        # W/(m K), single-crystal Si near 300 K
+                         # https://www.universitywafer.com/silicon-wafer-thermal-conductivity.html
+K_COPPER = 400.0         # W/(m K)
+                         # same source
+
 
 @dataclass
 class FieldResult:
@@ -36,26 +44,26 @@ def source_mask(grid: int, center: tuple[int, int], radius: float = 2.0) -> np.n
     return (np.abs(yy - cy) <= radius) & (np.abs(xx - cx) <= radius)
 
 
-def solve_heat(
-    grid: int = 50,
-    source_radius: float = 2.0,
-    q: float = 1.0,
-    T_boundary: float = 25.0,
-    T_init: float = 25.0,
-    max_iter: int = 20000,
-    tol: float = 1e-6,
-    source_center: tuple[int, int] | None = None,
-) -> FieldResult:
-    """Return the steady temperature field on a grid x grid plate."""
-    if grid < 5:
-        raise ValueError("grid too small")
+def source_mask_multi(grid: int, centers, radius: float = 2.0) -> np.ndarray:
+    """Union of square source masks around several centres.
 
-    cy, cx = source_center if source_center is not None else ((grid - 1) // 2, (grid - 1) // 2)
-    src = source_mask(grid, (cy, cx), source_radius)
+    `centers` is an iterable of (y, x). Overlapping blocks merge, so two
+    sources closer than 2*radius+1 cells behave as one elongated source.
+    """
+    yy, xx = np.mgrid[0:grid, 0:grid]
+    m = np.zeros((grid, grid), dtype=bool)
+    for cy, cx in centers:
+        m |= (np.abs(yy - cy) <= radius) & (np.abs(xx - cx) <= radius)
+    return m
 
-    # source term of the discrete Poisson update
-    src_b = (q * PITCH_MM**2 / 4.0) * src[1:-1, 1:-1]
 
+def _solve_poisson(src_b: np.ndarray, grid: int, T_init: float,
+                   T_boundary: float, max_iter: int, tol: float) -> FieldResult:
+    """Jacobi to steady state for a fixed interior source term.
+
+    Split out of solve_heat so the single- and multi-source solvers share one
+    discretisation (and therefore one sanity check).
+    """
     T = np.full((grid, grid), float(T_init))
     it = 0
     converged = False
@@ -79,6 +87,57 @@ def solve_heat(
             break
 
     return FieldResult(T=T, iterations=it, converged=converged, residual=residual)
+
+
+def solve_heat(
+    grid: int = 50,
+    source_radius: float = 2.0,
+    q: float = 1.0,
+    T_boundary: float = 25.0,
+    T_init: float = 25.0,
+    max_iter: int = 20000,
+    tol: float = 1e-6,
+    source_center: tuple[int, int] | None = None,
+    k: float = 1.0,
+) -> FieldResult:
+    """Return the steady temperature field on a grid x grid plate.
+
+    k is the plate conductivity in the same length units as PITCH_MM. With
+    the default k=1 the update is the dimensionless PROJECT.md 2.1 form, and
+    every number reported before the real-unit calibration is reproduced
+    bit-for-bit. Passing a physical k rescales the field by exactly 1/k
+    (the Poisson problem is linear), so it can be applied post-hoc instead.
+    """
+    if grid < 5:
+        raise ValueError("grid too small")
+
+    cy, cx = source_center if source_center is not None else ((grid - 1) // 2, (grid - 1) // 2)
+    src = source_mask(grid, (cy, cx), source_radius)
+    src_b = (q * PITCH_MM**2 / (4.0 * k)) * src[1:-1, 1:-1]
+    return _solve_poisson(src_b, grid, T_init, T_boundary, max_iter, tol)
+
+
+def solve_heat_sources(
+    grid: int = 50,
+    centers=((24, 24),),
+    source_radius: float = 2.0,
+    q: float = 1.0,
+    T_boundary: float = 25.0,
+    T_init: float = 25.0,
+    max_iter: int = 20000,
+    tol: float = 1e-6,
+    k: float = 1.0,
+) -> FieldResult:
+    """Steady field for several equal-strength sources (multi-chip layout).
+
+    q is per source cell, so N sources of the same size carry N times the
+    total power -- the intended "N identical chips" reading.
+    """
+    if grid < 5:
+        raise ValueError("grid too small")
+    src = source_mask_multi(grid, centers, source_radius)
+    src_b = (q * PITCH_MM**2 / (4.0 * k)) * src[1:-1, 1:-1]
+    return _solve_poisson(src_b, grid, T_init, T_boundary, max_iter, tol)
 
 
 def normalize_field(T: np.ndarray, T_boundary: float = 25.0, T_target: float = 100.0) -> np.ndarray:

@@ -1,4 +1,4 @@
-﻿"""Step 5: two-metric verification, tree vs equal-material straight channels.
+"""Step 5: two-metric verification, tree vs equal-material straight channels.
 
 Model (both groups, identical conventions):
   * steady 2D conduction on the same plate with the same heat source
@@ -171,6 +171,96 @@ def straight_group(T: np.ndarray, src: np.ndarray, n_channels: int, total_area_m
     dp = 8.0 * MU * L * (Q_TOTAL / len(xs)) / (np.pi * r ** 4)
     return Group.from_field(f"straight x{len(xs)}", Tc, pinned, dp, total_area_mm2,
                             len(xs), len(xs), T_cool, hotspot_frac, pitch_mm)
+
+
+def radial_group_pinned(T: np.ndarray, src: np.ndarray, target_pinned: int,
+                        total_area_mm2: float, grid_x: int, grid_y: int,
+                        pitch_mm: float = PITCH_MM, T_cool: float = T_COOL,
+                        hotspot_frac: float = 0.25) -> Group:
+    """One straight pipe per chip, scaled to a target number of PINNED cells.
+
+    `radial_group` fixes the cell budget and lets the pinned count fall out
+    of it, which is unfair in the multi-source case: a tree that grows
+    *through* a chip block has those cells exempted from pinning, so the
+    same 400-cell budget yields 325 pinned cells for the tree and 398 for
+    the control. The control would silently get 73 extra cold cells.
+
+    Here the budget is set so that len(cells) - (cells inside a source
+    block) == target_pinned exactly. Same occupancy, same exemption rule,
+    both sides.
+    """
+    centers = _cluster_centers(src)
+    n_src = max(1, len(centers))
+    src_cells = int(src.sum())
+
+    # each chip block is 5x5=25 cells; a pipe aimed at a chip starts inside it
+    exempt_per_chip = 25
+    need = int(target_pinned) + src_cells - n_src * exempt_per_chip
+    need = max(n_src, need)
+    per_src = max(1, need // n_src)
+    r = float(np.sqrt(total_area_mm2 / (need * np.pi)))
+
+    cells: list[tuple[int, int]] = []
+    lengths: list[int] = []
+    for cy, cx in centers:
+        cy, cx = int(round(cy)), int(round(cx))
+        d_top, d_bot = cy, grid_y - 1 - cy
+        d_left, d_right = cx, grid_x - 1 - cx
+        d = min(d_top, d_bot, d_left, d_right)
+        if d == d_top:
+            orient, span, up = "v", d_top + 1, True
+        elif d == d_bot:
+            orient, span, up = "v", d_bot + 1, False
+        elif d == d_left:
+            orient, span, up = "h", d_left + 1, True
+        else:
+            orient, span, up = "h", d_right + 1, False
+
+        k = max(1, min(span, per_src // span + (1 if per_src % span else 0)))
+        for j in range(k):
+            if orient == "v":
+                x = min(grid_x - 1, cx + j)
+                ys = range(cy, -1, -1) if up else range(cy, grid_y)
+                cells += [(y, x) for y in ys]
+                lengths.append(len(ys))
+            else:
+                y = min(grid_y - 1, cy + j)
+                xs = range(cx, -1, -1) if up else range(cx, grid_x)
+                cells += [(y, x) for x in xs]
+                lengths.append(len(xs))
+
+    seen: set[tuple[int, int]] = set()
+    uniq = [c for c in cells if not (c in seen or seen.add(c))]
+
+    Tc, pinned = apply_channels(T, uniq, src, T_cool)
+    L = float(np.mean(lengths)) if lengths else float(grid_y)
+    dp = 8.0 * MU * L * (Q_TOTAL / len(uniq)) / (np.pi * r ** 4)
+    return Group.from_field(f"radial-per-chip x{len(uniq)}", Tc, pinned, dp,
+                            total_area_mm2, len(uniq), len(uniq), T_cool,
+                            hotspot_frac, pitch_mm)
+
+
+def _cluster_centers(src: np.ndarray) -> list[tuple[int, int]]:
+    """Centroids of the connected components of the source mask (one per chip)."""
+    m = src.copy()
+    out: list[tuple[int, int]] = []
+    while m.any():
+        ys, xs = np.nonzero(m)
+        stack = [(int(ys[0]), int(xs[0]))]
+        m[stack[0]] = False
+        pts: list[tuple[int, int]] = []
+        while stack:
+            y, x = stack.pop()
+            pts.append((y, x))
+            for dy, dx in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                ny, nx = y + dy, x + dx
+                if 0 <= ny < m.shape[0] and 0 <= nx < m.shape[1] and m[ny, nx]:
+                    m[ny, nx] = False
+                    stack.append((ny, nx))
+        ay = np.array([p[0] for p in pts])
+        ax = np.array([p[1] for p in pts])
+        out.append((float(ay.mean()), float(ax.mean())))
+    return out
 
 
 def poiseuille_dp(edges, radii, grid_x: int, pitch_mm: float = PITCH_MM) -> float:
