@@ -1,0 +1,125 @@
+{
+  "params": {
+    "source_x": 25,
+    "source_y": 25,
+    "grid": 50,
+    "max_nodes": 400,
+    "r0": 0.5,
+    "height": 5.0,
+    "no_fig": true
+  },
+  "field": {
+    "grid": 50,
+    "T_centre_C": 100.0,
+    "T_edge_C": 25.0,
+    "converged": true,
+    "iterations": 4513
+  },
+  "sanity_check": {
+    "slope_measured": -0.16017,
+    "slope_analytic": -0.15915,
+    "ratio": 1.0064,
+    "r2_log_fit": 0.99998,
+    "pass": true
+  },
+  "tree": {
+    "nodes": 400,
+    "edges": 399,
+    "degree_hist": {
+      "1": 61,
+      "2": 282,
+      "3": 55,
+      "4": 2
+    }
+  },
+  "tree_offsource": {
+    "source_xy": [
+      10,
+      25
+    ],
+    "nodes": 400,
+    "signature": {
+      "centroid_x": 13.735,
+      "centroid_y": 24.948,
+      "bbox_x": [
+        3,
+        24
+      ],
+      "bbox_y": [
+        14,
+        36
+      ],
+      "cell_hash": 339957
+    },
+    "differs_from_baseline": true
+  },
+  "murray": {
+    "forks": 57,
+    "max_rel_err": 4.845e-16,
+    "pass": true,
+    "profile": {
+      "min": 0.5,
+      "max": 1.9682,
+      "mean": 0.573,
+      "frac_le_0_6mm": 0.8575
+    }
+  },
+  "stl": {
+    "triangles": 19152,
+    "manifold": {
+      "triangles": 19152,
+      "unique_directed_edges": 56958,
+      "edges_paired_once": 56460,
+      "junction_edges_shared_twice": 498,
+      "unpaired_edges": 0,
+      "is_manifold": true
+    },
+    "bbox_mm": {
+      "x": [
+        13.509709358215332,
+        36.490291595458984
+      ],
+      "y": [
+        13.509709358215332,
+        36.490291595458984
+      ],
+      "z": [
+        -0.38600531220436096,
+        5.304689407348633
+      ],
+      "size_mm": [
+        22.981,
+        22.981,
+        5.691
+      ]
+    },
+    "height_mm": 5.0
+  },
+  "compare": {
+    "tree": {
+      "T_max_C": 27.596,
+      "R_th_C_per_W": 2.5962,
+      "T_mean_solid_C": 25.02,
+      "hotspot_area_mm2": 25.0,
+      "pressure_drop": 588.0959,
+      "material_mm2": 651.461,
+      "segments": 399,
+      "channels": 399
+    },
+    "straight": {
+      "T_max_C": 27.596,
+      "R_th_C_per_W": 2.5962,
+      "T_mean_solid_C": 25.02,
+      "hotspot_area_mm2": 25.0,
+      "pressure_drop": 0.0237,
+      "material_mm2": 651.461,
+      "segments": 8,
+      "channels": 8
+    },
+    "verdict": "tree: tied on T_max, tied on mean solid T, tied on hot zone, higher pressure drop",
+    "dT_max_tree_minus_straight": 0.0,
+    "dT_mean_solid_tree_minus_straight": -0.0,
+    "dHotspot_area_tree_minus_straight": 0.0,
+    "dp_ratio_tree_over_straight": 24827.075
+  }
+}
