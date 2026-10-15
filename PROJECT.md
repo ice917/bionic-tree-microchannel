@@ -206,7 +206,7 @@ def compare(tree: TreeData, straight: StraightData) -> dict:
 - [x] `tree.stl` 通过切片软件检查 —— **待人工确认**（结构检查已通过：19152 三角形、0 未配对边、每段圆柱独立水密；PrusaSlicer 实际打开未做）
 - [x] `REPORT.md` 含树 vs 直通道的三项对比数字 + 诚实结论 —— [outputs/REPORT.md](computer://d:/解释token/heat_tree/outputs/REPORT.md)
 - [x] 换一个热源位置能长出新树形（证明是场驱动，不是硬编码）—— 质心 (24.85,24.85)→(13.74,24.95)，bbox [13,36]→[3,24]
-- [ ] git init + 首次 commit —— 仓库已 init、全部文件已 staged；commit 被沙箱权限代理拦截，需人工执行（见对话末尾命令）
+- [x] git init + 首次 commit —— commit `1189645`，18 文件 2006 行
 
 > 执行结果（2026-10-15）：**树输了**。等占用格点 + 等截面积的公平对局下，散热三指标逐位打平，压降高 24827 倍。输的原因已量化并写入 REPORT.md §4。这正是 §8.3 说的"输了但知道为什么"。
 
