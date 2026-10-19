@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="420mm" height="297mm" viewBox="0 0 1600 1130"
+     font-family="'Microsoft YaHei','SimSun',sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7.5" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 z" fill="#1f4e79"/>
+    </marker>
+    <marker id="ar2" markerWidth="9" markerHeight="9" refX="7.5" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 z" fill="#666"/>
+    </marker>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#9aa0a6" stroke-width="0.9"/>
+    </pattern>
+  </defs>
+
+  <style>
+    .pnl{fill:#fdfdfd;stroke:#9aa0a6;stroke-width:1}
+    .ttl{font-size:15px;font-weight:bold;fill:#111}
+    .sub{font-size:10.5px;font-weight:bold;fill:#1f4e79}
+    .n9{font-size:9px;fill:#333}
+    .n85{font-size:8.5px;fill:#444}
+    .n8{font-size:8px;fill:#555}
+    .nb{font-size:9px;font-weight:bold;fill:#111}
+    .rd{fill:#c0392b}
+    .rdb{font-size:9px;font-weight:bold;fill:#c0392b}
+    .gn{fill:#1e7b34}
+    .bl{fill:#1f4e79}
+    .or{fill:#b7791f}
+    .mono{font-family:Consolas,'Courier New',monospace}
+    .pip{stroke:#1f4e79;stroke-width:2;fill:none}
+    .thin{stroke:#666;stroke-width:0.8;fill:none}
+    .dsh{stroke:#c0392b;stroke-width:1;fill:none;stroke-dasharray:4 3}
+    .dshg{stroke:#1e7b34;stroke-width:1;fill:none;stroke-dasharray:4 3}
+    .dshk{stroke:#555;stroke-width:0.8;fill:none;stroke-dasharray:3 3}
+  </style>
+
+  <rect x="0" y="0" width="1600" height="1130" fill="#ffffff"/>
+
+  <!-- ================= TITLE ================= -->
+  <text x="30" y="38" class="ttl" font-size="22">设备连接设计图 &#183; 液路 / 电气 / 取压口</text>
+  <text x="30" y="60" class="n85">图号 HT-BENCH-001 &#183; 版 A（草案）&#183; 单位 mm &#183; 比例 NTS（尺寸以标注为准）&#183; 2026-10-18</text>
+  <text x="1570" y="38" class="n9" text-anchor="end">A3 横向 &#183; 420 &#215; 297 mm &#183; 共 6 区</text>
+  <text x="1570" y="60" class="n85" text-anchor="end">数值源：outputs/manifold_geometry.json &#183; ports_manifold.py</text>
+  <line x1="30" y1="74" x2="1570" y2="74" stroke="#333" stroke-width="1.2"/>
+
+  <!-- ================= P1 液路 ================= -->
+  <rect x="30" y="88" width="760" height="412" class="pnl"/>
+  <text x="44" y="112" class="sub">P1 &#160;&#160;液路系统 P&amp;ID（单环路，开口通大气）</text>
+
+  <!-- V-01 恒温槽 -->
+  <rect x="44" y="215" width="124" height="210" fill="#eef4fb" stroke="#333" stroke-width="1.4"/>
+  <rect x="45" y="243" width="122" height="181" fill="#cfe2f7"/>
+  <line x1="44" y1="243" x2="168" y2="243" stroke="#1f4e79" stroke-width="1"/>
+  <line x1="44" y1="215" x2="88" y2="215" stroke="#333" stroke-width="1.4"/>
+  <line x1="116" y1="215" x2="168" y2="215" stroke="#333" stroke-width="1.4"/>
+  <text x="102" y="207" class="n8" text-anchor="middle">通大气</text>
+  <text x="54" y="268" class="nb">V-01 恒温槽</text>
+  <text x="54" y="282" class="n8">开口通大气，控温 20&#8211;60 &#176;C</text>
+  <text x="54" y="296" class="n8">容积 &#8805; 2 L</text>
+  <text x="54" y="404" class="n8">槽底</text>
+
+  <!-- 主管线 y=290 -->
+  <path class="pip" d="M168,290 L183,290"/>
+  <circle cx="200" cy="290" r="17" fill="#eef4fb" stroke="#333" stroke-width="1.4"/>
+  <text x="200" y="294" class="nb" text-anchor="middle">P</text>
+  <text x="200" y="324" class="n8" text-anchor="middle">P-01 循环泵</text>
+  <path class="pip" d="M217,290 L242,290" marker-end="url(#ar)"/>
+  <rect x="242" y="270" width="28" height="40" fill="url(#hatch)" stroke="#333" stroke-width="1.2"/>
+  <text x="256" y="324" class="n8" text-anchor="middle">F-01 过滤</text>
+  <text x="256" y="336" class="n8" text-anchor="middle">5 &#181;m</text>
+  <path class="pip" d="M270,290 L300,290" marker-end="url(#ar)"/>
+  <rect x="300" y="272" width="45" height="36" fill="#eef4fb" stroke="#333" stroke-width="1.2"/>
+  <text x="322" y="324" class="n8" text-anchor="middle">D-01 阻尼腔</text>
+  <text x="322" y="336" class="n8" text-anchor="middle">20&#8211;50 mL</text>
+  <path class="pip" d="M345,290 L381,290" marker-end="url(#ar)"/>
+  <circle cx="398" cy="290" r="17" fill="#eef4fb" stroke="#333" stroke-width="1.4"/>
+  <text x="398" y="294" class="nb" text-anchor="middle">FI</text>
+  <text x="398" y="262" class="bl" font-size="9" text-anchor="middle">Q = 0.728 L/min</text>
+  <text x="398" y="324" class="n8" text-anchor="middle">FI-01 流量计</text>
+  <text x="398" y="336" class="n8" text-anchor="middle">脉冲 / 4&#8211;20 mA</text>
+  <path class="pip" d="M415,290 L470,290" marker-end="url(#ar)"/>
+
+  <!-- T-01 三通 + RT-01 -->
+  <circle cx="470" cy="290" r="6" fill="#c0392b"/>
+  <text x="478" y="316" class="n8">T-01</text>
+  <path class="pip" d="M470,284 L470,252" marker-end="url(#ar)"/>
+  <circle cx="470" cy="234" r="16" fill="#fdf3d8" stroke="#333" stroke-width="1.2"/>
+  <text x="470" y="232" class="n85" text-anchor="middle">RT-01</text>
+  <text x="470" y="244" class="n8" text-anchor="middle">PT100</text>
+  <text x="470" y="196" class="rdb" text-anchor="middle">! 三通 / 软管上禁止取压（见 P4）</text>
+
+  <!-- 下折至试件 -->
+  <path class="pip" d="M630,290 L630,316"/>
+  <path class="pip" d="M470,290 L630,290" marker-end="url(#ar)"/>
+
+  <!-- SPEC 试件 -->
+  <rect x="570" y="330" width="120" height="82" fill="#f2f7ef" stroke="#333" stroke-width="1.4"/>
+  <rect x="618" y="316" width="24" height="14" class="dsh"/>
+  <text x="630" y="356" class="nb" text-anchor="middle">SPEC 试件</text>
+  <text x="630" y="370" class="n8" text-anchor="middle">45 &#215; 45 &#215; 11.5</text>
+  <text x="630" y="384" class="n8" text-anchor="middle">进口凸台 z 9.0&#8211;11.5</text>
+  <text x="630" y="398" class="rdb" text-anchor="middle">外径待定</text>
+  <path class="pip" d="M690,366 L716,366" marker-end="url(#ar)"/>
+  <text x="646" y="378" class="n8" text-anchor="middle">出口孔</text>
+  <text x="646" y="390" class="n8" text-anchor="middle">z = 6.5</text>
+
+  <!-- 射流 + 漏斗 + 回液 -->
+  <path d="M716,366 Q742,382 740,430" class="dsh"/>
+  <polygon points="716,430 764,430 748,454 732,454" fill="#eef4fb" stroke="#333" stroke-width="1.2"/>
+  <path class="pip" d="M740,454 L740,470"/>
+  <path class="pip" d="M740,470 L106,470" marker-end="url(#ar)"/>
+  <path class="pip" d="M106,470 L106,425" marker-end="url(#ar)"/>
+  <text x="740" y="488" class="n8" text-anchor="middle">集液漏斗（通大气）</text>
+
+  <text x="130" y="430" class="n9">出口必须悬空：与下游液面落差 &#8805; 20 mm。若浸没 20 mm，背压 &#961;gh = 998 &#215; 9.81 &#215; 0.02 = 195.8 Pa，</text>
+  <text x="130" y="444" class="n9">占总信号 508.91 Pa 的 38.5%，静压表将直接读到假值。</text>
+  <text x="130" y="458" class="n9">软管 &#216;4&#8211;6，卡箍固定；管长与接头规格本图未定义，台架实测后回填。</text>
+  <text x="130" y="488" class="n8">件号：V 容器 / P 泵 / F 过滤 / D 阻尼 / FI 流量 / T 三通 / RT 热电阻 / TC 热电偶 / PT 压力 / H 加热 / SPEC 试件</text>
+
+  <!-- ================= P2 电气 ================= -->
+  <rect x="810" y="88" width="760" height="412" class="pnl"/>
+  <text x="824" y="112" class="sub">P2 &#160;&#160;电气接线定义（六路物理量 / 五类信号）</text>
+
+  <line x1="820" y1="118" x2="1565" y2="118" stroke="#333" stroke-width="1.2"/>
+  <line x1="820" y1="144" x2="1565" y2="144" stroke="#333" stroke-width="1.2"/>
+  <text x="820" y="136" class="nb">件号</text>
+  <text x="935" y="136" class="nb">名称 / 物理量</text>
+  <text x="1075" y="136" class="nb">信号与量程</text>
+  <text x="1280" y="136" class="nb">接法</text>
+  <text x="1450" y="136" class="nb">备注</text>
+  <line x1="820" y1="184" x2="1565" y2="184" class="thin"/>
+  <line x1="820" y1="224" x2="1565" y2="224" class="thin"/>
+  <line x1="820" y1="264" x2="1565" y2="264" class="thin"/>
+  <line x1="820" y1="304" x2="1565" y2="304" class="thin"/>
+  <line x1="820" y1="344" x2="1565" y2="344" class="thin"/>
+  <line x1="820" y1="384" x2="1565" y2="384" stroke="#333" stroke-width="1.2"/>
+  <line x1="935" y1="118" x2="935" y2="384" class="thin"/>
+  <line x1="1075" y1="118" x2="1075" y2="384" class="thin"/>
+  <line x1="1280" y1="118" x2="1280" y2="384" class="thin"/>
+  <line x1="1450" y1="118" x2="1450" y2="384" class="thin"/>
+
+  <text x="820" y="162" class="n9">H-01</text>
+  <text x="935" y="162" class="n9">加热功率 P</text>
+  <text x="1075" y="162" class="n9">0&#8211;30 W，P = V &#215; I</text>
+  <text x="1280" y="162" class="n9">4 线制：粗 2 + 细 2</text>
+  <text x="1450" y="162" class="n9">细线须从加热器</text>
+  <text x="1450" y="176" class="n9">端子单独引出</text>
+
+  <text x="820" y="202" class="n9">TC-01&#8230;05</text>
+  <text x="935" y="202" class="n9">芯片温度 &#215; 5</text>
+  <text x="1075" y="202" class="n9">T 型热电偶</text>
+  <text x="1280" y="202" class="n9">同合金延长线，</text>
+  <text x="1280" y="216" class="n9">共用一个冷端</text>
+  <text x="1450" y="202" class="n9">冷端温度须</text>
+  <text x="1450" y="216" class="n9">单独测量</text>
+
+  <text x="820" y="242" class="n9">RT-01</text>
+  <text x="935" y="242" class="n9">进口水温</text>
+  <text x="1075" y="242" class="n9">PT100 四线制，恒流 1 mA</text>
+  <text x="1280" y="242" class="n9">100 &#937; @ 0 &#176;C</text>
+  <text x="1450" y="242" class="n9">与 RT-02 同批同标定</text>
+
+  <text x="820" y="282" class="n9">RT-02</text>
+  <text x="935" y="282" class="n9">出口水温</text>
+  <text x="1075" y="282" class="n9">PT100 四线制，恒流 1 mA</text>
+  <text x="1280" y="282" class="n9">100 &#937; @ 0 &#176;C</text>
+  <text x="1450" y="282" class="n9">同上</text>
+
+  <text x="820" y="322" class="n9">PT-01</text>
+  <text x="935" y="322" class="n9">进口压力</text>
+  <text x="1075" y="322" class="n9">4&#8211;20 mA 两线，表压 0&#8211;2 kPa</text>
+  <text x="1280" y="322" class="n9">24 V 串 250 &#937; &#8594; 1&#8211;5 V</text>
+  <text x="1450" y="322" class="n9">L 口通大气（P4）</text>
+
+  <text x="820" y="362" class="n9">FT-01</text>
+  <text x="935" y="362" class="n9">流量</text>
+  <text x="1075" y="362" class="n9">脉冲 或 4&#8211;20 mA</text>
+  <text x="1280" y="362" class="n9">脉冲进计数器</text>
+  <text x="1450" y="362" class="n9">0.728 L/min 标定点</text>
+
+  <text x="824" y="404" class="n9">1. 所有地线单点汇接于采集仪 GND；禁止在加热回路取地，避免 mV 级串扰。</text>
+  <text x="824" y="418" class="n9">2. TC 冷端补偿：5 支共用一个冷端子块，该块温度用第 6 通道单独测，不得假设为室温。</text>
+  <text x="824" y="432" class="n9">3. PT-01 的 L 口直接通大气；出口不取压（壁厚 0.53175 mm，打不了 &#216;0.8 孔，见 P4-b）。</text>
+  <text x="824" y="446" class="n9">4. 加热回路与信号回路分开走线、不平行；4&#8211;20 mA 线与 TC 线间距 &#8805; 50 mm。</text>
+  <text x="824" y="460" class="n9">5. 上电顺序：先开循环并确认流量，再开加热；停机先断加热，循环延时 60 s。</text>
+
+  <rect x="1378" y="396" width="182" height="96" fill="#f7f7f7" stroke="#9aa0a6" stroke-width="0.9"/>
+  <text x="1469" y="410" class="nb" text-anchor="middle">加热功率 4 线制</text>
+  <text x="1386" y="426" class="mono" font-size="7.5" fill="#222">DC+ &#9472;&#31849;&#9654; A</text>
+  <text x="1386" y="438" class="mono" font-size="7.5" fill="#222">DC&#8722; &#9472;&#31849;&#9654; B</text>
+  <text x="1386" y="450" class="mono" font-size="7.5" fill="#222">A &#9472;&#32454;&#9472;&#9654; V+</text>
+  <text x="1386" y="462" class="mono" font-size="7.5" fill="#222">B &#9472;&#32454;&#9472;&#9654; V&#8722;</text>
+  <text x="1386" y="474" class="mono" font-size="7.5" fill="#222">P = V &#215; I</text>
+  <text x="1386" y="486" class="rd" font-size="7.5">细线不得并在粗线上</text>
+
+  <!-- ================= P3 试件接口 ================= -->
+  <rect x="30" y="512" width="590" height="354" class="pnl"/>
+  <text x="44" y="534" class="sub">P3 &#160;&#160;试件接口尺寸（俯视 + 剖面 A-A）</text>
+
+  <text x="55" y="548" class="nb">俯视</text>
+  <rect x="55" y="556" width="180" height="180" fill="url(#hatch)" stroke="#333" stroke-width="1.4"/>
+  <rect x="79" y="580" width="132" height="132" fill="#ffffff" stroke="#333" stroke-width="0.9"/>
+  <rect x="79" y="580" width="132" height="132" class="dshk"/>
+  <rect x="105.4" y="606.4" width="79.2" height="79.2" class="dshg"/>
+  <circle cx="145" cy="646" r="7.87" fill="none" stroke="#1f4e79" stroke-width="1.6"/>
+  <circle cx="145" cy="736" r="8" fill="none" stroke="#c0392b" stroke-width="1.6"/>
+  <line x1="145" y1="556" x2="145" y2="736" class="dsh"/>
+  <text x="150" y="566" class="rd" font-size="8">A-A</text>
+
+  <line x1="55" y1="550" x2="235" y2="550" stroke="#666" stroke-width="0.7" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+  <text x="145" y="545" class="n8" text-anchor="middle">45</text>
+
+  <text x="55" y="752" class="n85">外框 45 &#215; 45；环带宽 6，深 2</text>
+  <text x="55" y="764" class="n85">树包络 12.60&#8230;32.40（19.8 &#215; 19.8）</text>
+  <text x="55" y="776" class="n85">根 &#216;3.9365 @ (22.5, 22.5)</text>
+  <text x="55" y="788" class="n85">出口孔 &#216;3.9365 @ (22.5, 45)</text>
+  <text x="55" y="800" class="n85">A-A 过 x = 22.5（两孔同面）</text>
+
+  <!-- 剖面 A-A：横轴 = y（0..45，4 px/mm），竖轴 = z（0..11.5，12 px/mm） -->
+  <text x="300" y="548" class="nb">剖面 A-A</text>
+  <text x="292" y="576" class="n8" text-anchor="end">z &#8593;</text>
+  <text x="484" y="714" class="n8">y &#8594;</text>
+
+  <rect x="300" y="670" width="180" height="48" fill="#fdf3d8" stroke="#333" stroke-width="1.2"/>
+  <rect x="300" y="610" width="180" height="60" fill="#eef1f4" stroke="#333" stroke-width="1.2"/>
+  <rect x="366" y="580" width="48" height="30" class="dsh"/>
+  <text x="390" y="596" class="rd" font-size="8" text-anchor="middle">外径待定</text>
+  <rect x="382" y="580" width="16" height="114" fill="#cfe2f7" stroke="#1f4e79" stroke-width="1"/>
+  <rect x="468" y="616.4" width="12" height="47.2" fill="#cfe2f7" stroke="#1f4e79" stroke-width="1"/>
+  <rect x="300" y="628" width="24" height="24" fill="url(#hatch)" stroke="#333" stroke-width="1"/>
+  <rect x="456" y="628" width="24" height="24" fill="url(#hatch)" stroke="#333" stroke-width="1"/>
+  <line x1="300" y1="718" x2="480" y2="718" stroke="#333" stroke-width="1.4"/>
+
+  <!-- z 尺寸链 -->
+  <line x1="270" y1="718" x2="270" y2="580" stroke="#666" stroke-width="0.7"/>
+  <line x1="266" y1="718" x2="274" y2="718" stroke="#666" stroke-width="0.7"/>
+  <line x1="266" y1="670" x2="274" y2="670" stroke="#666" stroke-width="0.7"/>
+  <line x1="266" y1="610" x2="274" y2="610" stroke="#666" stroke-width="0.7"/>
+  <line x1="266" y1="580" x2="274" y2="580" stroke="#666" stroke-width="0.7"/>
+  <text x="262" y="697" class="n8" text-anchor="end">4.0</text>
+  <text x="262" y="643" class="n8" text-anchor="end">5.0</text>
+  <text x="262" y="598" class="n8" text-anchor="end">2.5</text>
+  <text x="254" y="652" class="nb" text-anchor="end">11.5</text>
+  <line x1="252" y1="718" x2="252" y2="580" stroke="#666" stroke-width="0.7" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+
+  <line x1="300" y1="732" x2="480" y2="732" stroke="#666" stroke-width="0.7" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+  <text x="390" y="744" class="n8" text-anchor="middle">45（y 轴，横 4 px/mm；竖 12 px/mm）</text>
+
+  <text x="300" y="760" class="n85">进口孔 &#216;3.9365：z 2.0&#8230;11.5（含凸台 2.5）</text>
+  <text x="300" y="772" class="n85">出口孔 &#216;3.9365：轴线 z = 6.5，y 42&#8230;45</text>
+  <text x="300" y="784" class="n85">上下壁各 0.53175 mm；校验 &#8805; 0.5 通过</text>
+  <text x="300" y="796" class="n85">环 6 &#215; 2 @ z 5.5&#8230;7.5；剖面在 y 0&#8230;6 / 39&#8230;45</text>
+  <text x="300" y="808" class="n85">横轴取 y：进口孔与出口孔同在 x = 22.5</text>
+
+  <!-- ================= P4 取压口 ================= -->
+  <rect x="632" y="512" width="328" height="354" class="pnl"/>
+  <text x="646" y="534" class="sub">P4 &#160;&#160;取压口详图</text>
+
+  <text x="646" y="554" class="gn" font-size="10.5" font-weight="bold">P4-a 进口凸台取压 &#8212; 可行</text>
+  <rect x="660" y="566" width="90" height="40" fill="#eef1f4" stroke="#333" stroke-width="1.3"/>
+  <rect x="673" y="566" width="63" height="40" class="dshk"/>
+  <rect x="673" y="606" width="63" height="18" class="dshk"/>
+  <rect x="737" y="580" width="13" height="13" fill="#f7d9d5" stroke="#c0392b" stroke-width="1.2"/>
+  <rect x="750" y="578" width="24" height="17" fill="#d8d8d8" stroke="#333" stroke-width="1"/>
+  <text x="778" y="590" class="n8">取压嘴</text>
+  <text x="660" y="562" class="n8">凸台（z 9.0&#8211;11.5）</text>
+
+  <text x="646" y="640" class="rdb">凸台外径：仓库未定义 &#8594; 待定</text>
+  <text x="646" y="652" class="n9">建议 OD &#8805; &#216;8，攻 M5 &#215; 0.8 或 &#216;6 宝塔 + 卡箍</text>
+  <text x="646" y="664" class="n9">取压孔 &#216;0.8 垂直壁面，内壁去毛刺（毛刺致 +10&#8211;30 Pa 假压降）</text>
+
+  <text x="646" y="686" class="rdb" font-size="10.5">P4-b 出口侧壁取压 &#8212; 不可实现</text>
+  <rect x="655" y="700" width="140" height="80" fill="#eef1f4" stroke="#333" stroke-width="1.3"/>
+  <rect x="658.5" y="706.6" width="63" height="62.8" fill="#cfe2f7" stroke="#1f4e79" stroke-width="1"/>
+  <circle cx="690" cy="706.6" r="6.4" class="dsh"/>
+  <circle cx="690" cy="769.4" r="6.4" class="dsh"/>
+  <line x1="665" y1="712" x2="715" y2="764" stroke="#c0392b" stroke-width="1.8"/>
+  <line x1="715" y1="712" x2="665" y2="764" stroke="#c0392b" stroke-width="1.8"/>
+  <text x="800" y="712" class="n85">壁厚 0.53175</text>
+  <text x="800" y="724" class="n85">= 8.5 px</text>
+  <text x="800" y="742" class="rd" font-size="8.5">&#216;0.8 需 12.8 px</text>
+  <text x="800" y="754" class="rd" font-size="8.5">&gt; 8.5 px &#8594; 豁口</text>
+  <text x="646" y="792" class="n85">盖板上下表面距出口孔中心各 2.5 mm，孔径半径 1.96825</text>
+
+  <text x="646" y="812" class="rdb">结论：出口不取压，L 口直接通大气（表压）。</text>
+  <text x="646" y="824" class="n9">台架只测 进口静压 &#8722; 大气 = 508.91 Pa @ 0.728 L/min</text>
+  <text x="646" y="836" class="n9">模型 1004.57 Pa 含 495.66 Pa 射流动能，在出口平面下游，静压表测不到</text>
+  <text x="646" y="852" class="rd" font-size="8.5">取压嘴必须开在凸台：若开在上游三通，多计进口孔沿程 47.85 Pa（+9.4%）</text>
+
+  <!-- ================= P5 说明 ================= -->
+  <rect x="968" y="512" width="602" height="354" class="pnl"/>
+  <text x="982" y="534" class="sub">P5 &#160;&#160;标注分级 &#183; 压力口径 &#183; 待定项 &#183; 仿真边界</text>
+
+  <text x="982" y="554" class="nb">1. 标注分级</text>
+  <text x="982" y="568" class="n9">R &#160;= 由仓库代码 / JSON 直接得出，可复核</text>
+  <text x="982" y="581" class="n9">建议 = 工程设计取值，仓库无依据，可改</text>
+  <text x="982" y="594" class="rdb">待定 = 仓库中无定义，不得据此加工</text>
+
+  <text x="982" y="612" class="nb">2. 压力口径（易错点）</text>
+  <text x="982" y="626" class="n9">模型 1004.57 Pa = 80.25 树粘性 + 47.85 进口孔 + 84.46 via</text>
+  <text x="982" y="639" class="n9">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;+ 141.00 槽 + 140.24 环 + 15.11 出口孔 + 495.66 射流动能</text>
+  <text x="982" y="652" class="n9">台架静压表测不到射流动能（发生在出口平面下游）</text>
+  <text x="982" y="665" class="rdb">&#8658; 台架比对目标 = 508.91 Pa @ 0.728 L/min，不是 1004.57 Pa</text>
+
+  <text x="982" y="683" class="nb">3. 出口必须悬空</text>
+  <text x="982" y="697" class="n9">出口端与下游液面落差 &#8805; 20 mm；浸没 20 mm &#8594; 背压 &#961;gh = 998 &#215; 9.81 &#215; 0.02</text>
+  <text x="982" y="710" class="n9">= 195.8 Pa，占总信号 38.5%，静压表将直接读到假值</text>
+
+  <text x="982" y="728" class="nb">4. 本图未闭合的 3 项（图上标「待定」）</text>
+  <text x="982" y="742" class="n9">(1) 进口凸台外径 &#8212; 仓库仅定义孔 &#216;3.9365 与外伸 2.5 mm，无外径 / 壁厚</text>
+  <text x="982" y="755" class="n9">(2) 出口连接型式 &#8212; 出口端面与 y = 45 齐平、不外伸，无法直接接软管</text>
+  <text x="982" y="768" class="n9">(3) 管路实际长度与接头规格 &#8212; 未定义，压降预算未含</text>
+  <text x="982" y="781" class="rdb">以上 3 项须裁决后方可出零件加工图</text>
+
+  <text x="982" y="799" class="nb">5. 仿真边界</text>
+  <text x="982" y="813" class="n9">已算：2D 稳态导热（field.py）、1D 水力沿程（ports_manifold.py）、2D/1D 共轭</text>
+  <text x="982" y="826" class="n9">（conjugate.py）；R_th = 0.1403 &#176;C/W，树 &#916;p = 80.25 Pa @ 253 W</text>
+  <text x="982" y="839" class="rdb">未算：3D 流场、装配间隙、加工公差、环境漏热 &#8212; 结论不可外推到实物</text>
+  <text x="982" y="852" class="mono" font-size="8" fill="#333">复现：python -c "import calibrate;print(calibrate.report())"; python ports_manifold.py</text>
+
+  <!-- ================= P6 BOM ================= -->
+  <rect x="30" y="878" width="738" height="222" class="pnl"/>
+  <text x="44" y="902" class="sub">P6 &#160;&#160;件号表（BOM）</text>
+  <line x1="40" y1="910" x2="758" y2="910" stroke="#333" stroke-width="1.2"/>
+  <line x1="40" y1="928" x2="758" y2="928" stroke="#333" stroke-width="1.2"/>
+  <text x="44" y="922" class="nb">件号</text>
+  <text x="112" y="922" class="nb">名称</text>
+  <text x="212" y="922" class="nb">规格与型号</text>
+  <text x="640" y="922" class="nb">数量</text>
+  <text x="686" y="922" class="nb">状态</text>
+  <line x1="112" y1="910" x2="112" y2="1093" class="thin"/>
+  <line x1="212" y1="910" x2="212" y2="1093" class="thin"/>
+  <line x1="640" y1="910" x2="640" y2="1093" class="thin"/>
+  <line x1="686" y1="910" x2="686" y2="1093" class="thin"/>
+
+  <text x="44" y="939" class="n9">V-01</text>
+  <text x="112" y="939" class="n9">恒温槽</text>
+  <text x="212" y="939" class="n9">开口通大气，控温 20&#8211;60 &#176;C，容积 &#8805; 2 L</text>
+  <text x="640" y="939" class="n9">1</text>
+  <text x="686" y="939" class="n9">外购</text>
+  <line x1="40" y1="943" x2="758" y2="943" class="thin"/>
+
+  <text x="44" y="954" class="n9">P-01</text>
+  <text x="112" y="954" class="n9">循环泵</text>
+  <text x="212" y="954" class="n9">耐温 60 &#176;C，0.1&#8211;1.5 L/min 可调，0.728 L/min 为标定点</text>
+  <text x="640" y="954" class="n9">1</text>
+  <text x="686" y="954" class="n9">外购</text>
+  <line x1="40" y1="958" x2="758" y2="958" class="thin"/>
+
+  <text x="44" y="969" class="n9">F-01</text>
+  <text x="112" y="969" class="n9">过滤器</text>
+  <text x="212" y="969" class="n9">5 &#181;m，&#216;6 快接；压降须实测并计入预算</text>
+  <text x="640" y="969" class="n9">1</text>
+  <text x="686" y="969" class="n9">外购</text>
+  <line x1="40" y1="973" x2="758" y2="973" class="thin"/>
+
+  <text x="44" y="984" class="n9">D-01</text>
+  <text x="112" y="984" class="n9">阻尼腔</text>
+  <text x="212" y="984" class="n9">容积 20&#8211;50 mL，稳压削脉动</text>
+  <text x="640" y="984" class="n9">1</text>
+  <text x="686" y="984" class="n9">自制</text>
+  <line x1="40" y1="988" x2="758" y2="988" class="thin"/>
+
+  <text x="44" y="999" class="n9">FI-01</text>
+  <text x="112" y="999" class="n9">流量计</text>
+  <text x="212" y="999" class="n9">0&#8211;2 L/min，脉冲或 4&#8211;20 mA 输出</text>
+  <text x="640" y="999" class="n9">1</text>
+  <text x="686" y="999" class="n9">外购</text>
+  <line x1="40" y1="1003" x2="758" y2="1003" class="thin"/>
+
+  <text x="44" y="1014" class="n9">T-01</text>
+  <text x="112" y="1014" class="n9">进口三通</text>
+  <text x="212" y="1014" class="n9">仅接 PT100；禁止作为取压点（见 P4）</text>
+  <text x="640" y="1014" class="n9">1</text>
+  <text x="686" y="1014" class="n9">外购</text>
+  <line x1="40" y1="1018" x2="758" y2="1018" class="thin"/>
+
+  <text x="44" y="1029" class="n9">RT-01/02</text>
+  <text x="112" y="1029" class="n9">PT100</text>
+  <text x="212" y="1029" class="n9">四线制，同批同标定，恒流 1 mA 激励</text>
+  <text x="640" y="1029" class="n9">2</text>
+  <text x="686" y="1029" class="n9">外购</text>
+  <line x1="40" y1="1033" x2="758" y2="1033" class="thin"/>
+
+  <text x="44" y="1044" class="n9">TC-01&#8230;05</text>
+  <text x="112" y="1044" class="n9">T 型热电偶</text>
+  <text x="212" y="1044" class="n9">5 支，同合金延长线，共用一个冷端子块</text>
+  <text x="640" y="1044" class="n9">5</text>
+  <text x="686" y="1044" class="n9">外购</text>
+  <line x1="40" y1="1048" x2="758" y2="1048" class="thin"/>
+
+  <text x="44" y="1059" class="n9">PT-01</text>
+  <text x="112" y="1059" class="n9">压力变送器</text>
+  <text x="212" y="1059" class="n9">0&#8211;2 kPa 表压，4&#8211;20 mA 两线，24 V 串 250 &#937;</text>
+  <text x="640" y="1059" class="n9">1</text>
+  <text x="686" y="1059" class="n9">外购</text>
+  <line x1="40" y1="1063" x2="758" y2="1063" class="thin"/>
+
+  <text x="44" y="1074" class="n9">H-01</text>
+  <text x="112" y="1074" class="n9">加热器</text>
+  <text x="212" y="1074" class="n9">定制薄膜或铜块，17 &#215; 17 mm，功率上限待裁决</text>
+  <text x="640" y="1074" class="n9">1</text>
+  <text x="686" y="1074" class="rdb">待定</text>
+  <line x1="40" y1="1078" x2="758" y2="1078" class="thin"/>
+
+  <text x="44" y="1089" class="n9">SPEC</text>
+  <text x="112" y="1089" class="n9">试件</text>
+  <text x="212" y="1089" class="n9">45 &#215; 45 &#215; 11.5 mm，集流环 + 树形微通道</text>
+  <text x="640" y="1089" class="n9">1</text>
+  <text x="686" y="1089" class="rdb">待定</text>
+
+  <!-- ================= 标题栏 ================= -->
+  <rect x="780" y="878" width="790" height="222" class="pnl"/>
+  <text x="794" y="902" class="nb">用途声明</text>
+  <text x="794" y="916" class="n9">本图可用于采购、管路搭建与电气接线。</text>
+  <text x="794" y="930" class="rdb">不可作为零件加工图：凸台外径、出口连接型式、管路实际长度在仓库中无定义（标「待定」）。</text>
+  <line x1="794" y1="942" x2="1556" y2="942" class="thin"/>
+
+  <text x="794" y="956" class="nb">依据文件</text>
+  <text x="794" y="970" class="n9">ports_manifold.py（几何与沿程损失）&#183; outputs/manifold_geometry.json（机器可读数值）</text>
+  <text x="794" y="984" class="n9">组装方案.md &#167;14.4（测量定义）&#183; outputs/manifold_assembly.stl（25136 三角面）</text>
+  <line x1="794" y1="996" x2="1556" y2="996" class="thin"/>
+
+  <text x="794" y="1010" class="nb">待裁决</text>
+  <text x="794" y="1024" class="n9">6 项硬件决策：根部底厚 / 几何方案 A&#8211;D / 加工资源 / 热源形式 / 目的定位 / 出口连接</text>
+  <text x="794" y="1038" class="rdb">见 组装方案.md &#167;7；未裁决前不得开模或外协。</text>
+  <line x1="794" y1="1050" x2="1556" y2="1050" class="thin"/>
+
+  <line x1="794" y1="1058" x2="1556" y2="1058" stroke="#333" stroke-width="1"/>
+  <line x1="794" y1="1080" x2="1556" y2="1080" stroke="#333" stroke-width="1"/>
+  <line x1="794" y1="1098" x2="1556" y2="1098" stroke="#333" stroke-width="1"/>
+  <line x1="1160" y1="1058" x2="1160" y2="1098" class="thin"/>
+  <line x1="1300" y1="1058" x2="1300" y2="1098" class="thin"/>
+  <line x1="1420" y1="1058" x2="1420" y2="1098" class="thin"/>
+  <text x="802" y="1072" class="n9">图号 HT-BENCH-001</text>
+  <text x="1168" y="1072" class="n9">版 A（草案）</text>
+  <text x="1308" y="1072" class="n9">比例 NTS</text>
+  <text x="1428" y="1072" class="n9">单位 mm</text>
+  <text x="802" y="1094" class="n9">日期 2026-10-18</text>
+  <text x="1168" y="1094" class="n9">纸张 A3 横向</text>
+  <text x="1308" y="1094" class="n9">共 6 区</text>
+  <text x="1428" y="1094" class="n9">页 1 / 1</text>
+
+</svg>
