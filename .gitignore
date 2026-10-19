@@ -1,2 +1,9 @@
 # IDE-local skill copies (not project content)
 .trae/
+
+# Python bytecode / caches
+__pycache__/
+*.pyc
+
+# MATLAB 会话中间产物（非输入非结果，体积大且可再生产）
+m_*.mat

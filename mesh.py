@@ -1,11 +1,14 @@
 """Step 4: cylinder-per-edge mesher writing a binary STL by hand (no deps).
 
-Every edge becomes a closed tapered cylinder between its two nodes. Each
-cylinder is watertight and manifold on its own, so the file slices cleanly;
-segments merely touch at junctions (the cover plate seals them into
-channels, per PROJECT.md Step 4/6).
+Every edge becomes a closed tapered cylinder between its two nodes. All
+cylinders lie in ONE z plane (z = height/2), so at a node the end caps of
+all incident edges share the node centre and the solid is volume-connected;
+the old z=0 -> z=height slope left a 4.23 mm gap at every node
+(DEFECT_REMEDIATION_PLAN.md 10.20). Each primitive is closed and
+outward-facing; coincident caps at multi-way nodes still make 228 edges
+non-manifold (shared by 3 or 4 triangles), reported separately.
 
-height: extrusion height in mm (tree height above the base plate).
+height: slab thickness in mm; the mesh sits on its mid-plane.
 """
 from __future__ import annotations
 
@@ -64,7 +67,14 @@ def cylinder_tris(a, b, ra: float, rb: float, n: int = 12):
         j = (i + 1) % n
         tris.append((a, ring_a[i], ring_a[j]))
         tris.append((b, ring_b[j], ring_b[i]))
-    return tris
+    # The construction above is consistently CLOSED but inward-facing:
+    # (u, v, axis) is right-handed, so ring_a[i] -> ring_b[i] -> ring_b[j]
+    # yields a normal of -outward. Measured: signed volume of a r=0.5, h=1
+    # cylinder is -0.75 mm^3 (12-gon area 0.75 x h 1), i.e. every facet
+    # normal points into the solid (DEFECT_REMEDIATION_PLAN.md 10.22).
+    # Reverse each triangle once, at the end, so all primitives in the file
+    # (including the ports_manifold frame, which is already outward) agree.
+    return [(c, b, a) for a, b, c in tris]
 
 
 def export_stl(
@@ -81,8 +91,12 @@ def export_stl(
     for p, c in edges:
         py, px = divmod(p, grid)
         cy, cx = divmod(c, grid)
-        a = np.array([px * pitch_mm, py * pitch_mm, 0.0])
-        b = np.array([cx * pitch_mm, cy * pitch_mm, height])
+        # Both ends on the SAME z plane. Previously the parent sat at z=0 and
+        # the child at z=height, so every edge sloped through the full slab and
+        # the end caps of two edges meeting at a node were 4.23 mm apart: the
+        # STL was not a connected channel (DEFECT_REMEDIATION_PLAN.md 10.20).
+        a = np.array([px * pitch_mm, py * pitch_mm, height / 2.0])
+        b = np.array([cx * pitch_mm, cy * pitch_mm, height / 2.0])
         rp = radii.get(p, 0.5)
         rc = radii.get(c, 0.5)
         tris_all.extend(cylinder_tris(a, b, rp, rc, n=n_sides))
@@ -107,13 +121,13 @@ def _key(vals) -> tuple:
 def stl_manifold_report(path: str) -> dict:
     """Structural check of the binary STL.
 
-    Two levels, because the model is deliberately not a single watertight
-    solid (PROJECT.md: segments touch at junctions, a cover plate seals them):
+    Three levels:
       * per-triangle sanity: every triangle counted once, no degenerate tris
-      * edge pairing: a directed edge shared by exactly 2 triangles (once each
-        direction) => locally manifold. At junctions two cylinders touch, so
-        the shared rim edges legitimately appear twice per direction; those
-        are reported separately as `junction_edges`.
+      * closure: every directed edge (a,b) has the same count as (b,a) =>
+        boundary_edges = 0 (volume can be sealed even when non-manifold)
+      * manifoldness: an edge shared by exactly 2 triangles (once each
+        direction). Coincident end caps at a multi-way node make some edges
+        span 3 or 4 triangles; those are counted in `nonmanifold_edges`.
     """
     data = Path(path).read_bytes()
     n_tri = struct.unpack_from("<I", data, 80)[0]
@@ -138,12 +152,18 @@ def stl_manifold_report(path: str) -> dict:
     unpaired = sum(1 for (a, b), cnt in edge_count.items()
                    if not (cnt == 1 and edge_count.get((b, a), 0) == 1)
                    and not (cnt == 2 and edge_count.get((b, a), 0) == 2))
+    boundary = sum(1 for (a, b), cnt in edge_count.items()
+                   if edge_count.get((b, a), 0) != cnt)
+    nonmanifold = sum(1 for (a, b), cnt in edge_count.items() if cnt >= 3)
     return {
         "triangles": n_tri,
         "unique_directed_edges": len(edge_count),
         "edges_paired_once": paired,
         "junction_edges_shared_twice": junction,
         "unpaired_edges": unpaired,
+        "boundary_edges": boundary,
+        "closed": bool(n_tri > 0 and boundary == 0),
+        "nonmanifold_edges": nonmanifold,
         "is_manifold": bool(n_tri > 0 and unpaired == 0),
     }
 

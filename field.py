@@ -20,6 +20,22 @@ import numpy as np
 # 1 mm grid spacing -> grid cells * PITCH_MM = plate size (see PROJECT.md 2.1)
 PITCH_MM = 1.0
 
+# Source footprint. TWO calibrated conventions, both explicit:
+#   SRC_RADIUS_REAL = 8.0  -> 17x17 = 289 cells = 234 mm^2 per die,
+#       108 W/cm^2 at 253 W. This is the REAL-scale footprint (i7-14700K:
+#       98 W/cm^2) and the default for every multi-chip / physical run.
+#   SRC_RADIUS_SYNTHETIC = 2.0  -> 5x5 = 25 cells, 1249 W/cm^2. This is the
+#       concentrated block the single-source chain was BUILT on (REPORT.md §4)
+#       and §22.4 ruled a deliberately retained synthetic extreme, NOT an
+#       oversight. Any script that needs the synthetic case must now pass
+#       this constant explicitly -- it is no longer reachable by omission.
+# The old default (2.0 everywhere) is what let a caller run the physical
+# comparison at 12.7x the real power density without noticing; see
+# DEFECT_REMEDIATION_PLAN.md §4 (conservation was caller discipline, not a
+# structural guarantee).
+SRC_RADIUS_REAL = 8.0
+SRC_RADIUS_SYNTHETIC = 2.0
+
 # Real-unit calibration (REPORT.md §11). The default run is dimensionless
 # (k=1, q in grid units); PHYSICAL below holds the published constants the
 # dimensionless numbers were mapped onto, with sources.
@@ -37,14 +53,20 @@ class FieldResult:
     residual: float               # final max|dT|
 
 
-def source_mask(grid: int, center: tuple[int, int], radius: float = 2.0) -> np.ndarray:
-    """Square source mask of half-width `radius` cells around `center`=(y, x)."""
+def source_mask(grid: int, center: tuple[int, int],
+                radius: float = SRC_RADIUS_REAL) -> np.ndarray:
+    """Square source mask of half-width `radius` cells around `center`=(y, x).
+
+    Default is the REAL-scale footprint (SRC_RADIUS_REAL). The synthetic
+    5x5 block is still available as SRC_RADIUS_SYNTHETIC.
+    """
     cy, cx = center
     yy, xx = np.mgrid[0:grid, 0:grid]
     return (np.abs(yy - cy) <= radius) & (np.abs(xx - cx) <= radius)
 
 
-def source_mask_multi(grid: int, centers, radius: float = 2.0) -> np.ndarray:
+def source_mask_multi(grid: int, centers, radius: float = SRC_RADIUS_REAL,
+                      powers=None) -> np.ndarray:
     """Union of square source masks around several centres.
 
     `centers` is an iterable of (y, x). Overlapping blocks merge, so two
@@ -57,14 +79,80 @@ def source_mask_multi(grid: int, centers, radius: float = 2.0) -> np.ndarray:
     return m
 
 
+def source_strength_multi(grid: int, centers,
+                          radius: float = SRC_RADIUS_REAL, powers=None) -> np.ndarray:
+    """Per-cell source strength for several chips.
+
+    `powers` holds the RELATIVE weight of each centre. The weights are
+    normalised so that a chip carrying `powers[k]` receives the share
+
+        q_cell[k] = base * powers[k] / mean(powers)
+
+    i.e. [1, 2, 3] and [2, 4, 6] give the IDENTICAL field, and the TOTAL
+    power of the layout is base * len(centers) regardless of the weights.
+    This is the "total power is an input, distribution is a shape" split
+    used by MOOSE (TotalPower + power_shape_function) and SimScale
+    (absolute vs specific power source), and it is what makes the layout's
+    total power independent of how unevenly the chips are loaded.
+
+    The previous behaviour -- powers as ABSOLUTE per-cell multipliers, so
+    [1, 2, 3] carried 6 units of total power -- made the layout's total
+    power a silent function of the power ratios: raising one chip's load
+    raised the whole board's dissipation. Experiments run under that
+    convention (REPORT.md §10 unequal-power rows, DEFECT_REMEDIATION_PLAN
+    §5.11 R26) are archived under the absolute convention and are NOT
+    comparable with post-migration runs; see §5.9a.
+    """
+    yy, xx = np.mgrid[0:grid, 0:grid]
+    s = np.zeros((grid, grid), dtype=float)
+    if powers is None:
+        w = [1.0] * len(list(centers))
+    else:
+        w = [float(p) for p in powers]
+        mean = sum(w) / len(w)
+        if mean <= 0.0:
+            raise ValueError(f"powers must have a positive mean, got {powers}")
+        w = [p / mean for p in w]
+    for k, (cy, cx) in enumerate(centers):
+        s[(np.abs(yy - cy) <= radius) & (np.abs(xx - cx) <= radius)] += w[k]
+    return s
+
+
 def _solve_poisson(src_b: np.ndarray, grid: int, T_init: float,
-                   T_boundary: float, max_iter: int, tol: float) -> FieldResult:
+                   T_boundary: float, max_iter: int, tol: float,
+                   h_conv: float = 0.0, T_ambient: float | None = None) -> FieldResult:
     """Jacobi to steady state for a fixed interior source term.
 
     Split out of solve_heat so the single- and multi-source solvers share one
     discretisation (and therefore one sanity check).
+
+    `h_conv` selects the boundary condition:
+      h_conv = 0  -> Dirichlet: the boundary ring is held at T_boundary.
+                     This is the ideal-cold-sink model used by every result
+                     in REPORT.md up to and including section 17, and it is
+                     reproduced BIT-FOR-BIT when h_conv is left at 0.
+      h_conv > 0  -> Robin (finite convection): the boundary ring exchanges
+                     heat with the ambient at rate h_conv [a.u.] and the
+                     boundary ring itself is now an unknown that is solved
+                     for, not prescribed. This is the physically real case
+                     (a plate edge bolted to a cold plate, not welded to a
+                     perfect heat sink), and it is the only idealisation
+                     REPORT.md section 14.6 listed as untested.
+
+    Robin discretisation, ghost-node form for a boundary cell P with one
+    outside neighbour at T_amb:
+
+        (T_in + T_amb - 2*T_P)/h^2 + q_P = h_conv*(T_amb - T_P)
+        =>  T_P = (T_in + T_amb*(1 + Bi)) / (2 + Bi),   Bi = h_conv*h/k
+
+    With k = 1 and h = PITCH_MM = 1 this reduces to (T_in + T_amb*(1+Bi))/(2+Bi).
+    At Bi -> 0 it collapses to (T_in + T_amb)/2, NOT to the Dirichlet value --
+    so h_conv=0 must keep taking the Dirichlet branch, which it does.
     """
     T = np.full((grid, grid), float(T_init))
+    if T_ambient is None:
+        T_ambient = T_boundary
+    Bi = h_conv * PITCH_MM          # k = 1, h = PITCH_MM
     it = 0
     converged = False
     residual = np.inf
@@ -74,10 +162,25 @@ def _solve_poisson(src_b: np.ndarray, grid: int, T_init: float,
             0.25 * (T[2:, 1:-1] + T[:-2, 1:-1] + T[1:-1, 2:] + T[1:-1, :-2])
             + src_b
         )
-        Tn[0, :] = T_boundary
-        Tn[-1, :] = T_boundary
-        Tn[:, 0] = T_boundary
-        Tn[:, -1] = T_boundary
+        if Bi > 0.0:
+            # Robin on all four edges: each edge cell has exactly one interior
+            # neighbour and one ghost at T_ambient.
+            a = 1.0 + Bi
+            b = 2.0 + Bi
+            Tn[0, 1:-1] = (Tn[1, 1:-1] + a * T_ambient) / b
+            Tn[-1, 1:-1] = (Tn[-2, 1:-1] + a * T_ambient) / b
+            Tn[1:-1, 0] = (Tn[1:-1, 1] + a * T_ambient) / b
+            Tn[1:-1, -1] = (Tn[1:-1, -2] + a * T_ambient) / b
+            # corners: two interior neighbours
+            Tn[0, 0] = (Tn[1, 0] + Tn[0, 1] + 2.0 * a * T_ambient) / (2.0 * b)
+            Tn[0, -1] = (Tn[1, -1] + Tn[0, -2] + 2.0 * a * T_ambient) / (2.0 * b)
+            Tn[-1, 0] = (Tn[-2, 0] + Tn[-1, 1] + 2.0 * a * T_ambient) / (2.0 * b)
+            Tn[-1, -1] = (Tn[-2, -1] + Tn[-1, -2] + 2.0 * a * T_ambient) / (2.0 * b)
+        else:
+            Tn[0, :] = T_boundary
+            Tn[-1, :] = T_boundary
+            Tn[:, 0] = T_boundary
+            Tn[:, -1] = T_boundary
 
         residual = float(np.max(np.abs(Tn - T)))
         T = Tn
@@ -91,7 +194,7 @@ def _solve_poisson(src_b: np.ndarray, grid: int, T_init: float,
 
 def solve_heat(
     grid: int = 50,
-    source_radius: float = 2.0,
+    source_radius: float = SRC_RADIUS_REAL,
     q: float = 1.0,
     T_boundary: float = 25.0,
     T_init: float = 25.0,
@@ -99,6 +202,8 @@ def solve_heat(
     tol: float = 1e-6,
     source_center: tuple[int, int] | None = None,
     k: float = 1.0,
+    h_conv: float = 0.0,
+    T_ambient: float | None = None,
 ) -> FieldResult:
     """Return the steady temperature field on a grid x grid plate.
 
@@ -107,6 +212,14 @@ def solve_heat(
     every number reported before the real-unit calibration is reproduced
     bit-for-bit. Passing a physical k rescales the field by exactly 1/k
     (the Poisson problem is linear), so it can be applied post-hoc instead.
+
+    h_conv / T_ambient switch the boundary condition from the ideal Dirichlet
+    cold sink to a finite-convection (Robin) edge. h_conv=0 (the default)
+    reproduces every pre-2026-10-16 result bit-for-bit; see _solve_poisson.
+
+    source_radius defaults to SRC_RADIUS_REAL (the real die footprint). The
+    synthetic 5x5 block of REPORT.md §4 is SRC_RADIUS_SYNTHETIC and must be
+    requested explicitly.
     """
     if grid < 5:
         raise ValueError("grid too small")
@@ -114,30 +227,107 @@ def solve_heat(
     cy, cx = source_center if source_center is not None else ((grid - 1) // 2, (grid - 1) // 2)
     src = source_mask(grid, (cy, cx), source_radius)
     src_b = (q * PITCH_MM**2 / (4.0 * k)) * src[1:-1, 1:-1]
-    return _solve_poisson(src_b, grid, T_init, T_boundary, max_iter, tol)
+    return _solve_poisson(src_b, grid, T_init, T_boundary, max_iter, tol,
+                          h_conv=h_conv, T_ambient=T_ambient)
 
 
 def solve_heat_sources(
     grid: int = 50,
     centers=((24, 24),),
-    source_radius: float = 2.0,
+    source_radius: float = SRC_RADIUS_REAL,
     q: float = 1.0,
     T_boundary: float = 25.0,
     T_init: float = 25.0,
     max_iter: int = 20000,
     tol: float = 1e-6,
     k: float = 1.0,
+    powers=None,
+    h_conv: float = 0.0,
+    T_ambient: float | None = None,
 ) -> FieldResult:
-    """Steady field for several equal-strength sources (multi-chip layout).
+    """Steady field for several sources (multi-chip layout).
 
-    q is per source cell, so N sources of the same size carry N times the
-    total power -- the intended "N identical chips" reading.
+    q is the default per-cell source strength, applied UNCONDITIONALLY to
+    every cell (scaling it only when `powers` is given makes it a silent
+    no-op in the equal-power case -- the bug that let the concentrated 5x5
+    model's power quietly change by the cell-count ratio). `powers` holds
+    the chips' RELATIVE weights, normalised to a constant layout total; see
+    source_strength_multi. Real-scale runs use source_radius =
+    SRC_RADIUS_REAL; the synthetic 5x5 block of REPORT.md §4 is
+    SRC_RADIUS_SYNTHETIC.
     """
     if grid < 5:
         raise ValueError("grid too small")
-    src = source_mask_multi(grid, centers, source_radius)
-    src_b = (q * PITCH_MM**2 / (4.0 * k)) * src[1:-1, 1:-1]
-    return _solve_poisson(src_b, grid, T_init, T_boundary, max_iter, tol)
+    # `q` scales every cell's strength. It must be applied UNCONDITIONALLY:
+    # scaling only when `powers` is given makes `q` a silent no-op in the
+    # (by far most common) equal-power case, which is how the concentrated
+    # 5x5 model's 253 W could never be re-spread over a real die footprint
+    # without the total power quietly changing by the cell-count ratio.
+    strength = source_strength_multi(grid, centers, source_radius, powers)
+    strength = strength * (q / 1.0)
+    src_b = (PITCH_MM**2 / (4.0 * k)) * strength[1:-1, 1:-1]
+    return _solve_poisson(src_b, grid, T_init, T_boundary, max_iter, tol,
+                          h_conv=h_conv, T_ambient=T_ambient)
+
+
+def solve_heat_3d(
+    grid: int = 50,
+    depth: int = 10,
+    source_radius: float = SRC_RADIUS_REAL,
+    q: float = 1.0,
+    T_boundary: float = 25.0,
+    T_init: float = 25.0,
+    max_iter: int = 20000,
+    tol: float = 1e-6,
+    source_center: tuple[int, int] | None = None,
+    k: float = 1.0,
+) -> FieldResult:
+    """Steady field on a grid x grid x depth block.
+
+    The 2D solver is the depth -> infinity limit of this. 3D matters because
+    in 2D a point source decays as -ln(r) (see sanity_check_log_decay), so
+    the field falls off far more slowly than in 3D, where it decays as 1/r.
+    Every conclusion drawn on the 2D field therefore rests on an assumption
+    that has not been tested.
+
+    Discretisation: 7-point Laplacian on a uniform grid,
+        T_P = (6 neighbours)/6 + q*h^2/6
+    with fixed-temperature boundaries on all six faces.
+    """
+    if grid < 5 or depth < 3:
+        raise ValueError("grid too small or depth too shallow")
+
+    cy, cx = source_center if source_center is not None else ((grid - 1) // 2, (grid - 1) // 2)
+    yy, xx = np.mgrid[0:grid, 0:grid]
+    mask2 = (np.abs(yy - cy) <= source_radius) & (np.abs(xx - cx) <= source_radius)
+    # the source is a column through the full depth: a chip on top of the
+    # plate dissipates through it, so every layer sees the same heat
+    src = np.zeros((depth, grid, grid), dtype=bool)
+    src[:, mask2] = True
+
+    T = np.full((depth, grid, grid), float(T_init))
+    it = 0
+    converged = False
+    residual = np.inf
+    c = q * PITCH_MM**2 / (6.0 * k)
+    while it < max_iter:
+        Tn = T.copy()
+        Tn[1:-1, 1:-1, 1:-1] = (
+            T[2:, 1:-1, 1:-1] + T[:-2, 1:-1, 1:-1]
+            + T[1:-1, 2:, 1:-1] + T[1:-1, :-2, 1:-1]
+            + T[1:-1, 1:-1, 2:] + T[1:-1, 1:-1, :-2]
+        ) / 6.0 + c * src[1:-1, 1:-1, 1:-1]
+        for sl in (0, -1):
+            Tn[sl, :, :] = T_boundary
+            Tn[:, sl, :] = T_boundary
+            Tn[:, :, sl] = T_boundary
+        residual = float(np.max(np.abs(Tn - T)))
+        T = Tn
+        it += 1
+        if residual < tol:
+            converged = True
+            break
+    return FieldResult(T=T, iterations=it, converged=converged, residual=residual)
 
 
 def normalize_field(T: np.ndarray, T_boundary: float = 25.0, T_target: float = 100.0) -> np.ndarray:

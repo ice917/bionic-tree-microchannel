@@ -14,6 +14,7 @@ from pathlib import Path
 
 import numpy as np
 
+import calibrate as C
 import field as F
 import grow as G
 import mesh as M
@@ -65,8 +66,10 @@ def main() -> None:
 
     # ---------------- Step 1: heat field ----------------
     print("[Step 1] solving heat field ...")
-    src = F.source_mask(grid, (args.source_y, args.source_x), radius=2.0)
-    res = F.solve_heat(grid=grid, source_center=(args.source_y, args.source_x))
+    src = F.source_mask(grid, (args.source_y, args.source_x),
+                        radius=F.SRC_RADIUS_SYNTHETIC)
+    res = F.solve_heat(grid=grid, source_center=(args.source_y, args.source_x),
+                       source_radius=F.SRC_RADIUS_SYNTHETIC)
     T = F.normalize_field(res.T, T_target=100.0)
     report["field"] = {
         "grid": grid,
@@ -101,9 +104,10 @@ def main() -> None:
     print(f"  nodes={cov['nodes']} edges={cov['edges']} degree hist={hist}")
 
     # off-centre source -> different shape (field-driven proof)
-    src_off = F.source_mask(grid, (25, 10), radius=2.0)
+    src_off = F.source_mask(grid, (25, 10), radius=F.SRC_RADIUS_SYNTHETIC)
     T_off = F.normalize_field(
-        F.solve_heat(grid=grid, source_center=(25, 10)).T, T_target=100.0)
+        F.solve_heat(grid=grid, source_center=(25, 10),
+                     source_radius=F.SRC_RADIUS_SYNTHETIC).T, T_target=100.0)
     edges_off = G.grow_tree(T_off, max_nodes=args.max_nodes)
     sig_a = G.shape_signature(edges, grid, grid)
     sig_b = G.shape_signature(edges_off, grid, grid)
@@ -132,14 +136,17 @@ def main() -> None:
     # ---------------- Step 4: STL ----------------
     print("[Step 4] exporting STL ...")
     stl_path = OUT / "tree.stl"
+    pitch_mm = C.paper_grid_mm(grid)
     n_tri = M.export_stl(edges, radii, grid=grid, height=args.height,
-                         path=str(stl_path), n_sides=12)
+                         path=str(stl_path), n_sides=12, pitch_mm=pitch_mm)
     mrep = M.stl_manifold_report(str(stl_path))
     bb = M.bbox(str(stl_path))
     report["stl"] = {"triangles": n_tri, "manifold": mrep, "bbox_mm": bb,
-                     "height_mm": args.height}
-    print(f"  {n_tri} triangles, manifold={mrep['is_manifold']}, "
-          f"bbox={bb['size_mm']} mm (height={args.height})")
+                     "height_mm": args.height, "pitch_mm": pitch_mm}
+    print(f"  {n_tri} triangles, closed={mrep['closed']} "
+          f"(boundary_edges={mrep['boundary_edges']}), "
+          f"nonmanifold_edges={mrep['nonmanifold_edges']}, "
+          f"pitch={pitch_mm} mm, bbox={bb['size_mm']} mm (height={args.height})")
 
     # ---------------- Step 5: verification ----------------
     # Fairness: the control must occupy the SAME NUMBER OF CELLS as the tree
