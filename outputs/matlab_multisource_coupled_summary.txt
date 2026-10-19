@@ -1,0 +1,83 @@
+================================================================================
+MATLAB multi-source coupled-growth experiment (coupled_grow_multi.m)
+grid 50x50 (50 mm plate) | pitch 1 mm | q=1 per source cell, k=1 | Tb=25 C
+protocol: tree cells inside chip blocks EXEMPT from pinning (both groups);
+          coupled runs use the same 600-node budget as the Python static tree;
+          fields normalised to peak 100 C before growth, metrics on raw scale;
+          metric fields polished to Jacobi tol 1e-7 (verify.apply_channels conv.);
+          Murray radii r0=0.5 mm, leaf demand 1, r=r0*flow^(1/3) (radius.py).
+================================================================================
+
+[Part A] single-source regression -- ORIGINAL coupled_grow.m, budget 400, rs=1
+--------------------------------------------------------------------------------
+  source center (y,x) 0-based = (25,25) | cold field solve iters = 4513
+  T_max              = 27.5962 C   (reference 27.5962)                  -> PASS
+  T_mean_solid       = 25.0196 C   (REPORT coupled ref 25.0196)
+  hotspot area       = 25.0 mm2 (threshold 25.6490 C)
+  pinned cells       = 375 (single 5x5 chip: tree-in-block cells = 25)
+  dp (Poiseuille)    = 583.539     (REPORT coupled ref 583.54, older radius code)
+  material           = 656.674 mm2 (summary ref 656.6744)
+  nodes / edges      = 400 / 399  (ref 400 / 399)
+  degree histogram   = 39/326/33/2/0 (summary ref 39/326/33/2/0)
+  forks / leaves     = 35 / 39  (ref 35 / 39)
+  bbox x/y (0-based) = [1 45] / [1 48]  (summary [1 48]/[1 46], scan [1 48]/[1 45])
+  centroid (x,y) 0b  = 17.9525 / 23.8675  (summary 23.8675/18.4275, scan 23.867/17.953)
+  radius min/max/mean= 0.5000 / 1.6956 / 0.6393  (summary 0.5/1.6956/0.6393)
+  frac_capillary<=0.6= 0.5450  (summary 0.5450, scan 0.885 -- both from older inline radius code)
+  root flow (=leaves)= 39 | Murray max rel err = 0.000e+00
+  recalcs = 399 | total Jacobi iters = 261157 | elapsed = 3.49 s
+  (scan_recalc_frequency.txt rs=1 ref: recalcs 399, iters 261157, t 3.92 s)
+  REGRESSION PASS
+
+[Part B] 3 chips, triangle layout, budget 600, coupled growth
+--------------------------------------------------------------------------------
+  chip centres (y,x) 0-based: (15,15) (35,15) (25,35) | cold field iters = 4873
+  -- recalc_every = 1 --
+    seed (y,x) 0b = (25,34) | nodes/edges = 600/599 | pinned = 525 (static ref 525)
+    T_max         = 27.5962 C  (static 27.5962, dT_max -0.0000)
+    T_mean_solid  = 25.063301 C  (static 25.0633, dT_mean +8.89e-07)
+    hotspot       = 75.0 mm2 (static 75.0, d+0.0) | threshold 25.6490 C
+    dp            = 614.856 (static 649.305, ratio 0.95) | material 1274.047 mm2 (static 1369.633)
+    chip dists    = 0/0/0 (max 0) | tree cells in blocks = 75 (per chip 25/25/25)
+    bbox x/y (0b) = [1 45] / [1 48] | centroid (14.84, 23.98)
+    forks/leaves  = 66/75 | deg 75/459/59/7/0 | root flow 75
+    radius min/max/mean = 0.5000/2.1086/0.6664 | frac_cap<=0.6 = 0.6750 | Murray err 0.000e+00
+    recalcs = 599 | total iters = 508085 | elapsed = 6.98 s
+  -- recalc_every = 5 --
+    seed (y,x) 0b = (25,34) | nodes/edges = 600/599 | pinned = 525 (static ref 525)
+    T_max         = 27.5962 C  (static 27.5962, dT_max -0.0000)
+    T_mean_solid  = 25.063301 C  (static 25.0633, dT_mean +8.89e-07)
+    hotspot       = 75.0 mm2 (static 75.0, d+0.0) | threshold 25.6490 C
+    dp            = 588.451 (static 649.305, ratio 0.91) | material 1231.344 mm2 (static 1369.633)
+    chip dists    = 0/0/0 (max 0) | tree cells in blocks = 75 (per chip 25/25/25)
+    bbox x/y (0b) = [1 45] / [1 48] | centroid (16.95, 24.62)
+    forks/leaves  = 67/75 | deg 75/458/61/6/0 | root flow 75
+    radius min/max/mean = 0.5000/2.1086/0.6596 | frac_cap<=0.6 = 0.6333 | Murray err 0.000e+00
+    recalcs = 119 | total iters = 102461 | elapsed = 1.39 s
+
+[Part C] coupled (MATLAB) vs static tree (Python, same 600-node budget)
+--------------------------------------------------------------------------------
+  case                              T_max     T_mean    hotspot     pinned           dp    maxdist
+  static tree (Python ref)        27.5962    25.0633       75.0        525      649.305          0
+  radial control (Python ref)     30.2932    25.9438      587.0        509        0.105          0
+  coupled rs=1 (MATLAB)           27.5962    25.0633       75.0        525      614.856          0
+  coupled rs=5 (MATLAB)           27.5962    25.0633       75.0        525      588.451          0
+
+  rs=1 vs static: dT_max -4.55e-05 C, dT_mean +8.89e-07 C, dHotspot +0.0 mm2, dPinned +0, dp x0.95
+  rs=5 vs static: dT_max -4.55e-05 C, dT_mean +8.89e-07 C, dHotspot +0.0 mm2, dPinned +0, dp x0.91
+
+Notes:
+ * Static-tree reference numbers are recorded outputs of
+   outputs/multi_source_results.csv ("3 chips, triangle | budget 600"), not recomputed here.
+ * Pinned counts differ between coupled and static only if the two trees
+   occupy different numbers of chip-block cells (exemption rule identical).
+ * Single-source summary/scan radius columns came from an older inline stats
+   script; this run uses the radius.py scheme (Python canonical) throughout.
+ * Edge indices are MATLAB-linear-1 (i = y + x*grid); bbox/centroid are decoded
+   accordingly. The recorded single-source summary/scan files used the
+   transposed decode (their bbox_x/bbox_y and cx/cy equal our bbox_y/bbox_x
+   and cy/cx). The cell set is identical -- only the axis labels swap, which
+   is unobservable for the centred single source but was fixed here for the
+   asymmetric 3-chip layout (chip-distance correctness was verified against
+   a direct block-membership check).
+================================================================================

@@ -1,0 +1,103 @@
+{
+  "protocol": "P0a rerun, protocol 4 (equal flow, Dirichlet/Coupled pair)",
+  "power_w": 759.0,
+  "tree": {
+    "dirichlet_peak_c": 59.113,
+    "sweep": [
+      {
+        "q_lpm": 0.73,
+        "peak_c": 83.03621762658116,
+        "T_mean_c": 48.91975299017237,
+        "pinned_peak_c": 59.113,
+        "converged": false,
+        "erosion_c": 23.923217626581163
+      },
+      {
+        "q_lpm": 1.8,
+        "peak_c": 72.58611377000071,
+        "T_mean_c": 42.56850051108036,
+        "pinned_peak_c": 59.113,
+        "converged": true,
+        "erosion_c": 13.473113770000708
+      },
+      {
+        "q_lpm": 3.6,
+        "peak_c": 66.82268559286705,
+        "T_mean_c": 39.468559481912656,
+        "pinned_peak_c": 59.113,
+        "converged": true,
+        "erosion_c": 7.7096855928670465
+      },
+      {
+        "q_lpm": 7.2,
+        "peak_c": 63.224829300659025,
+        "T_mean_c": 37.610223160726456,
+        "pinned_peak_c": 59.113,
+        "converged": true,
+        "erosion_c": 4.111829300659025
+      },
+      {
+        "q_lpm": 14.4,
+        "peak_c": 61.195147897930596,
+        "T_mean_c": 36.59409081394216,
+        "pinned_peak_c": 59.113,
+        "converged": true,
+        "erosion_c": 2.0821478979305965
+      }
+    ]
+  },
+  "ctrl": {
+    "dirichlet_peak_c": 107.3630054369558,
+    "pinned_cells": 182,
+    "tree_pinned_cells": 182,
+    "material_mm2": 1336.7764067034982,
+    "n_pipes": 18,
+    "sweep": [
+      {
+        "q_lpm": 0.73,
+        "peak_c": 113.245802104883,
+        "erosion_c": 5.882796667927195,
+        "converged": true,
+        "iters": 86,
+        "n_pipes": 18,
+        "max_wall_c": 67.96204819202805
+      },
+      {
+        "q_lpm": 1.8,
+        "peak_c": 110.07108255364994,
+        "erosion_c": 2.7080771166941418,
+        "converged": true,
+        "iters": 37,
+        "n_pipes": 18,
+        "max_wall_c": 42.107554476320125
+      },
+      {
+        "q_lpm": 3.6,
+        "peak_c": 108.82778056447556,
+        "erosion_c": 1.4647751275197578,
+        "converged": true,
+        "iters": 35,
+        "n_pipes": 18,
+        "max_wall_c": 34.904810904920474
+      },
+      {
+        "q_lpm": 7.2,
+        "peak_c": 108.13709164956143,
+        "erosion_c": 0.7740862126056243,
+        "converged": true,
+        "iters": 33,
+        "n_pipes": 18,
+        "max_wall_c": 30.723445875553992
+      },
+      {
+        "q_lpm": 14.4,
+        "peak_c": 107.76427216877693,
+        "erosion_c": 0.40126673182112427,
+        "converged": true,
+        "iters": 32,
+        "n_pipes": 18,
+        "max_wall_c": 28.14830952495293
+      }
+    ]
+  }
+}

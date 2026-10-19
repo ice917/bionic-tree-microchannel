@@ -1,0 +1,49 @@
+==============================================================================
+Simulink / Simscape chip routing circuit  (model: chip_route_circuit)
+5x5 routing window, 4-neighbour Manhattan mesh, 40 resistors, 25 nodes
+==============================================================================
+
+ELECTRICAL ANALOGUE OF THE POISEUILLE NETWORK
+  pressure p  <->  node voltage v
+  flux Q      <->  branch current i
+  R = L/D     <->  resistance (D = 1  =>  R = L)
+  supply b    <->  injected current source
+  so the graph solve L p = b is solved natively by Simscape.
+------------------------------------------------------------------------------
+
+[1] Sources
+  chip 1 at (x,y) = (1,1)  node  1  I = +1.0 A
+  chip 2 at (x,y) = (1,5)  node 21  I = +1.0 A
+  chip 3 at (x,y) = (5,3)  node 15  I = -2.0 A
+  ground node at (x,y) = (2,5)  node 22
+  sum(supply) = +0.0  (Kirchhoff satisfied)
+
+[2] Simscape measurement vs direct L p = b solve
+  max |i_simscape - i_reference|      = 1.121e-14 A
+  relative error (vs max |i_ref|)      = 1.397e-14
+  max |v_sensor - v_reference|         = 2.442e-15 V
+  => AGREEMENT: Simscape reproduces the MATLAB solve.
+
+[3] Chip-node potentials (from the Simscape logging tree)
+    magnitudes shown: Simscape logs the opposite sign to the
+    pressure field p, so |v| is the comparable quantity.
+  chip 1 (node  1): |v| =   0.579091 V   (|reference|   0.579091 V)
+  chip 2 (node 21): |v| =   0.579091 V   (|reference|   0.579091 V)
+  chip 3 (node 15): |v| =   1.872273 V   (|reference|   1.872273 V)
+
+[4] Branch currents (Simscape, magnitude)
+  edges = 40, max |i| = 0.802727 A, sum |i| = 12.000000 A
+  dissipated power = sum(i^2 R) = 4.902727 W
+
+[5] Files
+  model   : chip_route_circuit.slx
+  diagram : D:\解释token\heat_tree\outputs\chip_route_circuit.png
+  summary : outputs\chip_route_circuit_summary.txt
+
+------------------------------------------------------------------------------
+SCOPE NOTE: with D = 1 on every edge this is the t = 0 network
+of the Physarum dynamics, not its equilibrium.  The equilibrium
+for a multi-source/single-sink configuration is computed in
+physarum_route.m and is NOT a Steiner tree: BMV (arXiv:1106.0423)
+prove convergence to the shortest path only for TWO terminals.
+==============================================================================

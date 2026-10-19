@@ -6,7 +6,7 @@
     "max_nodes": 400,
     "r0": 0.5,
     "height": 5.0,
-    "no_fig": true
+    "no_fig": false
   },
   "field": {
     "grid": 50,
@@ -68,32 +68,36 @@
     "triangles": 19152,
     "manifold": {
       "triangles": 19152,
-      "unique_directed_edges": 56958,
-      "edges_paired_once": 56460,
-      "junction_edges_shared_twice": 498,
-      "unpaired_edges": 0,
-      "is_manifold": true
+      "unique_directed_edges": 40948,
+      "edges_paired_once": 24676,
+      "junction_edges_shared_twice": 16044,
+      "unpaired_edges": 228,
+      "boundary_edges": 0,
+      "closed": true,
+      "nonmanifold_edges": 228,
+      "is_manifold": false
     },
     "bbox_mm": {
       "x": [
-        13.509709358215332,
-        36.490291595458984
+        12.600000381469727,
+        32.400001525878906
       ],
       "y": [
-        13.509709358215332,
-        36.490291595458984
+        12.600000381469727,
+        32.400001525878906
       ],
       "z": [
-        -0.38600531220436096,
-        5.304689407348633
+        0.5317513942718506,
+        4.46824836730957
       ],
       "size_mm": [
-        22.981,
-        22.981,
-        5.691
+        19.8,
+        19.8,
+        3.936
       ]
     },
-    "height_mm": 5.0
+    "height_mm": 5.0,
+    "pitch_mm": 0.9
   },
   "compare": {
     "tree": {
@@ -101,7 +105,7 @@
       "R_th_C_per_W": 2.5962,
       "T_mean_solid_C": 25.02,
       "hotspot_area_mm2": 25.0,
-      "pressure_drop": 588.0959,
+      "pressure_drop": 7.3472,
       "material_mm2": 651.461,
       "segments": 399,
       "channels": 399
@@ -120,6 +124,6 @@
     "dT_max_tree_minus_straight": 0.0,
     "dT_mean_solid_tree_minus_straight": -0.0,
     "dHotspot_area_tree_minus_straight": 0.0,
-    "dp_ratio_tree_over_straight": 24827.075
+    "dp_ratio_tree_over_straight": 310.17
   }
 }

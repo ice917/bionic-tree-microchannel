@@ -1,0 +1,766 @@
+[
+ {
+  "case": "4 chips, corners | budget 400",
+  "tree_pinned": 210,
+  "tree_T_max": 28.2107,
+  "tree_T_mean": 26.4622,
+  "tree_hotspot": 1633.0,
+  "tree_dp": 5.034,
+  "src_to_tree": 23,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 210,
+    "ok": true,
+    "T_max": 31.2522,
+    "T_mean": 28.2877,
+    "hotspot": 1737.0,
+    "dp": 19.444,
+    "n_segments": 1366
+   },
+   {
+    "pitch": 2,
+    "pinned": 210,
+    "ok": true,
+    "T_max": 30.8209,
+    "T_mean": 27.7871,
+    "hotspot": 1644.0,
+    "dp": 12.839,
+    "n_segments": 1110
+   },
+   {
+    "pitch": 3,
+    "pinned": 210,
+    "ok": true,
+    "T_max": 30.3897,
+    "T_mean": 27.4083,
+    "hotspot": 1579.0,
+    "dp": 7.3,
+    "n_segments": 837
+   },
+   {
+    "pitch": 4,
+    "pinned": 210,
+    "ok": true,
+    "T_max": 29.5412,
+    "T_mean": 26.7027,
+    "hotspot": 1342.0,
+    "dp": 5.593,
+    "n_segments": 741
+   },
+   {
+    "pitch": 5,
+    "pinned": 210,
+    "ok": true,
+    "T_max": 28.951,
+    "T_mean": 26.3924,
+    "hotspot": 1271.0,
+    "dp": 4.691,
+    "n_segments": 690
+   },
+   {
+    "pitch": 6,
+    "pinned": 210,
+    "ok": true,
+    "T_max": 29.0814,
+    "T_mean": 26.4832,
+    "hotspot": 1301.0,
+    "dp": 3.302,
+    "n_segments": 582
+   },
+   {
+    "pitch": 7,
+    "pinned": 210,
+    "ok": true,
+    "T_max": 29.3324,
+    "T_mean": 26.5896,
+    "hotspot": 1306.0,
+    "dp": 2.212,
+    "n_segments": 466
+   },
+   {
+    "pitch": 8,
+    "pinned": 210,
+    "ok": true,
+    "T_max": 28.8667,
+    "T_mean": 26.4139,
+    "hotspot": 1306.0,
+    "dp": 2.117,
+    "n_segments": 466
+   },
+   {
+    "pitch": 9,
+    "pinned": 210,
+    "ok": true,
+    "T_max": 28.1169,
+    "T_mean": 26.0822,
+    "hotspot": 1249.0,
+    "dp": 2.051,
+    "n_segments": 466
+   },
+   {
+    "pitch": 10,
+    "pinned": 210,
+    "ok": true,
+    "T_max": 27.7447,
+    "T_mean": 26.0595,
+    "hotspot": 1304.0,
+    "dp": 1.969,
+    "n_segments": 466
+   },
+   {
+    "pitch": 11,
+    "pinned": 210,
+    "ok": true,
+    "T_max": 27.7122,
+    "T_mean": 25.9849,
+    "hotspot": 1226.0,
+    "dp": 1.549,
+    "n_segments": 405
+   },
+   {
+    "pitch": 12,
+    "pinned": 210,
+    "ok": true,
+    "T_max": 28.683,
+    "T_mean": 26.3812,
+    "hotspot": 1336.0,
+    "dp": 1.105,
+    "n_segments": 342
+   },
+   {
+    "pitch": 13,
+    "pinned": 210,
+    "ok": true,
+    "T_max": 27.7589,
+    "T_mean": 26.0418,
+    "hotspot": 1279.0,
+    "dp": 1.06,
+    "n_segments": 342
+   }
+  ],
+  "n_admissible": 13,
+  "best_hotspot_pitch": 11,
+  "best_Tmax_pitch": 11,
+  "tree_vs_best_hotspot": 407.0,
+  "tree_vs_best_Tmax": 0.4985,
+  "tree_vs_best_Tmean": 0.4773,
+  "hotspot_spread": 511.0
+ },
+ {
+  "case": "4 chips, corners | budget 600",
+  "tree_pinned": 309,
+  "tree_T_max": 27.9415,
+  "tree_T_mean": 26.2878,
+  "tree_hotspot": 1519.0,
+  "tree_dp": 4.822,
+  "src_to_tree": 20,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 309,
+    "ok": true,
+    "T_max": 30.7178,
+    "T_mean": 27.7919,
+    "hotspot": 1617.0,
+    "dp": 13.207,
+    "n_segments": 1465
+   },
+   {
+    "pitch": 2,
+    "pinned": 309,
+    "ok": true,
+    "T_max": 29.8017,
+    "T_mean": 26.9423,
+    "hotspot": 1399.0,
+    "dp": 8.892,
+    "n_segments": 1209
+   },
+   {
+    "pitch": 3,
+    "pinned": 309,
+    "ok": true,
+    "T_max": 29.2391,
+    "T_mean": 26.5616,
+    "hotspot": 1252.0,
+    "dp": 5.211,
+    "n_segments": 936
+   },
+   {
+    "pitch": 4,
+    "pinned": 309,
+    "ok": true,
+    "T_max": 28.94,
+    "T_mean": 26.4208,
+    "hotspot": 1246.0,
+    "dp": 4.062,
+    "n_segments": 840
+   },
+   {
+    "pitch": 5,
+    "pinned": 309,
+    "ok": true,
+    "T_max": 27.7385,
+    "T_mean": 25.9104,
+    "hotspot": 1132.0,
+    "dp": 3.472,
+    "n_segments": 789
+   },
+   {
+    "pitch": 6,
+    "pinned": 309,
+    "ok": true,
+    "T_max": 28.1201,
+    "T_mean": 26.0936,
+    "hotspot": 1215.0,
+    "dp": 2.586,
+    "n_segments": 681
+   },
+   {
+    "pitch": 7,
+    "pinned": 309,
+    "ok": true,
+    "T_max": 28.2118,
+    "T_mean": 26.1192,
+    "hotspot": 1211.0,
+    "dp": 1.78,
+    "n_segments": 565
+   },
+   {
+    "pitch": 8,
+    "pinned": 309,
+    "ok": true,
+    "T_max": 27.6811,
+    "T_mean": 25.9574,
+    "hotspot": 1168.0,
+    "dp": 1.78,
+    "n_segments": 565
+   },
+   {
+    "pitch": 9,
+    "pinned": 308,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 10,
+    "pinned": 219,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 11,
+    "pinned": 280,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 12,
+    "pinned": 309,
+    "ok": true,
+    "T_max": 27.6802,
+    "T_mean": 26.0319,
+    "hotspot": 1261.0,
+    "dp": 1.041,
+    "n_segments": 441
+   },
+   {
+    "pitch": 13,
+    "pinned": 252,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   }
+  ],
+  "n_admissible": 9,
+  "best_hotspot_pitch": 5,
+  "best_Tmax_pitch": 12,
+  "tree_vs_best_hotspot": 387.0,
+  "tree_vs_best_Tmax": 0.2613,
+  "tree_vs_best_Tmean": 0.3774,
+  "hotspot_spread": 485.0
+ },
+ {
+  "case": "4 chips, corners | budget 700",
+  "tree_pinned": 353,
+  "tree_T_max": 27.8486,
+  "tree_T_mean": 26.2008,
+  "tree_hotspot": 1431.0,
+  "tree_dp": 5.192,
+  "src_to_tree": 18,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 353,
+    "ok": true,
+    "T_max": 30.4412,
+    "T_mean": 27.5744,
+    "hotspot": 1572.0,
+    "dp": 11.644,
+    "n_segments": 1509
+   },
+   {
+    "pitch": 2,
+    "pinned": 353,
+    "ok": true,
+    "T_max": 29.3514,
+    "T_mean": 26.6456,
+    "hotspot": 1255.0,
+    "dp": 7.848,
+    "n_segments": 1253
+   },
+   {
+    "pitch": 3,
+    "pinned": 353,
+    "ok": true,
+    "T_max": 29.0633,
+    "T_mean": 26.4865,
+    "hotspot": 1218.0,
+    "dp": 4.644,
+    "n_segments": 980
+   },
+   {
+    "pitch": 4,
+    "pinned": 353,
+    "ok": true,
+    "T_max": 28.7027,
+    "T_mean": 26.325,
+    "hotspot": 1218.0,
+    "dp": 3.698,
+    "n_segments": 884
+   },
+   {
+    "pitch": 5,
+    "pinned": 353,
+    "ok": true,
+    "T_max": 27.3716,
+    "T_mean": 25.8073,
+    "hotspot": 1088.0,
+    "dp": 3.15,
+    "n_segments": 833
+   },
+   {
+    "pitch": 6,
+    "pinned": 353,
+    "ok": true,
+    "T_max": 27.6348,
+    "T_mean": 25.9137,
+    "hotspot": 1119.0,
+    "dp": 2.436,
+    "n_segments": 725
+   },
+   {
+    "pitch": 7,
+    "pinned": 353,
+    "ok": true,
+    "T_max": 27.7136,
+    "T_mean": 25.9394,
+    "hotspot": 1166.0,
+    "dp": 1.719,
+    "n_segments": 609
+   },
+   {
+    "pitch": 8,
+    "pinned": 353,
+    "ok": true,
+    "T_max": 27.5432,
+    "T_mean": 25.9148,
+    "hotspot": 1142.0,
+    "dp": 1.65,
+    "n_segments": 609
+   },
+   {
+    "pitch": 9,
+    "pinned": 308,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 10,
+    "pinned": 219,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 11,
+    "pinned": 280,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 12,
+    "pinned": 343,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 13,
+    "pinned": 252,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   }
+  ],
+  "n_admissible": 8,
+  "best_hotspot_pitch": 5,
+  "best_Tmax_pitch": 5,
+  "tree_vs_best_hotspot": 343.0,
+  "tree_vs_best_Tmax": 0.477,
+  "tree_vs_best_Tmean": 0.3935,
+  "hotspot_spread": 484.0
+ },
+ {
+  "case": "4 chips, corners | budget 800",
+  "tree_pinned": 395,
+  "tree_T_max": 27.7708,
+  "tree_T_mean": 26.1427,
+  "tree_hotspot": 1313.0,
+  "tree_dp": 5.254,
+  "src_to_tree": 17,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 395,
+    "ok": true,
+    "T_max": 30.1632,
+    "T_mean": 27.3805,
+    "hotspot": 1530.0,
+    "dp": 10.469,
+    "n_segments": 1551
+   },
+   {
+    "pitch": 2,
+    "pinned": 395,
+    "ok": true,
+    "T_max": 29.2379,
+    "T_mean": 26.5898,
+    "hotspot": 1239.0,
+    "dp": 7.055,
+    "n_segments": 1295
+   },
+   {
+    "pitch": 3,
+    "pinned": 395,
+    "ok": true,
+    "T_max": 28.8381,
+    "T_mean": 26.3921,
+    "hotspot": 1204.0,
+    "dp": 4.252,
+    "n_segments": 1022
+   },
+   {
+    "pitch": 4,
+    "pinned": 395,
+    "ok": true,
+    "T_max": 28.261,
+    "T_mean": 26.1461,
+    "hotspot": 1188.0,
+    "dp": 3.382,
+    "n_segments": 926
+   },
+   {
+    "pitch": 5,
+    "pinned": 395,
+    "ok": true,
+    "T_max": 27.3689,
+    "T_mean": 25.8209,
+    "hotspot": 1088.0,
+    "dp": 2.899,
+    "n_segments": 875
+   },
+   {
+    "pitch": 6,
+    "pinned": 395,
+    "ok": true,
+    "T_max": 27.4297,
+    "T_mean": 25.8504,
+    "hotspot": 1076.0,
+    "dp": 2.25,
+    "n_segments": 767
+   },
+   {
+    "pitch": 7,
+    "pinned": 395,
+    "ok": true,
+    "T_max": 27.4703,
+    "T_mean": 25.8386,
+    "hotspot": 1079.0,
+    "dp": 1.671,
+    "n_segments": 651
+   },
+   {
+    "pitch": 8,
+    "pinned": 395,
+    "ok": true,
+    "T_max": 27.5432,
+    "T_mean": 25.933,
+    "hotspot": 1142.0,
+    "dp": 1.605,
+    "n_segments": 651
+   },
+   {
+    "pitch": 9,
+    "pinned": 308,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 10,
+    "pinned": 219,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 11,
+    "pinned": 280,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 12,
+    "pinned": 343,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 13,
+    "pinned": 252,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   }
+  ],
+  "n_admissible": 8,
+  "best_hotspot_pitch": 6,
+  "best_Tmax_pitch": 5,
+  "tree_vs_best_hotspot": 237.0,
+  "tree_vs_best_Tmax": 0.4019,
+  "tree_vs_best_Tmean": 0.3218,
+  "hotspot_spread": 454.0
+ },
+ {
+  "case": "4 chips, corners | budget 1000",
+  "tree_pinned": 463,
+  "tree_T_max": 27.6589,
+  "tree_T_mean": 26.0753,
+  "tree_hotspot": 1225.0,
+  "tree_dp": 5.354,
+  "src_to_tree": 14,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 463,
+    "ok": true,
+    "T_max": 29.4337,
+    "T_mean": 26.7686,
+    "hotspot": 1267.0,
+    "dp": 8.3,
+    "n_segments": 1619
+   },
+   {
+    "pitch": 2,
+    "pinned": 463,
+    "ok": true,
+    "T_max": 28.9937,
+    "T_mean": 26.5163,
+    "hotspot": 1191.0,
+    "dp": 5.627,
+    "n_segments": 1363
+   },
+   {
+    "pitch": 3,
+    "pinned": 463,
+    "ok": true,
+    "T_max": 28.4217,
+    "T_mean": 26.2234,
+    "hotspot": 1175.0,
+    "dp": 3.449,
+    "n_segments": 1090
+   },
+   {
+    "pitch": 4,
+    "pinned": 463,
+    "ok": true,
+    "T_max": 27.6353,
+    "T_mean": 25.9008,
+    "hotspot": 1090.0,
+    "dp": 2.868,
+    "n_segments": 994
+   },
+   {
+    "pitch": 5,
+    "pinned": 420,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 6,
+    "pinned": 447,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 7,
+    "pinned": 463,
+    "ok": true,
+    "T_max": 27.3752,
+    "T_mean": 25.8095,
+    "hotspot": 1039.0,
+    "dp": 1.441,
+    "n_segments": 719
+   },
+   {
+    "pitch": 8,
+    "pinned": 395,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 9,
+    "pinned": 308,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 10,
+    "pinned": 219,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 11,
+    "pinned": 280,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 12,
+    "pinned": 343,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 13,
+    "pinned": 252,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   }
+  ],
+  "n_admissible": 5,
+  "best_hotspot_pitch": 7,
+  "best_Tmax_pitch": 7,
+  "tree_vs_best_hotspot": 186.0,
+  "tree_vs_best_Tmax": 0.2837,
+  "tree_vs_best_Tmean": 0.2658,
+  "hotspot_spread": 228.0
+ },
+ {
+  "case": "4 chips, corners | budget 1300",
+  "tree_pinned": 547,
+  "tree_T_max": 27.593,
+  "tree_T_mean": 26.0143,
+  "tree_hotspot": 1139.0,
+  "tree_dp": 5.377,
+  "src_to_tree": 10,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 547,
+    "ok": true,
+    "T_max": 29.2431,
+    "T_mean": 26.7102,
+    "hotspot": 1226.0,
+    "dp": 6.3,
+    "n_segments": 1703
+   },
+   {
+    "pitch": 2,
+    "pinned": 547,
+    "ok": true,
+    "T_max": 28.6505,
+    "T_mean": 26.3768,
+    "hotspot": 1189.0,
+    "dp": 4.354,
+    "n_segments": 1447
+   },
+   {
+    "pitch": 3,
+    "pinned": 547,
+    "ok": true,
+    "T_max": 27.8817,
+    "T_mean": 26.0097,
+    "hotspot": 1103.0,
+    "dp": 2.807,
+    "n_segments": 1174
+   },
+   {
+    "pitch": 4,
+    "pinned": 547,
+    "ok": true,
+    "T_max": 27.2881,
+    "T_mean": 25.7932,
+    "hotspot": 1040.0,
+    "dp": 2.295,
+    "n_segments": 1078
+   },
+   {
+    "pitch": 5,
+    "pinned": 420,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 6,
+    "pinned": 447,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 7,
+    "pinned": 480,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 8,
+    "pinned": 395,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 9,
+    "pinned": 308,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 10,
+    "pinned": 219,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 11,
+    "pinned": 280,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 12,
+    "pinned": 343,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 13,
+    "pinned": 252,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   }
+  ],
+  "n_admissible": 4,
+  "best_hotspot_pitch": 4,
+  "best_Tmax_pitch": 4,
+  "tree_vs_best_hotspot": 99.0,
+  "tree_vs_best_Tmax": 0.3049,
+  "tree_vs_best_Tmean": 0.2211,
+  "hotspot_spread": 186.0
+ }
+]

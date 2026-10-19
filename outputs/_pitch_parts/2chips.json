@@ -1,0 +1,838 @@
+[
+ {
+  "case": "2 chips, 20 mm apart | budget 400",
+  "tree_pinned": 51,
+  "tree_T_max": 28.6844,
+  "tree_T_mean": 26.1218,
+  "tree_hotspot": 1098.0,
+  "tree_dp": 7.218,
+  "src_to_tree": 10,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 51,
+    "ok": true,
+    "T_max": 32.6744,
+    "T_mean": 27.8391,
+    "hotspot": 1334.0,
+    "dp": 12.392,
+    "n_segments": 629
+   },
+   {
+    "pitch": 2,
+    "pinned": 51,
+    "ok": true,
+    "T_max": 32.6249,
+    "T_mean": 27.7845,
+    "hotspot": 1321.0,
+    "dp": 7.531,
+    "n_segments": 467
+   },
+   {
+    "pitch": 3,
+    "pinned": 51,
+    "ok": true,
+    "T_max": 32.5994,
+    "T_mean": 27.7578,
+    "hotspot": 1310.0,
+    "dp": 5.078,
+    "n_segments": 376
+   },
+   {
+    "pitch": 4,
+    "pinned": 51,
+    "ok": true,
+    "T_max": 32.5932,
+    "T_mean": 27.7503,
+    "hotspot": 1309.0,
+    "dp": 2.962,
+    "n_segments": 291
+   },
+   {
+    "pitch": 5,
+    "pinned": 51,
+    "ok": true,
+    "T_max": 32.4567,
+    "T_mean": 27.6105,
+    "hotspot": 1272.0,
+    "dp": 2.131,
+    "n_segments": 237
+   },
+   {
+    "pitch": 6,
+    "pinned": 51,
+    "ok": true,
+    "T_max": 32.5905,
+    "T_mean": 27.7464,
+    "hotspot": 1306.0,
+    "dp": 1.674,
+    "n_segments": 223
+   },
+   {
+    "pitch": 7,
+    "pinned": 51,
+    "ok": true,
+    "T_max": 32.6744,
+    "T_mean": 27.8391,
+    "hotspot": 1334.0,
+    "dp": 1.368,
+    "n_segments": 209
+   },
+   {
+    "pitch": 8,
+    "pinned": 51,
+    "ok": true,
+    "T_max": 32.5899,
+    "T_mean": 27.7455,
+    "hotspot": 1306.0,
+    "dp": 1.066,
+    "n_segments": 179
+   },
+   {
+    "pitch": 9,
+    "pinned": 51,
+    "ok": true,
+    "T_max": 32.3518,
+    "T_mean": 27.5192,
+    "hotspot": 1244.0,
+    "dp": 1.151,
+    "n_segments": 179
+   },
+   {
+    "pitch": 10,
+    "pinned": 51,
+    "ok": true,
+    "T_max": 32.2382,
+    "T_mean": 27.4049,
+    "hotspot": 1202.0,
+    "dp": 1.233,
+    "n_segments": 179
+   },
+   {
+    "pitch": 11,
+    "pinned": 51,
+    "ok": true,
+    "T_max": 32.2516,
+    "T_mean": 27.4288,
+    "hotspot": 1219.0,
+    "dp": 0.966,
+    "n_segments": 164
+   },
+   {
+    "pitch": 12,
+    "pinned": 51,
+    "ok": true,
+    "T_max": 32.5897,
+    "T_mean": 27.7451,
+    "hotspot": 1306.0,
+    "dp": 0.444,
+    "n_segments": 117
+   },
+   {
+    "pitch": 13,
+    "pinned": 51,
+    "ok": true,
+    "T_max": 32.1304,
+    "T_mean": 27.3225,
+    "hotspot": 1178.0,
+    "dp": 0.505,
+    "n_segments": 117
+   }
+  ],
+  "n_admissible": 13,
+  "best_hotspot_pitch": 13,
+  "best_Tmax_pitch": 13,
+  "tree_vs_best_hotspot": -80.0,
+  "tree_vs_best_Tmax": -3.446,
+  "tree_vs_best_Tmean": -1.2007,
+  "hotspot_spread": 156.0
+ },
+ {
+  "case": "2 chips, 20 mm apart | budget 600",
+  "tree_pinned": 135,
+  "tree_T_max": 27.7329,
+  "tree_T_mean": 25.5808,
+  "tree_hotspot": 688.0,
+  "tree_dp": 7.31,
+  "src_to_tree": 6,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 135,
+    "ok": true,
+    "T_max": 32.5016,
+    "T_mean": 27.7506,
+    "hotspot": 1285.0,
+    "dp": 7.54,
+    "n_segments": 713
+   },
+   {
+    "pitch": 2,
+    "pinned": 135,
+    "ok": true,
+    "T_max": 32.3933,
+    "T_mean": 27.6432,
+    "hotspot": 1255.0,
+    "dp": 4.452,
+    "n_segments": 551
+   },
+   {
+    "pitch": 3,
+    "pinned": 135,
+    "ok": true,
+    "T_max": 32.2818,
+    "T_mean": 27.5335,
+    "hotspot": 1223.0,
+    "dp": 3.068,
+    "n_segments": 460
+   },
+   {
+    "pitch": 4,
+    "pinned": 135,
+    "ok": true,
+    "T_max": 32.1568,
+    "T_mean": 27.4193,
+    "hotspot": 1188.0,
+    "dp": 2.016,
+    "n_segments": 375
+   },
+   {
+    "pitch": 5,
+    "pinned": 135,
+    "ok": true,
+    "T_max": 32.0143,
+    "T_mean": 27.2798,
+    "hotspot": 1148.0,
+    "dp": 1.477,
+    "n_segments": 321
+   },
+   {
+    "pitch": 6,
+    "pinned": 135,
+    "ok": true,
+    "T_max": 32.0924,
+    "T_mean": 27.3508,
+    "hotspot": 1167.0,
+    "dp": 1.351,
+    "n_segments": 307
+   },
+   {
+    "pitch": 7,
+    "pinned": 135,
+    "ok": true,
+    "T_max": 32.0721,
+    "T_mean": 27.3362,
+    "hotspot": 1159.0,
+    "dp": 1.231,
+    "n_segments": 293
+   },
+   {
+    "pitch": 8,
+    "pinned": 135,
+    "ok": true,
+    "T_max": 31.9254,
+    "T_mean": 27.2184,
+    "hotspot": 1124.0,
+    "dp": 0.992,
+    "n_segments": 263
+   },
+   {
+    "pitch": 9,
+    "pinned": 135,
+    "ok": true,
+    "T_max": 31.4758,
+    "T_mean": 26.9021,
+    "hotspot": 1036.0,
+    "dp": 0.992,
+    "n_segments": 263
+   },
+   {
+    "pitch": 10,
+    "pinned": 135,
+    "ok": true,
+    "T_max": 30.7061,
+    "T_mean": 26.5252,
+    "hotspot": 939.0,
+    "dp": 0.992,
+    "n_segments": 263
+   },
+   {
+    "pitch": 11,
+    "pinned": 135,
+    "ok": true,
+    "T_max": 31.0971,
+    "T_mean": 26.6888,
+    "hotspot": 977.0,
+    "dp": 0.882,
+    "n_segments": 248
+   },
+   {
+    "pitch": 12,
+    "pinned": 135,
+    "ok": true,
+    "T_max": 31.5073,
+    "T_mean": 26.9444,
+    "hotspot": 1048.0,
+    "dp": 0.579,
+    "n_segments": 201
+   },
+   {
+    "pitch": 13,
+    "pinned": 135,
+    "ok": true,
+    "T_max": 29.1445,
+    "T_mean": 25.9704,
+    "hotspot": 875.0,
+    "dp": 0.573,
+    "n_segments": 201
+   }
+  ],
+  "n_admissible": 13,
+  "best_hotspot_pitch": 13,
+  "best_Tmax_pitch": 13,
+  "tree_vs_best_hotspot": -187.0,
+  "tree_vs_best_Tmax": -1.4116,
+  "tree_vs_best_Tmean": -0.3896,
+  "hotspot_spread": 410.0
+ },
+ {
+  "case": "2 chips, 20 mm apart | budget 700",
+  "tree_pinned": 197,
+  "tree_T_max": 27.5594,
+  "tree_T_mean": 25.5055,
+  "tree_hotspot": 627.0,
+  "tree_dp": 7.252,
+  "src_to_tree": 4,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 197,
+    "ok": true,
+    "T_max": 32.3833,
+    "T_mean": 27.7011,
+    "hotspot": 1253.0,
+    "dp": 6.72,
+    "n_segments": 775
+   },
+   {
+    "pitch": 2,
+    "pinned": 197,
+    "ok": true,
+    "T_max": 32.2266,
+    "T_mean": 27.5433,
+    "hotspot": 1206.0,
+    "dp": 4.111,
+    "n_segments": 613
+   },
+   {
+    "pitch": 3,
+    "pinned": 197,
+    "ok": true,
+    "T_max": 32.0679,
+    "T_mean": 27.3923,
+    "hotspot": 1158.0,
+    "dp": 2.981,
+    "n_segments": 522
+   },
+   {
+    "pitch": 4,
+    "pinned": 197,
+    "ok": true,
+    "T_max": 31.886,
+    "T_mean": 27.239,
+    "hotspot": 1116.0,
+    "dp": 2.089,
+    "n_segments": 437
+   },
+   {
+    "pitch": 5,
+    "pinned": 197,
+    "ok": true,
+    "T_max": 31.4999,
+    "T_mean": 26.9526,
+    "hotspot": 1028.0,
+    "dp": 1.605,
+    "n_segments": 383
+   },
+   {
+    "pitch": 6,
+    "pinned": 197,
+    "ok": true,
+    "T_max": 31.4717,
+    "T_mean": 26.9487,
+    "hotspot": 1036.0,
+    "dp": 1.49,
+    "n_segments": 369
+   },
+   {
+    "pitch": 7,
+    "pinned": 197,
+    "ok": true,
+    "T_max": 31.3393,
+    "T_mean": 26.8689,
+    "hotspot": 1016.0,
+    "dp": 1.379,
+    "n_segments": 355
+   },
+   {
+    "pitch": 8,
+    "pinned": 197,
+    "ok": true,
+    "T_max": 30.9195,
+    "T_mean": 26.6302,
+    "hotspot": 952.0,
+    "dp": 1.156,
+    "n_segments": 325
+   },
+   {
+    "pitch": 9,
+    "pinned": 197,
+    "ok": true,
+    "T_max": 30.254,
+    "T_mean": 26.3327,
+    "hotspot": 868.0,
+    "dp": 1.156,
+    "n_segments": 325
+   },
+   {
+    "pitch": 10,
+    "pinned": 197,
+    "ok": true,
+    "T_max": 28.6321,
+    "T_mean": 25.7998,
+    "hotspot": 747.0,
+    "dp": 1.118,
+    "n_segments": 325
+   },
+   {
+    "pitch": 11,
+    "pinned": 197,
+    "ok": true,
+    "T_max": 28.8925,
+    "T_mean": 25.8662,
+    "hotspot": 782.0,
+    "dp": 1.017,
+    "n_segments": 310
+   },
+   {
+    "pitch": 12,
+    "pinned": 197,
+    "ok": true,
+    "T_max": 29.4628,
+    "T_mean": 26.109,
+    "hotspot": 886.0,
+    "dp": 0.732,
+    "n_segments": 263
+   },
+   {
+    "pitch": 13,
+    "pinned": 197,
+    "ok": true,
+    "T_max": 28.4687,
+    "T_mean": 25.6988,
+    "hotspot": 701.0,
+    "dp": 0.732,
+    "n_segments": 263
+   }
+  ],
+  "n_admissible": 13,
+  "best_hotspot_pitch": 13,
+  "best_Tmax_pitch": 13,
+  "tree_vs_best_hotspot": -74.0,
+  "tree_vs_best_Tmax": -0.9093,
+  "tree_vs_best_Tmean": -0.1933,
+  "hotspot_spread": 552.0
+ },
+ {
+  "case": "2 chips, 20 mm apart | budget 800",
+  "tree_pinned": 264,
+  "tree_T_max": 27.4577,
+  "tree_T_mean": 25.4614,
+  "tree_hotspot": 586.0,
+  "tree_dp": 7.202,
+  "src_to_tree": 3,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 264,
+    "ok": true,
+    "T_max": 32.2556,
+    "T_mean": 27.6459,
+    "hotspot": 1214.0,
+    "dp": 6.081,
+    "n_segments": 842
+   },
+   {
+    "pitch": 2,
+    "pinned": 264,
+    "ok": true,
+    "T_max": 32.0314,
+    "T_mean": 27.4297,
+    "hotspot": 1148.0,
+    "dp": 3.966,
+    "n_segments": 680
+   },
+   {
+    "pitch": 3,
+    "pinned": 264,
+    "ok": true,
+    "T_max": 31.7819,
+    "T_mean": 27.2172,
+    "hotspot": 1088.0,
+    "dp": 2.975,
+    "n_segments": 589
+   },
+   {
+    "pitch": 4,
+    "pinned": 264,
+    "ok": true,
+    "T_max": 31.4211,
+    "T_mean": 26.9536,
+    "hotspot": 1017.0,
+    "dp": 2.179,
+    "n_segments": 504
+   },
+   {
+    "pitch": 5,
+    "pinned": 264,
+    "ok": true,
+    "T_max": 30.6204,
+    "T_mean": 26.5022,
+    "hotspot": 895.0,
+    "dp": 1.737,
+    "n_segments": 450
+   },
+   {
+    "pitch": 6,
+    "pinned": 264,
+    "ok": true,
+    "T_max": 30.6178,
+    "T_mean": 26.5196,
+    "hotspot": 905.0,
+    "dp": 1.63,
+    "n_segments": 436
+   },
+   {
+    "pitch": 7,
+    "pinned": 264,
+    "ok": true,
+    "T_max": 30.3464,
+    "T_mean": 26.3924,
+    "hotspot": 874.0,
+    "dp": 1.527,
+    "n_segments": 422
+   },
+   {
+    "pitch": 8,
+    "pinned": 264,
+    "ok": true,
+    "T_max": 28.9103,
+    "T_mean": 25.8853,
+    "hotspot": 783.0,
+    "dp": 1.275,
+    "n_segments": 392
+   },
+   {
+    "pitch": 9,
+    "pinned": 264,
+    "ok": true,
+    "T_max": 28.3944,
+    "T_mean": 25.7211,
+    "hotspot": 726.0,
+    "dp": 1.275,
+    "n_segments": 392
+   },
+   {
+    "pitch": 10,
+    "pinned": 264,
+    "ok": true,
+    "T_max": 28.1142,
+    "T_mean": 25.6423,
+    "hotspot": 663.0,
+    "dp": 1.275,
+    "n_segments": 392
+   },
+   {
+    "pitch": 11,
+    "pinned": 264,
+    "ok": true,
+    "T_max": 28.218,
+    "T_mean": 25.6553,
+    "hotspot": 671.0,
+    "dp": 1.18,
+    "n_segments": 377
+   },
+   {
+    "pitch": 12,
+    "pinned": 264,
+    "ok": true,
+    "T_max": 28.2714,
+    "T_mean": 25.6915,
+    "hotspot": 709.0,
+    "dp": 0.904,
+    "n_segments": 330
+   },
+   {
+    "pitch": 13,
+    "pinned": 264,
+    "ok": true,
+    "T_max": 27.7404,
+    "T_mean": 25.5319,
+    "hotspot": 637.0,
+    "dp": 0.858,
+    "n_segments": 330
+   }
+  ],
+  "n_admissible": 13,
+  "best_hotspot_pitch": 13,
+  "best_Tmax_pitch": 13,
+  "tree_vs_best_hotspot": -51.0,
+  "tree_vs_best_Tmax": -0.2827,
+  "tree_vs_best_Tmean": -0.0705,
+  "hotspot_spread": 577.0
+ },
+ {
+  "case": "2 chips, 20 mm apart | budget 1000",
+  "tree_pinned": 426,
+  "tree_T_max": 27.3703,
+  "tree_T_mean": 25.379,
+  "tree_hotspot": 492.0,
+  "tree_dp": 7.344,
+  "src_to_tree": 1,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 426,
+    "ok": true,
+    "T_max": 31.86,
+    "T_mean": 27.4576,
+    "hotspot": 1108.0,
+    "dp": 5.937,
+    "n_segments": 1004
+   },
+   {
+    "pitch": 2,
+    "pinned": 426,
+    "ok": true,
+    "T_max": 31.4075,
+    "T_mean": 27.093,
+    "hotspot": 1014.0,
+    "dp": 4.176,
+    "n_segments": 842
+   },
+   {
+    "pitch": 3,
+    "pinned": 426,
+    "ok": true,
+    "T_max": 30.5919,
+    "T_mean": 26.5926,
+    "hotspot": 887.0,
+    "dp": 3.322,
+    "n_segments": 751
+   },
+   {
+    "pitch": 4,
+    "pinned": 426,
+    "ok": true,
+    "T_max": 28.9617,
+    "T_mean": 25.9067,
+    "hotspot": 732.0,
+    "dp": 2.556,
+    "n_segments": 666
+   },
+   {
+    "pitch": 5,
+    "pinned": 426,
+    "ok": true,
+    "T_max": 28.3212,
+    "T_mean": 25.675,
+    "hotspot": 650.0,
+    "dp": 2.135,
+    "n_segments": 612
+   },
+   {
+    "pitch": 6,
+    "pinned": 426,
+    "ok": true,
+    "T_max": 28.0439,
+    "T_mean": 25.6156,
+    "hotspot": 640.0,
+    "dp": 2.038,
+    "n_segments": 598
+   },
+   {
+    "pitch": 7,
+    "pinned": 426,
+    "ok": true,
+    "T_max": 27.8683,
+    "T_mean": 25.5751,
+    "hotspot": 628.0,
+    "dp": 1.944,
+    "n_segments": 584
+   },
+   {
+    "pitch": 8,
+    "pinned": 426,
+    "ok": true,
+    "T_max": 27.547,
+    "T_mean": 25.4792,
+    "hotspot": 567.0,
+    "dp": 1.749,
+    "n_segments": 554
+   },
+   {
+    "pitch": 9,
+    "pinned": 426,
+    "ok": true,
+    "T_max": 27.7442,
+    "T_mean": 25.5547,
+    "hotspot": 615.0,
+    "dp": 1.627,
+    "n_segments": 554
+   },
+   {
+    "pitch": 10,
+    "pinned": 347,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 11,
+    "pinned": 362,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 12,
+    "pinned": 409,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 13,
+    "pinned": 318,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   }
+  ],
+  "n_admissible": 9,
+  "best_hotspot_pitch": 8,
+  "best_Tmax_pitch": 8,
+  "tree_vs_best_hotspot": -75.0,
+  "tree_vs_best_Tmax": -0.1767,
+  "tree_vs_best_Tmean": -0.1002,
+  "hotspot_spread": 541.0
+ },
+ {
+  "case": "2 chips, 20 mm apart | budget 1300",
+  "tree_pinned": 722,
+  "tree_T_max": 27.0598,
+  "tree_T_mean": 25.3554,
+  "tree_hotspot": 442.0,
+  "tree_dp": 7.353,
+  "src_to_tree": 0,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 722,
+    "ok": true,
+    "T_max": 30.7048,
+    "T_mean": 26.9163,
+    "hotspot": 898.0,
+    "dp": 5.994,
+    "n_segments": 1300
+   },
+   {
+    "pitch": 2,
+    "pinned": 722,
+    "ok": true,
+    "T_max": 28.8309,
+    "T_mean": 25.9774,
+    "hotspot": 697.0,
+    "dp": 4.445,
+    "n_segments": 1138
+   },
+   {
+    "pitch": 3,
+    "pinned": 722,
+    "ok": true,
+    "T_max": 27.8131,
+    "T_mean": 25.6016,
+    "hotspot": 570.0,
+    "dp": 3.762,
+    "n_segments": 1047
+   },
+   {
+    "pitch": 4,
+    "pinned": 722,
+    "ok": true,
+    "T_max": 27.441,
+    "T_mean": 25.4694,
+    "hotspot": 518.0,
+    "dp": 3.176,
+    "n_segments": 962
+   },
+   {
+    "pitch": 5,
+    "pinned": 714,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 6,
+    "pinned": 647,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 7,
+    "pinned": 578,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 8,
+    "pinned": 523,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 9,
+    "pinned": 436,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 10,
+    "pinned": 347,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 11,
+    "pinned": 362,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 12,
+    "pinned": 409,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   },
+   {
+    "pitch": 13,
+    "pinned": 318,
+    "ok": false,
+    "note": "no exact equal-pinned lattice at this pitch"
+   }
+  ],
+  "n_admissible": 4,
+  "best_hotspot_pitch": 4,
+  "best_Tmax_pitch": 4,
+  "tree_vs_best_hotspot": -76.0,
+  "tree_vs_best_Tmax": -0.3812,
+  "tree_vs_best_Tmean": -0.114,
+  "hotspot_spread": 380.0
+ }
+]

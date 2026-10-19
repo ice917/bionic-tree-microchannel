@@ -1,0 +1,62 @@
+Bionic chip placement + static cooling tree -- joint optimisation study
+generated 2026-10-16 00:56:13 | MATLAB 2025b | grid 50x50 (50 mm), Dirichlet 25 C
+pipeline: multi_source.py rules ported to MATLAB (static greedy growth)
+
+[1] Triangle reproduction check (MATLAB vs Python multi_source.py, budget 600)
+    metric              MATLAB      Python     delta      tol     status
+    T_max [C]             27.5962    27.5962  -4.62e-05  5.0e-04  ok
+    T_mean_solid [C]      25.0633    25.0633   2.43e-06  5.0e-04  ok
+    hotspot [mm2]         75.0000    75.0000   0.00e+00  1.0e-01  ok
+    tree dp [a.u.]       649.3053   649.3050   3.27e-04  5.0e-01  ok
+    pinned cells         525.0000   525.0000   0.00e+00  5.0e-01  ok
+    chip-to-tree dist      0.0000     0.0000   0.00e+00  5.0e-01  ok
+    overall: PASS
+
+[2] Three-layout comparison (budget 600 nodes, identical pinning rules)
+    layout       centres (x,y)                        T_max[C]  T_mean[C]  hotspot[mm2]  dp[a.u.]   pinned  chipdist
+    triangle     (15,15) (15,35) (35,25)               27.5962    25.0633          75.0    649.305     525      0
+    horizontal   (12,25) (25,25) (38,25)               27.5962    25.0633          75.0    514.623     525      0
+    bionic-best  (21,29) (21,18) (35,31)               27.5962    25.0633          75.0    598.324     525      0
+    (horizontal baseline = 3 chips on the y=25 line at x = 12/25/38, spacing 13;
+     bionic-best = EA winner, seed 43 restart, re-evaluated through the same path)
+
+[3] Search configuration
+    population 12, generations 12, elite top-4 kept, crossover = rounded
+    mean of two elite parents, Gaussian mutation sigma annealed 6 -> 2
+    linearly, objective = lexicographic (T_max, T_mean_solid), illegal
+    layouts (centre <4 cells from an edge, or pairwise Chebyshev <8)
+    penalised to the worst rank, rng(seed) fixed per restart.
+
+[4] Per-generation best-so-far (T_max/T_mean; T_mean decides where T_max saturates)
+    seed 42: g1=27.59615/25.06330289 g2=27.59615/25.06330250 g3=27.59615/25.06330240 g4=27.59615/25.06330240 g5=27.59615/25.06330212 g6=27.59615/25.06330212 g7=27.59615/25.06330212 g8=27.59615/25.06330176 g9=27.59615/25.06330176 g10=27.59615/25.06330176 g11=27.59615/25.06330176 g12=27.59615/25.06330176 -> best (T_max=27.59615, T_mean=25.06330176), last strict improvement at gen 8, design=[29 14 15 28 35 35 ]
+    seed 43: g1=27.59615/25.06330505 g2=27.59615/25.06330243 g3=27.59615/25.06330207 g4=27.59615/25.06330207 g5=27.59615/25.06330196 g6=27.59615/25.06330192 g7=27.59615/25.06330184 g8=27.59615/25.06330174 g9=27.59615/25.06330174 g10=27.59615/25.06330174 g11=27.59615/25.06330174 g12=27.59615/25.06330174 -> best (T_max=27.59615, T_mean=25.06330174), last strict improvement at gen 8, design=[21 29 21 18 35 31 ]
+    seed 44: g1=27.59615/25.06330346 g2=27.59615/25.06330346 g3=27.59615/25.06330346 g4=27.59615/25.06330300 g5=27.59615/25.06330248 g6=27.59615/25.06330248 g7=27.59615/25.06330248 g8=27.59615/25.06330207 g9=27.59615/25.06330207 g10=27.59615/25.06330207 g11=27.59615/25.06330207 g12=27.59615/25.06330195 -> best (T_max=27.59615, T_mean=25.06330195), last strict improvement at gen 12, design=[28 29 28 13 21 21 ]
+
+[5] Restart stability (seeds 42 43 44 )
+    seed 42: design=[(29,14) (15,28) (35,35)] T_max=27.5962 T_mean=25.0633 hotspot=75.0 dp=763.655 (58 evals, 5.6 s)
+    seed 43: design=[(21,29) (21,18) (35,31)] T_max=27.5962 T_mean=25.0633 hotspot=75.0 dp=598.324 (74 evals, 7.2 s)
+    seed 44: design=[(28,29) (28,13) (21,21)] T_max=27.5962 T_mean=25.0633 hotspot=75.0 dp=680.950 (73 evals, 7.2 s)
+    T_mean spread across restarts: 2.13e-07 C; identical winning design: no
+    restarts selected the same layout: no
+
+[6] Winner geometry (factual descriptors)
+    triangle     mean chip-to-edge dist =  14.3 cells, min pairwise Chebyshev = 20, mean pairwise Euclid =  21.6
+    horizontal   mean chip-to-edge dist =  15.7 cells, min pairwise Chebyshev = 13, mean pairwise Euclid =  17.3
+    bionic-best  mean chip-to-edge dist =  17.3 cells, min pairwise Chebyshev = 11, mean pairwise Euclid =  14.7
+
+[7] Limitations
+    - Controls are hand-designed layouts (triangle, equal-spaced horizontal),
+      NOT optimised controls; improvements quoted here are vs hand layouts.
+      Percentage conclusions from other experiments (e.g. a "50.9%" figure)
+      do NOT transfer to this experiment.
+    - Static growth only: the field is fixed while the tree grows (no
+      field-tree coupling as in grow_coupled.py).
+    - Single budget (600 nodes), single grid (50x50), idealised Dirichlet
+      coolant pinning (upper bound of convective cooling).
+    - Small EA budget (<=100 unique evaluations per restart): the winner is
+      a reproducible local optimum under the lexicographic objective, not a
+      proof of global optimality.
+
+[8] Totals
+    PDE evaluations: 208 unique (baseline/re-eval 3 + search 205), 208 lookup attempts
+    wall time: 20.4 s (search only: 20.0 s)

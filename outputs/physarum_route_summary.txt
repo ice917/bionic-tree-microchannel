@@ -1,0 +1,103 @@
+Physarum adaptive-network routing (MATLAB)
+==========================================
+
+Model    : Bonifaci-Mehlhorn-Varma, "Physarum Can Compute Shortest
+           Paths", arXiv:1106.0423, JTB 309:121-133, eq.(1)-(2).
+           R_e = L_e/D_e, conductance C_e = D_e/L_e, dD_e/dt = |Q_e| - D_e,
+           Q_e = C_e |p_u - p_v|, node eq. L p = b with
+           L = diag(rowsum(A)) - A,  A = W + W.'.
+Scheme   : Straszak-Vishnoi arXiv:1601.02712 eq.(12),
+           D^{k+1} = (1-h) D^k + h |Q^k|, h in (0,1).  Keeps D>0 and
+           makes ||D||_1 non-increasing (Lemma 5.6).
+Post-proc: threshold D>thresh, then Prim MST on the saved network.
+           Required because multi-source/single-sink is only a
+           transportation problem: BMV Thm 7 gives attraction to the
+           equilibrium SET only, Thm 8 needs "no two equilibria with
+           equal cost"; Sun 2019 (arXiv:1903.08926) states the
+           multi-source solver saved network is not guaranteed to
+           be a tree nor connected, hence the MST pass.
+Scope    : empirical demonstration only.  BMV leave approximate
+           Steiner-tree computation as an open problem with "no
+           theoretical analysis available", so nothing here is a
+           certified optimum.
+
+[VALIDATION: two terminals -- the only regime BMV prove]
+   n  iters   edges  expected     euclid       err  all_diag
+  12    990       11        11   15.556349   3.6e-15        1
+  20   1605       19        19   26.870058   1.1e-14        1
+  28   2193       27        27   38.183766   0.0e+00        1
+  => two-terminal validation: ALL PASS
+  (BMV Thm 2 prediction: n-1 edges, all diagonal,
+   euclid = (n-1)*sqrt(2) to machine precision.)
+
+[case1: 4 corners (4-pin)]
+  grid n=20, pins=4, h=0.05, thresh=0.50, iterations=6000
+  fixed-point residual (rel max|D-|Q||) = 5.671e-05
+  ||D||_1 final    = 57.002568   monotone = 1
+  RAW Physarum support:
+    edges          = 57
+    euclidean      = 64.870058
+    manhattan      = 76.000000
+    pins connected = 1  (components 1)
+  EXTRACTED TREE (Prim MST on the support):
+    edges          = 57
+    euclidean      = 64.870058
+    manhattan      = 76.000000
+    pins connected = 1
+    covers all pins= 1
+  BASELINES:
+    MST (manhattan) = 57.000000
+    RSMT (hanan)    = 57.000000
+    tree / MST      = 1.333333
+    obstacle crossings = 0
+
+[case2: 5 pins + wall (gated)]
+  grid n=20, pins=5, h=0.05, thresh=0.50, iterations=4737
+  fixed-point residual (rel max|D-|Q||) = 1.048e-06
+  ||D||_1 final    = 35.000041   monotone = 1
+  RAW Physarum support:
+    edges          = 33
+    euclidean      = 46.669048
+    manhattan      = 66.000000
+    pins connected = 0  (components 3)
+  EXTRACTED TREE (Prim MST on the support):
+    edges          = 26
+    euclidean      = 36.769553
+    manhattan      = 52.000000
+    pins connected = 0
+    covers all pins= 0
+  BASELINES:
+    MST (manhattan) = 67.000000
+    RSMT (hanan)    = 51.000000
+    tree / MST      = 0.776119
+    obstacle crossings = 0
+
+[case3: random 6 pins (rng 7)]
+  grid n=20, pins=6, h=0.05, thresh=0.50, iterations=4451
+  fixed-point residual (rel max|D-|Q||) = 1.050e-06
+  ||D||_1 final    = 54.000056   monotone = 1
+  RAW Physarum support:
+    edges          = 40
+    euclidean      = 44.970563
+    manhattan      = 52.000000
+    pins connected = 0  (components 6)
+  EXTRACTED TREE (Prim MST on the support):
+    edges          = 5
+    euclidean      = 7.071068
+    manhattan      = 10.000000
+    pins connected = 0
+    covers all pins= 0
+  BASELINES:
+    MST (manhattan) = 47.000000
+    RSMT (hanan)    = 42.000000
+    tree / MST      = 0.212766
+    obstacle crossings = 0
+
+[damping-step sensitivity, 4 corners on n=16]
+   h   raw_e tree_e  tree_eu  tree_mh conn iters  mono fp_resid
+ 0.01     45     45  51.2132  60.0000     1  6000     1  6.65e-03
+ 0.05     45     45  51.2132  60.0000     1  6000     1  1.18e-05
+ 0.10     45     45  51.2132  60.0000     1  3837     1  1.11e-06
+ 0.20     45     45  51.2132  60.0000     1  1896     1  1.24e-06
+ 0.30     45     45  51.2132  60.0000     1  1248     1  1.41e-06
+ 0.50     45     45  51.2132  60.0000     1   724     1  1.95e-06

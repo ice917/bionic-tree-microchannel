@@ -1,0 +1,134 @@
+{
+  "about": "A2 port/manifold geometry; loss figures are PRELIMINARY and are NOT part of calibrate.tree_dp_pa",
+  "pitch_mm": 0.9,
+  "package_mm": 45.0,
+  "tree": {
+    "nodes": 400,
+    "edges": 399,
+    "leaves": 61,
+    "root_mm": [
+      22.5,
+      22.5
+    ],
+    "root_radius_mm": 1.96825,
+    "leaf_radius_mm": [
+      0.5
+    ]
+  },
+  "assumptions": {
+    "channel_depth_mm": 4.0,
+    "cover_thickness_mm": 5.0,
+    "ring_inset_mm": 3.0,
+    "ring_width_mm": 6.0,
+    "ring_depth_mm": 2.0,
+    "outlet_port_ext_mm": 3.0,
+    "inlet_stub_mm": 2.5,
+    "via_length_mm": 4.5,
+    "ring_mid_plane_mm": 6.5,
+    "ring_cross_section": "rectangle 6 mm wide x 2 mm deep (matches rect_dp)",
+    "outlet_port_wall_mm": 0.53175,
+    "wall_min_mm": 0.5,
+    "K_via": 1.5,
+    "K_exit": 1.0,
+    "flow_m3s": 1.2135881580657804e-05,
+    "flow_lpm": 0.7281528948394682,
+    "per_leaf_m3s": 1.989488783714394e-07
+  },
+  "geometry": {
+    "triangles": 25136,
+    "stl": "outputs/manifold_assembly.stl",
+    "groove_length_mm": {
+      "min": 9.6,
+      "max": 17.39482681718907,
+      "mean": 11.936374496192366
+    },
+    "inlet_port_clearance_mm": 9.178235124467014,
+    "inlet_port_clearance_ok": true,
+    "outlet_port_wall_ok": true,
+    "groove_pairs_merged": 36,
+    "merged_clusters": 18,
+    "grooves_in_merged_clusters": 54,
+    "max_cluster_size": 5,
+    "groove_through_other_via": 72,
+    "merged_note": "merged grooves share a manifold; the per-leaf model charges each leaf a full-length duct and ignores the larger shared cross-section, so the groove term is expected to over-estimate, not to be exact",
+    "mesh_note": "union of closed primitives: end caps at multi-way nodes and groove tips inside the ring are interior faces; watertight per primitive, not one boolean-unioned solid. Measured decomposition of the 236 directed edges with multiplicity >= 3: 228 vertical spokes + 8 horizontal spokes. Mechanism: for a horizontal cylinder (axis in the xy plane) u = axis x zhat is horizontal and v = -zhat, so the rim points at t = 90 and 270 deg are always center -/+ r*zhat; at a node with k outgoing channels the k child end caps and the parent end cap (k caps at the root) are coincident 12-gons of the same radius, so those two rim points are shared by k+1 (k) caps and yield 2 spokes x 2 directions = 4 edges per node. 57 nodes have out-degree >= 2, giving 57 x 2 x 2 = 228 vertical spokes; the remaining 8 are the root's 4 collinear radial spokes x 2 directions. Multiplicity distribution: mult=3 for 220 vertical + 8 horizontal, mult=4 for the 4 spokes at the root (k=4) and at the single k=3 node. All 236 reverse counts match and boundary_edges = 0, so closure holds. 2 vertex-connected components = main assembly + the 16-vertex collector frame, which shares no vertices."
+  },
+  "losses_pa": {
+    "inlet_port": 47.851468849595044,
+    "via": 84.45651373352707,
+    "groove_max": 141.00084043079926,
+    "groove_mean": 96.75513607279784,
+    "ring_half": 140.23685382093464,
+    "outlet_port": 15.110990163030014,
+    "exit": 495.6636114838219,
+    "added_total_max_path": 924.3202784817079,
+    "added_total_mean_path": 880.0745741237065,
+    "added_total_max_path_exit_excluded": 428.65666699788596,
+    "tree_viscous_reference": 80.248,
+    "ratio_to_tree_viscous_max": 11.518296761062055,
+    "ratio_exit_excluded": 5.341649224876457
+  },
+  "regimes": {
+    "inlet_port": {
+      "Re": 3913.509128845533,
+      "v_m_s": 0.9971510183657878,
+      "regime": "blasius"
+    },
+    "via": {
+      "Re": 252.5496505852531,
+      "v_m_s": 0.25330957932322273,
+      "regime": "laminar"
+    },
+    "ring": {
+      "Re": 1512.434241989479,
+      "v_m_s": 0.5056617325274085,
+      "Dh_mm": 3.0,
+      "regime": "laminar"
+    },
+    "outlet_port": {
+      "Re": 3913.509128845533,
+      "v_m_s": 0.9971510183657878,
+      "regime": "blasius"
+    }
+  },
+  "stl_check": {
+    "triangles": 25136,
+    "unique_directed_edges": 58632,
+    "edges_paired_once": 42100,
+    "junction_edges_shared_twice": 16296,
+    "unpaired_edges": 236,
+    "boundary_edges": 0,
+    "closed": true,
+    "nonmanifold_edges": 236,
+    "is_manifold": false
+  },
+  "stl_closure": {
+    "triangles_kept": 25136,
+    "boundary_edges": 0,
+    "max_edge_multiplicity": 4,
+    "edges_with_multiplicity_ge_3": 236,
+    "vertex_connected_components": 2,
+    "closed": true,
+    "note": "closed <=> every directed edge occurs as often as its reverse; each primitive is generated closed, so this proves no missing facet, NOT that the overlapping union is one valid solid"
+  },
+  "bbox_mm": {
+    "x": [
+      0.0,
+      45.0
+    ],
+    "y": [
+      0.0,
+      45.0
+    ],
+    "z": [
+      0.03175000101327896,
+      11.5
+    ],
+    "size_mm": [
+      45.0,
+      45.0,
+      11.468
+    ]
+  },
+  "bbox_inside_package": true
+}

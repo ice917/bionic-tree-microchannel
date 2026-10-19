@@ -1,0 +1,5 @@
+case,n_nodes,n_edges,pinned,T_max_C,T_mean_solid_C,hotspot_mm2,dp,material_mm2,max_chip_to_tree_dist,chip_dists,tree_cells_in_blocks,bbox_x,bbox_y,centroid_x,centroid_y,deg1,deg2,deg3,deg4,deg5p,forks,leaves,flow_root,radius_min,radius_max,radius_mean,frac_cap_le_0p6,murray_max_rel_err,n_recalcs,total_iters,elapsed_s,note
+single_source_regression_rs1,400,399,375,27.5962,25.0196,25.0,583.539,656.674,0,0,25,[1 45],[1 48],17.9525,23.8675,39,326,33,2,0,35,39,39,0.5000,1.6956,0.6393,0.5450,0.000000e+00,399,261157,3.49,computed_matlab_this_run
+static_tree_python_ref,600,599,525,27.5962,25.0633,75.0,649.305,1369.633,0,0/0/0,75,,,,,,,,,,,,,,,,,,,,,recorded outputs/multi_source_results.csv
+coupled_3chip_triangle_600_rs1,600,599,525,27.5962,25.0633,75.0,614.856,1274.047,0,0/0/0,75,[1 45],[1 48],14.8383,23.9850,75,459,59,7,0,66,75,75,0.5000,2.1086,0.6664,0.6750,0.000000e+00,599,508085,6.98,computed_matlab_this_run
+coupled_3chip_triangle_600_rs5,600,599,525,27.5962,25.0633,75.0,588.451,1231.344,0,0/0/0,75,[1 45],[1 48],16.9550,24.6200,75,458,61,6,0,67,75,75,0.5000,2.1086,0.6596,0.6333,0.000000e+00,119,102461,1.39,computed_matlab_this_run

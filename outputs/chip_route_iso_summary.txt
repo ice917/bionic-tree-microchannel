@@ -1,0 +1,40 @@
+==============================================================================
+Simulink circuit ISOMORPHIC to the 8-neighbour Physarum mesh (chip_route_iso_mdl)
+4x4 window: 16 nodes, 42 edges = 12 horiz + 12 vert + 18 diagonal
+==============================================================================
+
+ISOMORPHISM: identical node set, edge set and edge weights to
+physarum_route.m.  Diagonal edges are weighted sqrt(2), as there.
+Only the canvas coordinates differ: a Simulink block cannot be
+rotated 45 degrees, so each edge is drawn by a masked resistor
+whose icon follows the true direction of that edge.
+------------------------------------------------------------------------------
+
+[1] Sources
+  chip 1 at (x,y) = (1,1)  I = +1.0 A
+  chip 2 at (x,y) = (1,4)  I = +1.0 A
+  chip 3 at (x,y) = (4,2)  I = -2.0 A
+  ground at (x,y) = (4,4)   sum(supply) = +0.0
+
+[2] Simscape vs direct L p = b solve
+  max |i_simscape - i_reference| = 6.968e-08 A
+  relative current error          = 1.376e-07
+  max |v_simscape - v_reference|  = 9.473e-08 V
+  => AGREEMENT: the circuit is the mesh, solved.
+
+[3] Edge count by direction (must match the 8-neighbour mesh)
+  horizontal (len 1)      : 12
+  vertical   (len 1)      : 12
+  diagonal   (len sqrt 2) : 18
+  expected for 4x4      : 12 horiz + 12 vert + 18 diag
+
+[4] Chip-node potentials (magnitudes)
+  chip 1 (node  1): |v| =   0.642055 V   (|ref|   0.642055 V)
+  chip 2 (node 13): |v| =   0.679213 V   (|ref|   0.679213 V)
+  chip 3 (node  8): |v| =   0.547314 V   (|ref|   0.547314 V)
+
+[5] Files
+  model   : chip_route_iso_mdl.slx
+  diagram : D:\解释token\heat_tree\outputs\chip_route_iso.png
+  summary : outputs\chip_route_iso_summary.txt
+==============================================================================

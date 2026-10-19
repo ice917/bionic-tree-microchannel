@@ -1,0 +1,7 @@
+case,n,pins,h,thresh,iters,fp_residual,edges_raw,len_euclid_raw,len_manhattan_raw,raw_connected,raw_components,edges_tree,tree_len_euclid,tree_len_manhattan,tree_connected,tree_covers_pins,mst_manhattan,rsmt_hanan,tree_over_mst,obstacle_crossings,dnorm_final,dnorm_monotone
+"validation:two-terminal n=12",12,2,0.30,0.50,990,1.407e-06,11,15.556349,15.556349,1,1,NaN,NaN,NaN,1,1,15.556349,NaN,NaN,0,NaN,1
+"validation:two-terminal n=20",20,2,0.30,0.50,1605,1.418e-06,19,26.870058,26.870058,1,1,NaN,NaN,NaN,1,1,26.870058,NaN,NaN,0,NaN,1
+"validation:two-terminal n=28",28,2,0.30,0.50,2193,1.419e-06,27,38.183766,38.183766,1,1,NaN,NaN,NaN,1,1,38.183766,NaN,NaN,0,NaN,1
+"case1: 4 corners (4-pin)",20,4,0.05,0.50,6000,5.671e-05,57,64.870058,76.000000,1,1,57,64.870058,76.000000,1,1,57.000000,57.000000,1.333333,0,57.002568,1
+"case2: 5 pins + wall (gated)",20,5,0.05,0.50,4737,1.048e-06,33,46.669048,66.000000,0,3,26,36.769553,52.000000,0,0,67.000000,51.000000,0.776119,0,35.000041,1
+"case3: random 6 pins (rng 7)",20,6,0.05,0.50,4451,1.050e-06,40,44.970563,52.000000,0,6,5,7.071068,10.000000,0,0,47.000000,42.000000,0.212766,0,54.000056,1

@@ -1,0 +1,26 @@
+[
+ {
+  "case": "5 chips, corners+centre | budget 400",
+  "skipped": "N4b: source blocks fuse into fewer regions than chips at radius 8.0 -- per-die metrics undefined"
+ },
+ {
+  "case": "5 chips, corners+centre | budget 600",
+  "skipped": "N4b: source blocks fuse into fewer regions than chips at radius 8.0 -- per-die metrics undefined"
+ },
+ {
+  "case": "5 chips, corners+centre | budget 700",
+  "skipped": "N4b: source blocks fuse into fewer regions than chips at radius 8.0 -- per-die metrics undefined"
+ },
+ {
+  "case": "5 chips, corners+centre | budget 800",
+  "skipped": "N4b: source blocks fuse into fewer regions than chips at radius 8.0 -- per-die metrics undefined"
+ },
+ {
+  "case": "5 chips, corners+centre | budget 1000",
+  "skipped": "N4b: source blocks fuse into fewer regions than chips at radius 8.0 -- per-die metrics undefined"
+ },
+ {
+  "case": "5 chips, corners+centre | budget 1300",
+  "skipped": "N4b: source blocks fuse into fewer regions than chips at radius 8.0 -- per-die metrics undefined"
+ }
+]

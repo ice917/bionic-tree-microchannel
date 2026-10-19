@@ -1,0 +1,376 @@
+[
+ {
+  "case": "equal 1/1/1 | budget 600",
+  "powers": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tree_pinned": 123,
+  "tree_T_max": 28.1721,
+  "tree_T_mean": 26.0848,
+  "tree_hotspot": 1199.0,
+  "tree_hot_per_chip": [
+   262.0,
+   263.0,
+   258.0
+  ],
+  "src_to_tree": 13,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 123,
+    "T_max": 33.8626,
+    "T_mean": 28.7779,
+    "hotspot": 1474.0,
+    "hot_per_chip": [
+     289.0,
+     285.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 2,
+    "pinned": 123,
+    "T_max": 33.7403,
+    "T_mean": 28.6598,
+    "hotspot": 1449.0,
+    "hot_per_chip": [
+     289.0,
+     281.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 3,
+    "pinned": 123,
+    "T_max": 33.6115,
+    "T_mean": 28.544,
+    "hotspot": 1426.0,
+    "hot_per_chip": [
+     289.0,
+     267.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 4,
+    "pinned": 123,
+    "T_max": 33.4696,
+    "T_mean": 28.4248,
+    "hotspot": 1399.0,
+    "hot_per_chip": [
+     289.0,
+     253.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 5,
+    "pinned": 123,
+    "T_max": 33.2022,
+    "T_mean": 28.1795,
+    "hotspot": 1343.0,
+    "hot_per_chip": [
+     289.0,
+     247.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 6,
+    "pinned": 123,
+    "T_max": 33.266,
+    "T_mean": 28.2397,
+    "hotspot": 1361.0,
+    "hot_per_chip": [
+     289.0,
+     257.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 7,
+    "pinned": 123,
+    "T_max": 33.2687,
+    "T_mean": 28.2371,
+    "hotspot": 1359.0,
+    "hot_per_chip": [
+     289.0,
+     259.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 8,
+    "pinned": 123,
+    "T_max": 33.0025,
+    "T_mean": 28.0408,
+    "hotspot": 1321.0,
+    "hot_per_chip": [
+     289.0,
+     250.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 9,
+    "pinned": 123,
+    "T_max": 32.3508,
+    "T_mean": 27.6236,
+    "hotspot": 1255.0,
+    "hot_per_chip": [
+     289.0,
+     233.0,
+     288.0
+    ]
+   },
+   {
+    "pitch": 10,
+    "pinned": 123,
+    "T_max": 29.6248,
+    "T_mean": 26.57,
+    "hotspot": 1226.0,
+    "hot_per_chip": [
+     289.0,
+     254.0,
+     273.0
+    ]
+   },
+   {
+    "pitch": 11,
+    "pinned": 123,
+    "T_max": 31.8634,
+    "T_mean": 27.3502,
+    "hotspot": 1209.0,
+    "hot_per_chip": [
+     289.0,
+     235.0,
+     276.0
+    ]
+   },
+   {
+    "pitch": 12,
+    "pinned": 123,
+    "T_max": 32.3151,
+    "T_mean": 27.6116,
+    "hotspot": 1251.0,
+    "hot_per_chip": [
+     289.0,
+     240.0,
+     288.0
+    ]
+   },
+   {
+    "pitch": 13,
+    "pinned": 123,
+    "T_max": 29.3879,
+    "T_mean": 26.4323,
+    "hotspot": 1180.0,
+    "hot_per_chip": [
+     288.0,
+     220.0,
+     275.0
+    ]
+   }
+  ],
+  "n_admissible": 13,
+  "best_hotspot_pitch": 13,
+  "best_Tmax_pitch": 13,
+  "tree_minus_best_hotspot": 19.0,
+  "tree_minus_best_Tmax": -1.2158,
+  "best_lat_hot_per_chip": [
+   288.0,
+   220.0,
+   275.0
+  ],
+  "hotspot_spread": 294.0
+ },
+ {
+  "case": "unequal 1/1/5 | budget 600",
+  "powers": [
+   1.0,
+   1.0,
+   5.0
+  ],
+  "tree_pinned": 189,
+  "tree_T_max": 30.1406,
+  "tree_T_mean": 25.7943,
+  "tree_hotspot": 388.0,
+  "tree_hot_per_chip": [
+   58.0,
+   53.0,
+   240.0
+  ],
+  "src_to_tree": 21,
+  "lattice": [
+   {
+    "pitch": 1,
+    "pinned": 189,
+    "T_max": 37.3371,
+    "T_mean": 28.9459,
+    "hotspot": 1172.0,
+    "hot_per_chip": [
+     238.0,
+     195.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 2,
+    "pinned": 189,
+    "T_max": 37.1795,
+    "T_mean": 28.8052,
+    "hotspot": 1153.0,
+    "hot_per_chip": [
+     238.0,
+     181.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 3,
+    "pinned": 189,
+    "T_max": 36.8751,
+    "T_mean": 28.5926,
+    "hotspot": 1113.0,
+    "hot_per_chip": [
+     240.0,
+     164.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 4,
+    "pinned": 189,
+    "T_max": 36.5044,
+    "T_mean": 28.3607,
+    "hotspot": 1074.0,
+    "hot_per_chip": [
+     240.0,
+     150.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 5,
+    "pinned": 189,
+    "T_max": 35.2588,
+    "T_mean": 27.7678,
+    "hotspot": 989.0,
+    "hot_per_chip": [
+     245.0,
+     120.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 6,
+    "pinned": 189,
+    "T_max": 35.1122,
+    "T_mean": 27.7123,
+    "hotspot": 981.0,
+    "hot_per_chip": [
+     245.0,
+     115.0,
+     289.0
+    ]
+   },
+   {
+    "pitch": 7,
+    "pinned": 189,
+    "T_max": 34.5151,
+    "T_mean": 27.4981,
+    "hotspot": 961.0,
+    "hot_per_chip": [
+     250.0,
+     114.0,
+     284.0
+    ]
+   },
+   {
+    "pitch": 8,
+    "pinned": 189,
+    "T_max": 33.8542,
+    "T_mean": 27.1695,
+    "hotspot": 885.0,
+    "hot_per_chip": [
+     246.0,
+     59.0,
+     277.0
+    ]
+   },
+   {
+    "pitch": 9,
+    "pinned": 189,
+    "T_max": 32.4292,
+    "T_mean": 26.5198,
+    "hotspot": 679.0,
+    "hot_per_chip": [
+     177.0,
+     0.0,
+     276.0
+    ]
+   },
+   {
+    "pitch": 10,
+    "pinned": 189,
+    "T_max": 30.9468,
+    "T_mean": 25.868,
+    "hotspot": 317.0,
+    "hot_per_chip": [
+     0.0,
+     0.0,
+     274.0
+    ]
+   },
+   {
+    "pitch": 11,
+    "pinned": 189,
+    "T_max": 30.6631,
+    "T_mean": 25.9627,
+    "hotspot": 508.0,
+    "hot_per_chip": [
+     158.0,
+     0.0,
+     269.0
+    ]
+   },
+   {
+    "pitch": 12,
+    "pinned": 189,
+    "T_max": 33.0419,
+    "T_mean": 26.6374,
+    "hotspot": 680.0,
+    "hot_per_chip": [
+     148.0,
+     0.0,
+     285.0
+    ]
+   },
+   {
+    "pitch": 13,
+    "pinned": 189,
+    "T_max": 30.5576,
+    "T_mean": 25.7581,
+    "hotspot": 308.0,
+    "hot_per_chip": [
+     0.0,
+     0.0,
+     270.0
+    ]
+   }
+  ],
+  "n_admissible": 13,
+  "best_hotspot_pitch": 13,
+  "best_Tmax_pitch": 13,
+  "tree_minus_best_hotspot": 80.0,
+  "tree_minus_best_Tmax": -0.417,
+  "best_lat_hot_per_chip": [
+   0.0,
+   0.0,
+   270.0
+  ],
+  "hotspot_spread": 864.0
+ }
+]

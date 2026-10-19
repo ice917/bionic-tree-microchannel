@@ -1,32 +1,41 @@
-﻿real-unit calibration  (REPORT.md 11)
+real-unit calibration  (REPORT.md 11)
 ==========================================================================
 
 [i7-14700K class (253 W)]
   board            45 x 45 mm, cell 0.90 mm, slab 5 mm, k=148 W/(m K)
   source block     4.5 x 4.5 mm, 10.12 W/cell, 253 W total
   bare conduction  peak   174.6 C   <- no cooling at all, R_th=0.591 C/W
-  + tree channels  peak    27.6 C   R_th=0.0103 C/W   (399 segments, 375 pinned cells)
-                   published cold plates: 0.0069 - 0.0200 C/W
-                   -> model is 1.5x to 0.5x worse
-  flow 0.73 L/min  ->  tree dP =   6.42 kPa, control dP = 0.01294 kPa  (497x)
-                   published cold plate dP = 9 kPa at 1 kW (tree is 0.71x at 253 W)
+  + tree channels  peak    60.5 C   R_th=0.1403 C/W   (399 segments, 375 pinned cells)
+                   published ref 1: 0.0069 C/W (chip-to-coolant, incl. TIM, 1 kW)
+                   published ref 2: 0.014-0.019 C/W (case-to-inlet, 1.5-3.5 LPM only)
+                   -> model is 20.3x worse than ref 1; 7.4x-10.0x worse than ref 2 (not like-for-like)
+  flow 0.73 L/min  ->  tree dP =   0.0802 kPa, control dP = 0.01294 kPa  (6x)
+                   [demand-driven network (convention A): 61 leaves, 57 true forks, depth 16, path spread 1.344x]
+                   [Kirchhoff reference (convention B, leaves shorted onto one manifold) = 0.0679 kPa (0.85x A; self-check 4.2e-16, spread 1.000x)]
+                   [historical serial (pre-§10.11, WRONG) = 6.42 kPa = 80x A; decomposes as series structure 33.8x x parent-charging 2.36x]
+                   published cold plate dP = 9 kPa at 1 kW (tree is 0.0089x at 253 W)
 
 [H100 SXM class (700 W)]
   board            45 x 45 mm, cell 0.90 mm, slab 5 mm, k=148 W/(m K)
   source block     4.5 x 4.5 mm, 28.00 W/cell, 700 W total
   bare conduction  peak   439.0 C   <- no cooling at all, R_th=0.591 C/W
-  + tree channels  peak    27.6 C   R_th=0.0037 C/W   (399 segments, 375 pinned cells)
-                   published cold plates: 0.0069 - 0.0200 C/W
-                   -> model is 0.5x to 0.2x worse
-  flow 2.01 L/min  ->  tree dP =  17.77 kPa, control dP = 0.03579 kPa  (497x)
-                   published cold plate dP = 9 kPa at 1 kW (tree is 1.97x at 700 W)
+  + tree channels  peak   123.2 C   R_th=0.1403 C/W   (399 segments, 375 pinned cells)
+                   published ref 1: 0.0069 C/W (chip-to-coolant, incl. TIM, 1 kW)
+                   published ref 2: 0.014-0.019 C/W (case-to-inlet, 1.5-3.5 LPM only)
+                   -> model is 20.3x worse than ref 1; 7.4x-10.0x worse than ref 2 (not like-for-like)
+  flow 2.01 L/min  ->  tree dP =   0.2220 kPa, control dP = 0.03579 kPa  (6x)
+                   [demand-driven network (convention A): 61 leaves, 57 true forks, depth 16, path spread 1.344x]
+                   [Kirchhoff reference (convention B, leaves shorted onto one manifold) = 0.1879 kPa (0.85x A; self-check 4.5e-16, spread 1.000x)]
+                   [historical serial (pre-§10.11, WRONG) = 17.77 kPa = 80x A; decomposes as series structure 33.8x x parent-charging 2.36x]
+                   published cold plate dP = 9 kPa at 1 kW (tree is 0.0247x at 700 W)
 
 thickness sensitivity: R_th and dP both scale as 1/t, so the
 numbers above move by the same factor if the slab thickness
 assumption moves. The *ratios* tree-vs-control do not.
 
-microchannel reference: production cold plates use 0.2-0.5 mm
-channels; this model's capillaries are r0=0.5 mm (1.0 mm
-diameter), i.e. 2-5x wider than the
-narrowest production channels. The r^4 penalty is therefore
-not an artefact of the toy scale.
+microchannel reference: Ecotherm production data gives fin
+spacing P <= 0.5 mm and Dh = 2*P*L/(P+L) ~= 2*P (L/P > 15),
+so Dh = 0.4-1.0 mm for P = 0.2-0.5 mm. The model's capillaries
+are r0=0.5 mm (D=1.0 mm): the r^4 penalty is 1.0-39.1x, a
+sensitivity range, not the historical 16-100x (16 needs the
+interior P=0.25 mm; 100 needs P=0.158 mm, outside the range).
