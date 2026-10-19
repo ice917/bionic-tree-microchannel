@@ -1,0 +1,1012 @@
+{
+ "1 chip": {
+  "centers": [
+   [
+    24,
+    24
+   ]
+  ],
+  "tree": {
+   "front": [
+    {
+     "budget": 27,
+     "n_leaves": 12,
+     "pinned": 0,
+     "n_cells": 27,
+     "T_max_c": 30.984044804459057,
+     "dp_pa": 338.43139366632266,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 314,
+     "n_leaves": 56,
+     "pinned": 37,
+     "n_cells": 314,
+     "T_max_c": 27.158676551058367,
+     "dp_pa": 1459.6736485986805,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 399,
+     "n_leaves": 64,
+     "pinned": 110,
+     "n_cells": 399,
+     "T_max_c": 27.061646806775208,
+     "dp_pa": 1818.4153084428883,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 524,
+     "n_leaves": 72,
+     "pinned": 235,
+     "n_cells": 524,
+     "T_max_c": 27.059836190746132,
+     "dp_pa": 2116.293968634301,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    }
+   ],
+   "n_feasible": 12,
+   "knee": {
+    "n_leaves": 64,
+    "budget": 399,
+    "T_max_c": 27.061646806775208,
+    "dp_pa": 1818.4153084428883
+   },
+   "knee_sensitivity": [
+    {
+     "t_tol_c": 0.01,
+     "n_leaves": 64,
+     "budget": 399,
+     "T_max_c": 27.061646806775208,
+     "dp_pa": 1818.4153084428883,
+     "dp_vs_min_front": 5.373069231974855,
+     "T_max_penalty_c": 0.001810616029075618
+    },
+    {
+     "t_tol_c": 0.1,
+     "n_leaves": 56,
+     "budget": 314,
+     "T_max_c": 27.158676551058367,
+     "dp_pa": 1459.6736485986805,
+     "dp_vs_min_front": 4.313056282354968,
+     "T_max_penalty_c": 0.09884036031223431
+    },
+    {
+     "t_tol_c": 0.5,
+     "n_leaves": 56,
+     "budget": 314,
+     "T_max_c": 27.158676551058367,
+     "dp_pa": 1459.6736485986805,
+     "dp_vs_min_front": 4.313056282354968,
+     "T_max_penalty_c": 0.09884036031223431
+    },
+    {
+     "t_tol_c": 1.0,
+     "n_leaves": 56,
+     "budget": 314,
+     "T_max_c": 27.158676551058367,
+     "dp_pa": 1459.6736485986805,
+     "dp_vs_min_front": 4.313056282354968,
+     "T_max_penalty_c": 0.09884036031223431
+    },
+    {
+     "t_tol_c": 2.0,
+     "n_leaves": 56,
+     "budget": 314,
+     "T_max_c": 27.158676551058367,
+     "dp_pa": 1459.6736485986805,
+     "dp_vs_min_front": 4.313056282354968,
+     "T_max_penalty_c": 0.09884036031223431
+    },
+    {
+     "t_tol_c": 5.0,
+     "n_leaves": 12,
+     "budget": 27,
+     "T_max_c": 30.984044804459057,
+     "dp_pa": 338.43139366632266,
+     "dp_vs_min_front": 1.0,
+     "T_max_penalty_c": 3.924208613712924
+    }
+   ],
+   "c2_summary": {
+    "n_on_front": 4,
+    "n_C2_ok_on_front": 4,
+    "all_satisfy_C2": true,
+    "note": "with r0=None every front row satisfies C2 by construction (r0 is derived from it); a non-zero count of violations means r0 was forced"
+   }
+  },
+  "radial_total": {
+   "front": [
+    {
+     "budget": 1309,
+     "n_leaves": null,
+     "pinned": 1020,
+     "T_max_c": 27.05984258738497,
+     "dp_pa": 1.6192513723935678,
+     "target_total": 1309,
+     "n_channel_cells": 1309,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 1100,
+     "n_leaves": null,
+     "pinned": 811,
+     "T_max_c": 27.059841185538108,
+     "dp_pa": 1.9269091331483459,
+     "target_total": 1100,
+     "n_channel_cells": 1100,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 1000,
+     "n_leaves": null,
+     "pinned": 711,
+     "T_max_c": 27.05983668340729,
+     "dp_pa": 2.1196000464631806,
+     "target_total": 1000,
+     "n_channel_cells": 1000,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    }
+   ],
+   "n_feasible": 14
+  },
+  "dominance_vs_radial": {
+   "tree_dominates": false,
+   "n_control_points_beating_tree": 3,
+   "examples": [
+    {
+     "control_target": 1309,
+     "control_basis": "total",
+     "control_T_max_c": 27.05984258738497,
+     "control_dp_pa": 1.6192513723935678,
+     "tree_leaves": 12,
+     "tree_T_max_c": 30.984044804459057,
+     "tree_dp_pa": 338.43139366632266
+    },
+    {
+     "control_target": 1100,
+     "control_basis": "total",
+     "control_T_max_c": 27.059841185538108,
+     "control_dp_pa": 1.9269091331483459,
+     "tree_leaves": 12,
+     "tree_T_max_c": 30.984044804459057,
+     "tree_dp_pa": 338.43139366632266
+    },
+    {
+     "control_target": 1000,
+     "control_basis": "total",
+     "control_T_max_c": 27.05983668340729,
+     "control_dp_pa": 2.1196000464631806,
+     "tree_leaves": 12,
+     "tree_T_max_c": 30.984044804459057,
+     "tree_dp_pa": 338.43139366632266
+    }
+   ],
+   "best_T_max_c": {
+    "tree": 27.059836190746132,
+    "control": 27.05983668340729,
+    "tree_better": true
+   },
+   "best_dp_pa": {
+    "tree": 338.43139366632266,
+    "control": 1.6192513723935678,
+    "tree_better": false
+   },
+   "front_sizes": {
+    "tree": 4,
+    "control": 3
+   }
+  },
+  "lattice_total": {
+   "front": [
+    {
+     "budget": 1309,
+     "n_leaves": null,
+     "pinned": 1084,
+     "T_max_c": 27.05984258738497,
+     "dp_pa": 1.3990628740848932,
+     "target_total": 1309,
+     "n_channel_cells": 1131,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    }
+   ],
+   "n_feasible": 12
+  },
+  "dominance_vs_lattice": {
+   "tree_dominates": false,
+   "n_control_points_beating_tree": 1,
+   "examples": [
+    {
+     "control_target": 1309,
+     "control_basis": "total",
+     "control_T_max_c": 27.05984258738497,
+     "control_dp_pa": 1.3990628740848932,
+     "tree_leaves": 12,
+     "tree_T_max_c": 30.984044804459057,
+     "tree_dp_pa": 338.43139366632266
+    }
+   ],
+   "best_T_max_c": {
+    "tree": 27.059836190746132,
+    "control": 27.05984258738497,
+    "tree_better": true
+   },
+   "best_dp_pa": {
+    "tree": 338.43139366632266,
+    "control": 1.3990628740848932,
+    "tree_better": false
+   },
+   "front_sizes": {
+    "tree": 4,
+    "control": 1
+   }
+  }
+ },
+ "2 chip d=16": {
+  "centers": [
+   [
+    12,
+    24
+   ],
+   [
+    36,
+    24
+   ]
+  ],
+  "tree": {
+   "front": [
+    {
+     "budget": 105,
+     "n_leaves": 32,
+     "pinned": 19,
+     "n_cells": 105,
+     "T_max_c": 29.02460978640765,
+     "dp_pa": 2514.0290901568965,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 157,
+     "n_leaves": 46,
+     "pinned": 25,
+     "n_cells": 157,
+     "T_max_c": 28.80217753344079,
+     "dp_pa": 2988.803704269352,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 210,
+     "n_leaves": 56,
+     "pinned": 46,
+     "n_cells": 210,
+     "T_max_c": 28.677544159125272,
+     "dp_pa": 3405.103655989859,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 314,
+     "n_leaves": 64,
+     "pinned": 78,
+     "n_cells": 314,
+     "T_max_c": 28.538391798248437,
+     "dp_pa": 4509.553336009992,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 399,
+     "n_leaves": 70,
+     "pinned": 98,
+     "n_cells": 399,
+     "T_max_c": 28.456521421854927,
+     "dp_pa": 4950.820123993639,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 524,
+     "n_leaves": 79,
+     "pinned": 135,
+     "n_cells": 524,
+     "T_max_c": 28.143863772513797,
+     "dp_pa": 5815.474984070157,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 655,
+     "n_leaves": 86,
+     "pinned": 208,
+     "n_cells": 655,
+     "T_max_c": 27.611988201459788,
+     "dp_pa": 6695.228951198657,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 838,
+     "n_leaves": 97,
+     "pinned": 332,
+     "n_cells": 838,
+     "T_max_c": 27.411579635278862,
+     "dp_pa": 8073.521877043491,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 1047,
+     "n_leaves": 106,
+     "pinned": 496,
+     "n_cells": 1047,
+     "T_max_c": 27.335414715645577,
+     "dp_pa": 9080.037871875491,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 1309,
+     "n_leaves": 118,
+     "pinned": 731,
+     "n_cells": 1309,
+     "T_max_c": 27.103236574369987,
+     "dp_pa": 10605.625693181157,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    }
+   ],
+   "n_feasible": 10,
+   "knee": {
+    "n_leaves": 118,
+    "budget": 1309,
+    "T_max_c": 27.103236574369987,
+    "dp_pa": 10605.625693181157
+   },
+   "knee_sensitivity": [
+    {
+     "t_tol_c": 0.01,
+     "n_leaves": 118,
+     "budget": 1309,
+     "T_max_c": 27.103236574369987,
+     "dp_pa": 10605.625693181157,
+     "dp_vs_min_front": 4.218577157561561,
+     "T_max_penalty_c": 0.0
+    },
+    {
+     "t_tol_c": 0.1,
+     "n_leaves": 118,
+     "budget": 1309,
+     "T_max_c": 27.103236574369987,
+     "dp_pa": 10605.625693181157,
+     "dp_vs_min_front": 4.218577157561561,
+     "T_max_penalty_c": 0.0
+    },
+    {
+     "t_tol_c": 0.5,
+     "n_leaves": 97,
+     "budget": 838,
+     "T_max_c": 27.411579635278862,
+     "dp_pa": 8073.521877043491,
+     "dp_vs_min_front": 3.2113876122808254,
+     "T_max_penalty_c": 0.3083430609088751
+    },
+    {
+     "t_tol_c": 1.0,
+     "n_leaves": 86,
+     "budget": 655,
+     "T_max_c": 27.611988201459788,
+     "dp_pa": 6695.228951198657,
+     "dp_vs_min_front": 2.6631469689083107,
+     "T_max_penalty_c": 0.5087516270898007
+    },
+    {
+     "t_tol_c": 2.0,
+     "n_leaves": 32,
+     "budget": 105,
+     "T_max_c": 29.02460978640765,
+     "dp_pa": 2514.0290901568965,
+     "dp_vs_min_front": 1.0,
+     "T_max_penalty_c": 1.9213732120376648
+    },
+    {
+     "t_tol_c": 5.0,
+     "n_leaves": 32,
+     "budget": 105,
+     "T_max_c": 29.02460978640765,
+     "dp_pa": 2514.0290901568965,
+     "dp_vs_min_front": 1.0,
+     "T_max_penalty_c": 1.9213732120376648
+    }
+   ],
+   "c2_summary": {
+    "n_on_front": 10,
+    "n_C2_ok_on_front": 10,
+    "all_satisfy_C2": true,
+    "note": "with r0=None every front row satisfies C2 by construction (r0 is derived from it); a non-zero count of violations means r0 was forced"
+   }
+  },
+  "radial_total": {
+   "front": [
+    {
+     "budget": 1309,
+     "n_leaves": null,
+     "pinned": 731,
+     "T_max_c": 27.059842600587956,
+     "dp_pa": 3.2385027447871355,
+     "target_total": 1309,
+     "n_channel_cells": 1309,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 1100,
+     "n_leaves": null,
+     "pinned": 522,
+     "T_max_c": 27.059839639679215,
+     "dp_pa": 3.8538182662966918,
+     "target_total": 1100,
+     "n_channel_cells": 1100,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 1000,
+     "n_leaves": null,
+     "pinned": 422,
+     "T_max_c": 27.05983650393238,
+     "dp_pa": 4.239200092926361,
+     "target_total": 1000,
+     "n_channel_cells": 1000,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    }
+   ],
+   "n_feasible": 14
+  },
+  "dominance_vs_radial": {
+   "tree_dominates": false,
+   "n_control_points_beating_tree": 3,
+   "examples": [
+    {
+     "control_target": 1309,
+     "control_basis": "total",
+     "control_T_max_c": 27.059842600587956,
+     "control_dp_pa": 3.2385027447871355,
+     "tree_leaves": 32,
+     "tree_T_max_c": 29.02460978640765,
+     "tree_dp_pa": 2514.0290901568965
+    },
+    {
+     "control_target": 1100,
+     "control_basis": "total",
+     "control_T_max_c": 27.059839639679215,
+     "control_dp_pa": 3.8538182662966918,
+     "tree_leaves": 32,
+     "tree_T_max_c": 29.02460978640765,
+     "tree_dp_pa": 2514.0290901568965
+    },
+    {
+     "control_target": 1000,
+     "control_basis": "total",
+     "control_T_max_c": 27.05983650393238,
+     "control_dp_pa": 4.239200092926361,
+     "tree_leaves": 32,
+     "tree_T_max_c": 29.02460978640765,
+     "tree_dp_pa": 2514.0290901568965
+    }
+   ],
+   "best_T_max_c": {
+    "tree": 27.103236574369987,
+    "control": 27.05983650393238,
+    "tree_better": false
+   },
+   "best_dp_pa": {
+    "tree": 2514.0290901568965,
+    "control": 3.2385027447871355,
+    "tree_better": false
+   },
+   "front_sizes": {
+    "tree": 10,
+    "control": 3
+   }
+  },
+  "lattice_total": {
+   "front": [
+    {
+     "budget": 1309,
+     "n_leaves": null,
+     "pinned": 929,
+     "T_max_c": 27.212381875928664,
+     "dp_pa": 2.7981257481697863,
+     "target_total": 1309,
+     "n_channel_cells": 1131,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    }
+   ],
+   "n_feasible": 12
+  },
+  "dominance_vs_lattice": {
+   "tree_dominates": false,
+   "n_control_points_beating_tree": 1,
+   "examples": [
+    {
+     "control_target": 1309,
+     "control_basis": "total",
+     "control_T_max_c": 27.212381875928664,
+     "control_dp_pa": 2.7981257481697863,
+     "tree_leaves": 32,
+     "tree_T_max_c": 29.02460978640765,
+     "tree_dp_pa": 2514.0290901568965
+    }
+   ],
+   "best_T_max_c": {
+    "tree": 27.103236574369987,
+    "control": 27.212381875928664,
+    "tree_better": true
+   },
+   "best_dp_pa": {
+    "tree": 2514.0290901568965,
+    "control": 2.7981257481697863,
+    "tree_better": false
+   },
+   "front_sizes": {
+    "tree": 10,
+    "control": 1
+   }
+  }
+ },
+ "3 chip": {
+  "centers": [
+   [
+    12,
+    12
+   ],
+   [
+    36,
+    12
+   ],
+   [
+    24,
+    36
+   ]
+  ],
+  "tree": {
+   "front": [
+    {
+     "budget": 210,
+     "n_leaves": 67,
+     "pinned": 73,
+     "n_cells": 210,
+     "T_max_c": 28.75300676450174,
+     "dp_pa": 5908.036691262054,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 314,
+     "n_leaves": 80,
+     "pinned": 122,
+     "n_cells": 314,
+     "T_max_c": 28.591517316111837,
+     "dp_pa": 7671.786980077022,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 399,
+     "n_leaves": 90,
+     "pinned": 152,
+     "n_cells": 399,
+     "T_max_c": 28.5158970638796,
+     "dp_pa": 8548.90713812059,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 524,
+     "n_leaves": 101,
+     "pinned": 190,
+     "n_cells": 524,
+     "T_max_c": 28.441541428225015,
+     "dp_pa": 10068.417520502891,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 655,
+     "n_leaves": 109,
+     "pinned": 235,
+     "n_cells": 655,
+     "T_max_c": 28.102231465478773,
+     "dp_pa": 11542.528024927513,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 838,
+     "n_leaves": 119,
+     "pinned": 307,
+     "n_cells": 838,
+     "T_max_c": 27.72316103665441,
+     "dp_pa": 13136.311933537516,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 1047,
+     "n_leaves": 130,
+     "pinned": 403,
+     "n_cells": 1047,
+     "T_max_c": 27.655180123827765,
+     "dp_pa": 14817.699763941813,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 1309,
+     "n_leaves": 142,
+     "pinned": 531,
+     "n_cells": 1309,
+     "T_max_c": 27.624427837249392,
+     "dp_pa": 16587.259060695294,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    }
+   ],
+   "n_feasible": 8,
+   "knee": {
+    "n_leaves": 142,
+    "budget": 1309,
+    "T_max_c": 27.624427837249392,
+    "dp_pa": 16587.259060695294
+   },
+   "knee_sensitivity": [
+    {
+     "t_tol_c": 0.01,
+     "n_leaves": 142,
+     "budget": 1309,
+     "T_max_c": 27.624427837249392,
+     "dp_pa": 16587.259060695294,
+     "dp_vs_min_front": 2.8075754988501913,
+     "T_max_penalty_c": 0.0
+    },
+    {
+     "t_tol_c": 0.1,
+     "n_leaves": 119,
+     "budget": 838,
+     "T_max_c": 27.72316103665441,
+     "dp_pa": 13136.311933537516,
+     "dp_vs_min_front": 2.223464853047719,
+     "T_max_penalty_c": 0.09873319940501801
+    },
+    {
+     "t_tol_c": 0.5,
+     "n_leaves": 109,
+     "budget": 655,
+     "T_max_c": 28.102231465478773,
+     "dp_pa": 11542.528024927513,
+     "dp_vs_min_front": 1.9536994484138586,
+     "T_max_penalty_c": 0.47780362822938116
+    },
+    {
+     "t_tol_c": 1.0,
+     "n_leaves": 80,
+     "budget": 314,
+     "T_max_c": 28.591517316111837,
+     "dp_pa": 7671.786980077022,
+     "dp_vs_min_front": 1.2985340784060369,
+     "T_max_penalty_c": 0.9670894788624445
+    },
+    {
+     "t_tol_c": 2.0,
+     "n_leaves": 67,
+     "budget": 210,
+     "T_max_c": 28.75300676450174,
+     "dp_pa": 5908.036691262054,
+     "dp_vs_min_front": 1.0,
+     "T_max_penalty_c": 1.1285789272523488
+    },
+    {
+     "t_tol_c": 5.0,
+     "n_leaves": 67,
+     "budget": 210,
+     "T_max_c": 28.75300676450174,
+     "dp_pa": 5908.036691262054,
+     "dp_vs_min_front": 1.0,
+     "T_max_penalty_c": 1.1285789272523488
+    }
+   ],
+   "c2_summary": {
+    "n_on_front": 8,
+    "n_C2_ok_on_front": 8,
+    "all_satisfy_C2": true,
+    "note": "with r0=None every front row satisfies C2 by construction (r0 is derived from it); a non-zero count of violations means r0 was forced"
+   }
+  },
+  "radial_total": {
+   "infeasible": "control kind=radial (C5/total): no design satisfies C1 and C3 (swept 14 total-cell targets)."
+  },
+  "dominance_vs_radial": {
+   "infeasible": "control kind=radial (C5/total): no design satisfies C1 and C3 (swept 14 total-cell targets)."
+  },
+  "lattice_total": {
+   "front": [
+    {
+     "budget": 1309,
+     "n_leaves": null,
+     "pinned": 801,
+     "T_max_c": 27.212381876369456,
+     "dp_pa": 4.1971886222546795,
+     "target_total": 1309,
+     "n_channel_cells": 1131,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    }
+   ],
+   "n_feasible": 11
+  },
+  "dominance_vs_lattice": {
+   "tree_dominates": false,
+   "n_control_points_beating_tree": 1,
+   "examples": [
+    {
+     "control_target": 1309,
+     "control_basis": "total",
+     "control_T_max_c": 27.212381876369456,
+     "control_dp_pa": 4.1971886222546795,
+     "tree_leaves": 67,
+     "tree_T_max_c": 28.75300676450174,
+     "tree_dp_pa": 5908.036691262054
+    }
+   ],
+   "best_T_max_c": {
+    "tree": 27.624427837249392,
+    "control": 27.212381876369456,
+    "tree_better": false
+   },
+   "best_dp_pa": {
+    "tree": 5908.036691262054,
+    "control": 4.1971886222546795,
+    "tree_better": false
+   },
+   "front_sizes": {
+    "tree": 8,
+    "control": 1
+   }
+  }
+ },
+ "4 chip": {
+  "centers": [
+   [
+    12,
+    12
+   ],
+   [
+    36,
+    12
+   ],
+   [
+    12,
+    36
+   ],
+   [
+    36,
+    36
+   ]
+  ],
+  "tree": {
+   "front": [
+    {
+     "budget": 210,
+     "n_leaves": 68,
+     "pinned": 102,
+     "n_cells": 210,
+     "T_max_c": 29.05874536543886,
+     "dp_pa": 8788.849548101136,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 314,
+     "n_leaves": 88,
+     "pinned": 163,
+     "n_cells": 314,
+     "T_max_c": 28.56030950946051,
+     "dp_pa": 9172.952793584558,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 399,
+     "n_leaves": 99,
+     "pinned": 202,
+     "n_cells": 399,
+     "T_max_c": 28.3488701125075,
+     "dp_pa": 10023.23713352556,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 524,
+     "n_leaves": 108,
+     "pinned": 247,
+     "n_cells": 524,
+     "T_max_c": 28.15591607184944,
+     "dp_pa": 11313.597705317241,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 655,
+     "n_leaves": 116,
+     "pinned": 292,
+     "n_cells": 655,
+     "T_max_c": 27.96357129338069,
+     "dp_pa": 12391.656861352558,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 838,
+     "n_leaves": 127,
+     "pinned": 343,
+     "n_cells": 838,
+     "T_max_c": 27.864706275005958,
+     "dp_pa": 14393.858795019736,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 1047,
+     "n_leaves": 136,
+     "pinned": 399,
+     "n_cells": 1047,
+     "T_max_c": 27.757284667192668,
+     "dp_pa": 16419.63971996801,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    },
+    {
+     "budget": 1309,
+     "n_leaves": 151,
+     "pinned": 455,
+     "n_cells": 1309,
+     "T_max_c": 27.70158552607633,
+     "dp_pa": 18715.05676263252,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    }
+   ],
+   "n_feasible": 8,
+   "knee": {
+    "n_leaves": 151,
+    "budget": 1309,
+    "T_max_c": 27.70158552607633,
+    "dp_pa": 18715.05676263252
+   },
+   "knee_sensitivity": [
+    {
+     "t_tol_c": 0.01,
+     "n_leaves": 151,
+     "budget": 1309,
+     "T_max_c": 27.70158552607633,
+     "dp_pa": 18715.05676263252,
+     "dp_vs_min_front": 2.1294091633046532,
+     "T_max_penalty_c": 0.0
+    },
+    {
+     "t_tol_c": 0.1,
+     "n_leaves": 136,
+     "budget": 1047,
+     "T_max_c": 27.757284667192668,
+     "dp_pa": 16419.63971996801,
+     "dp_vs_min_front": 1.868235385086952,
+     "T_max_penalty_c": 0.05569914111633878
+    },
+    {
+     "t_tol_c": 0.5,
+     "n_leaves": 108,
+     "budget": 524,
+     "T_max_c": 28.15591607184944,
+     "dp_pa": 11313.597705317241,
+     "dp_vs_min_front": 1.2872671950291363,
+     "T_max_penalty_c": 0.4543305457731108
+    },
+    {
+     "t_tol_c": 1.0,
+     "n_leaves": 88,
+     "budget": 314,
+     "T_max_c": 28.56030950946051,
+     "dp_pa": 9172.952793584558,
+     "dp_vs_min_front": 1.0437034726082448,
+     "T_max_penalty_c": 0.8587239833841807
+    },
+    {
+     "t_tol_c": 2.0,
+     "n_leaves": 68,
+     "budget": 210,
+     "T_max_c": 29.05874536543886,
+     "dp_pa": 8788.849548101136,
+     "dp_vs_min_front": 1.0,
+     "T_max_penalty_c": 1.3571598393625308
+    },
+    {
+     "t_tol_c": 5.0,
+     "n_leaves": 68,
+     "budget": 210,
+     "T_max_c": 29.05874536543886,
+     "dp_pa": 8788.849548101136,
+     "dp_vs_min_front": 1.0,
+     "T_max_penalty_c": 1.3571598393625308
+    }
+   ],
+   "c2_summary": {
+    "n_on_front": 8,
+    "n_C2_ok_on_front": 8,
+    "all_satisfy_C2": true,
+    "note": "with r0=None every front row satisfies C2 by construction (r0 is derived from it); a non-zero count of violations means r0 was forced"
+   }
+  },
+  "radial_total": {
+   "infeasible": "control kind=radial (C5/total): no design satisfies C1 and C3 (swept 14 total-cell targets)."
+  },
+  "dominance_vs_radial": {
+   "infeasible": "control kind=radial (C5/total): no design satisfies C1 and C3 (swept 14 total-cell targets)."
+  },
+  "lattice_total": {
+   "front": [
+    {
+     "budget": 1309,
+     "n_leaves": null,
+     "pinned": 673,
+     "T_max_c": 27.20476017435516,
+     "dp_pa": 5.596251496339573,
+     "target_total": 1309,
+     "n_channel_cells": 1131,
+     "C1_enters_all_chips": true,
+     "C3_within_pump": true
+    }
+   ],
+   "n_feasible": 11
+  },
+  "dominance_vs_lattice": {
+   "tree_dominates": false,
+   "n_control_points_beating_tree": 1,
+   "examples": [
+    {
+     "control_target": 1309,
+     "control_basis": "total",
+     "control_T_max_c": 27.20476017435516,
+     "control_dp_pa": 5.596251496339573,
+     "tree_leaves": 68,
+     "tree_T_max_c": 29.05874536543886,
+     "tree_dp_pa": 8788.849548101136
+    }
+   ],
+   "best_T_max_c": {
+    "tree": 27.70158552607633,
+    "control": 27.20476017435516,
+    "tree_better": false
+   },
+   "best_dp_pa": {
+    "tree": 8788.849548101136,
+    "control": 5.596251496339573,
+    "tree_better": false
+   },
+   "front_sizes": {
+    "tree": 8,
+    "control": 1
+   }
+  }
+ }
+}
