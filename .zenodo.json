@@ -1,0 +1,28 @@
+{
+  "title": "仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账",
+  "description": "<p>在 50×50 二维导热网格上，以热寻路生长与 Murray 定径生成冷却通道树，并在同一功率、同一网格、同一钉住规则下与放射状通道和均匀格状网逐案比较。仓库包含全部 Python/MATLAB 源码、57 个原始输出文件（CSV/JSON/TXT/PNG/STL）、逐节对比台账（REPORT.md）、缺陷修复台账（DEFECT_REMEDIATION_PLAN.md）与论文 docx。</p><p>核心结果（N4c 修复后）：18 个可采纳 case 中，树对最优格状网的峰值温度为 11 胜 7 负；4 芯片布局 0/6 胜，是真实拓扑劣势。物理标定 253 W 下峰值 60.5 °C、R_th = 0.1403 °C/W；该值含 N=50 网格约 41% 的温升偏高，且与公开冷板数据口径不可比。</p><p>许可为混合：代码 MIT（LICENSE），数据与文档 CC BY 4.0（LICENSE-DATA）；src_extract/ 为第三方论文源码，不在许可覆盖范围内。作者姓名、单位与 DOI 尚未确定，以 TODO 占位。</p>",
+  "creators": [
+    {
+      "name": "TODO: 作者姓名",
+      "affiliation": "TODO: 单位"
+    }
+  ],
+  "upload_type": "software",
+  "access_right": "open",
+  "license": {
+    "id": "other-open"
+  },
+  "language": "zho",
+  "version": "0.1.0-draft",
+  "keywords": [
+    "constructal theory",
+    "Murray's law",
+    "physarum",
+    "heat sink",
+    "liquid cooling",
+    "microchannel",
+    "generative design",
+    "reproducibility"
+  ],
+  "notes": "Mixed licensing: code under MIT (LICENSE); data and documentation under CC BY 4.0 (LICENSE-DATA); src_extract/ excluded from both. This record is a pre-release: author identity and DOI are not yet assigned, and the TODO placeholders must be replaced before any claim of formal publication or archiving."
+}

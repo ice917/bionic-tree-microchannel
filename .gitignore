@@ -1,5 +1,2 @@
-__pycache__/
-*.pyc
-
-# MATLAB intermediate state (large, regenerable)
-*.mat
+# IDE-local skill copies (not project content)
+.trae/

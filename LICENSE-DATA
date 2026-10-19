@@ -1,0 +1,53 @@
+Data and documentation license
+==============================
+
+Scope
+-----
+This license applies to the following material in this repository, and to
+nothing else:
+
+  - outputs/            all generated result files (CSV, JSON, TXT, PNG, STL)
+  - README.md
+  - REPORTING_COMPLIANCE.md
+  - REPORT.md
+  - PROJECT.md
+  - DATA_DICTIONARY.md
+  - DEFECT_REMEDIATION_PLAN.md
+  - 论文/               the generated paper files
+
+Source code (*.py, *.m, *.slx) is licensed separately under the MIT License;
+see LICENSE.
+
+License
+-------
+The material listed above is licensed under the Creative Commons Attribution
+4.0 International License (CC BY 4.0).
+
+  Human-readable summary: https://creativecommons.org/licenses/by/4.0/
+  Full legal code:        https://creativecommons.org/licenses/by/4.0/legalcode
+
+You are free to share (copy and redistribute the material in any medium or
+format) and to adapt (remix, transform, and build upon the material) for any
+purpose, including commercially, under the following terms:
+
+  Attribution -- You must give appropriate credit, provide a link to the
+  license, and indicate if changes were made. You may do so in any reasonable
+  manner, but not in any way that suggests the licensor endorses you or your
+  use.
+
+  No additional restrictions -- You may not apply legal terms or
+  technological measures that legally restrict others from doing anything
+  the license permits.
+
+Suggested attribution string (replace the placeholder author before release):
+
+  TODO: 作者姓名 (2026). 仿生自适应网络芯片散热与布线: data and documentation.
+  Licensed under CC BY 4.0.
+
+Notes
+-----
+1. The full legal code is not reproduced here; the canonical text at the URL
+   above governs. This notice is a pointer, not a substitute.
+2. Third-party material: src_extract/ contains files extracted from a published
+   paper (FullPaper.tex, figures, style files) and is NOT covered by this
+   license. Those files remain under their original copyright.
