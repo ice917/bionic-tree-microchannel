@@ -78,6 +78,32 @@ MATLAB 脚本（`bionic_placement.m`、`multisource_coupled_main.m` 等）用于
 Get-Content MANIFEST.sha256 | ForEach-Object { $h,$p = $_ -split '  ',2; if ((Get-FileHash $p -Algorithm SHA256).Hash -ne $h) { $p } }
 ```
 
+### 行尾约定：重算清单前必须先归一化
+
+`.gitattributes` 固定 `* text=auto eol=lf`，并把 `.docx`/`.png`/`.stl`/`.slx`/`.zip` 声明为 `binary`。因此文本文件在任意平台都以 LF 检出、二进制文件不做任何转换。`MANIFEST.sha256` 记录的是**工作树字节**的 SHA-256，这条约定是清单可跨平台校验的前提：一旦工作树里出现 CRLF，干净克隆后哈希必然失配（修正前实测 65/132 项失配，修复见提交 `e1712c0`）。
+
+在 Windows 上，Python 以文本模式写文件会把换行写成 CRLF，重跑生成脚本后 `outputs/` 下的 `.json`/`.csv` 即属此类。**此时直接重算清单会把 CRLF 字节计入，再次破坏可校验性**；须先执行下面的归一化，再重算：
+
+```powershell
+# 按清单逐项把 CRLF 改写为 LF；含 NUL 的二进制文件跳过（幂等，无 CRLF 时不做任何写入）
+python -c @"
+import pathlib
+n = 0
+for line in pathlib.Path('MANIFEST.sha256').read_text(encoding='utf-8').splitlines():
+    if not line.strip():
+        continue
+    p = pathlib.Path(line.split('  ', 1)[1].strip())
+    b = p.read_bytes()
+    if b'\x00' in b[:8000] or b'\r\n' not in b:
+        continue
+    p.write_bytes(b.replace(b'\r\n', b'\n'))
+    n += 1
+print('rewritten =', n)
+"@
+```
+
+该改写只作用于换行符，不改变任何其他字节；新增或删除文件后，应先更新清单条目再执行归一化。
+
 ## 数据与单位（必读）
 
 - **物理 °C**：`multi_source_*`、`spread_source_thermal_*`、`lattice_pitch_*`、`unequal_power_pitch_*`、`c5_artifact.json`、`conjugate_*.json`、`real_unit_calibration.txt`。这些是 17×17 真实 die 足迹、8.0 W/cm² 口径或 A7 标定后的温度。
