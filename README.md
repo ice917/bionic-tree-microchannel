@@ -22,14 +22,15 @@
 ```
 *.py                      Python 求解、扫描与论文生成脚本
 *.m / *.slx               MATLAB 交叉验证与 Simulink 模型
-outputs/                  全部数值结果、图、STL（59 个文件，约 4.76 MB / 4,763,033 字节）
+outputs/                  全部数值结果、图、STL（70 个文件）
 论文/                      论文 docx 成品
 REPORT.md                 逐节对比台账（与论文互校）
 PROJECT.md                项目方案与目标（历史文档，结论以 REPORT.md 为准）
 DEFECT_REMEDIATION_PLAN.md 缺陷台账：机制、证据、修复、作废项
 DATA_DICTIONARY.md        每个输出文件的生成脚本、字段与单位状态
 REPORTING_COMPLIANCE.md   报告合规性对照（TOP 2025 七项 / Nature 数据与代码可用性）
-MANIFEST.sha256           outputs/、源脚本与 paper_template.py 的 SHA-256 清单（108 项）
+MANIFEST.sha256           全部随附文件（源码/工件/文档/论文）的 SHA-256 清单（132 项）
+DATA_AVAILABILITY.md      数据可用性声明模板（中英）
 src_extract/              Physarum 参考文献的 LaTeX 源码（第三方材料）
 ```
 
@@ -59,6 +60,15 @@ python extend_surface.py
 
 # 论文 docx（依赖同目录 paper_template.py，不读外部绝对路径）
 python generate_heat_tree_paper.py
+python generate_heat_tree_paper_mainstream.py
+python generate_heat_tree_paper_journal.py
+
+# 顶刊补强（数据链路断言 / 接头损失 / 3D 维度 / regime map / benchmark 数据集）
+python data_link_assertions.py
+python junction_loss_landing.py
+python conjugate_3d.py
+python regime_map.py
+python benchmark_dataset.py
 ```
 
 MATLAB 脚本（`bionic_placement.m`、`multisource_coupled_main.m` 等）用于交叉验证，不是 Python 结果的前置依赖。论文生成脚本只依赖同目录的 `paper_template.py`（已随仓库分发），故 docx 可在干净环境重建。

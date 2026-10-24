@@ -25,12 +25,61 @@ verified calibration anchor. Nothing is invented. Run:
 import json
 import os
 
+from docx.oxml import parse_xml
+from docx.oxml.ns import nsdecls
+from docx.shared import Cm
+
 from paper_template import PaperTemplate
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.join(HERE, "论文")
 os.makedirs(OUT_DIR, exist_ok=True)
 OUT_PATH = os.path.join(OUT_DIR, "仿生树形微通道散热_期刊投稿版.docx")
+
+# ---------------------------------------------------------------------------
+# AI 生成内容标识：文首一个「含 AI 生成」文本框 + 一个空段落。
+# 该标识此前由外部工具手工注入，生成器无法重建，导致 docx 内容不可复现；
+# 此处内建，使重生成的结果与投稿版一致。
+AI_LABEL_XML = (
+    "<w:p {ns}><w:r><w:rPr><w:noProof/></w:rPr><w:drawing>"
+    '<wp:inline distT="0" distB="0" distL="0" distR="0">'
+    '<wp:extent cx="2400000" cy="380000"/>'
+    '<wp:docPr id="{doc_pr_id}" name="AILabel"/>'
+    '<a:graphic><a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape">'
+    '<wps:wsp><wps:cNvSpPr txBox="1"/><wps:spPr>'
+    '<a:xfrm><a:off x="0" y="0"/><a:ext cx="2400000" cy="380000"/></a:xfrm>'
+    '<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>'
+    '<a:solidFill><a:srgbClr val="000000"><a:alpha val="50000"/></a:srgbClr></a:solidFill>'
+    '<a:ln w="12700"><a:solidFill><a:srgbClr val="FFFFFF"/></a:solidFill></a:ln>'
+    "</wps:spPr><wps:txbx><w:txbxContent>"
+    '<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/>'
+    '<w:sz w:val="28"/><w:szCs w:val="28"/>'
+    '<w:rFonts w:eastAsia="SimSun" w:ascii="Arial" w:hAnsi="Arial"/>'
+    '<w:color w:val="FFFFFF"/></w:rPr><w:t>含 AI 生成</w:t></w:r></w:p>'
+    "</w:txbxContent></wps:txbx>"
+    '<wps:bodyPr anchor="ctr" anchorCtr="0" lIns="91440" tIns="45720" rIns="91440" bIns="45720">'
+    "<a:noAutofit/></wps:bodyPr></wps:wsp></a:graphicData></a:graphic>"
+    "</wp:inline></w:drawing></w:r></w:p>"
+)
+
+
+def add_ai_label(doc):
+    """在正文最前插入「含 AI 生成」标识文本框，随后补一个空段落。"""
+    body = doc.element.body
+    used = [int(v) for v in body.xpath("//wp:docPr/@id") if v.isdigit()]
+    xml = AI_LABEL_XML.format(
+        ns=nsdecls("w", "wp", "a")
+        + ' xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"',
+        doc_pr_id=(max(used) + 1) if used else 1,
+    )
+    body.insert(0, parse_xml(xml))
+    body.insert(1, parse_xml("<w:p %s/>" % nsdecls("w")))
+
+# 数据链路口径断言（阶段 0）：任一断言失败即中断生成，防止口径锚点静默漂移
+import subprocess
+import sys
+subprocess.run([sys.executable, os.path.join(HERE, "data_link_assertions.py")],
+               check=True, cwd=HERE)
 
 
 # ---------------------------------------------------------------------------
@@ -79,7 +128,11 @@ _deg = RUN["tree"]["degree_hist"]
 _stl = RUN["stl"]["manifold"]
 _tol = C5["shared_threshold_c"]
 
-paper = PaperTemplate(OUT_PATH)
+# 中文期刊常规版面：A4，左右边距 2.88 cm 使正文宽为 15.24 cm
+paper = PaperTemplate(OUT_PATH, margins=(2.54, 2.54, 2.88, 2.88))
+for _sec in paper.doc.sections:
+    _sec.page_width = Cm(21.0)
+    _sec.page_height = Cm(29.7)
 
 # ===========================================================================
 # Front matter
@@ -230,7 +283,7 @@ paper.p(
 paper.image(os.path.join(HERE, "outputs", "step2_tree.png"),
             caption="图1 热场驱动生长得到的树形通道形态"
                     f"（{RUN['tree']['edges']} 段、{_deg['1']} 叶）",
-            width_cm=9)
+            width_cm=15.24)
 
 paper.h2("2.3 Murray 定律管径分配")
 paper.p(
@@ -345,9 +398,9 @@ paper.p(
     "水力解另用 Simulink 电学类比（流体–电路同构）独立引擎交叉验证，两引擎在等占用"
     "约束下压降一致，排除了单一实现的系统性错误。该电路与 8 邻域网格严格同构（水平/"
     "竖直/对角边数 12/12/18，合计 42），见 图2。")
-paper.image(os.path.join(HERE, "outputs", "chip_route_circuit.png"),
-            caption="图2 Simulink 电学类比电路（与 8 邻域网格严格同构）",
-            width_cm=11)
+paper.image(os.path.join(HERE, "outputs", "chip_route_iso.png"),
+            caption="图2 电学类比电路示意（与 8 邻域网格严格同构，按模型网表重绘，电学网络与数值不变）",
+            width_cm=15.2)
 
 paper.h2("3.4 有限流量共轭验证")
 paper.p(
@@ -415,11 +468,19 @@ paper.p(
     f"唯一区别是压降——树 {_cmp['tree']['pressure_drop']} 对直通道 "
     f"{_cmp['straight']['pressure_drop']}（无量纲），比值 {_dp_ratio:.0f}×。机制上，"
     "源区本身即最热的未钉住格，通道一旦覆盖源邻域，$T_{max}$ 随即饱和，拓扑不再提供"
-    "额外收益；而树的 $r^4$ 四次方惩罚（式 (3)）使其压降远高于直通道。图3 以 "
-    "2D/1D 共轭扫掠进一步说明：流量由 "
-    f"{CONJ['sweep'][0]['q_lpm']} 增至 {CONJ['sweep'][-1]['q_lpm']} L/min 时峰值"
-    f"变化仅 {CONJ['sweep'][0]['peak_c'] - CONJ['sweep'][-1]['peak_c']:.1f} °C，"
-    "而压降随流量线性增长——热侧饱和、水力侧敏感，是该工况的完整特征。")
+    "额外收益；而树的 $r^4$ 四次方惩罚（式 (3)）使其压降远高于直通道。表3 的 "
+    "2D/1D 共轭扫描进一步说明：流量由 "
+    f"{CONJ['sweep'][0]['q_lpm']} 增至 {CONJ['sweep'][-1]['q_lpm']} L/min（约 "
+    f"{CONJ['sweep'][-1]['q_lpm'] / CONJ['sweep'][0]['q_lpm']:.0f} 倍）时峰值由 "
+    f"{CONJ['sweep'][0]['peak_c']:.4f} 降至 {CONJ['sweep'][-1]['peak_c']:.4f} °C，"
+    f"降幅 {CONJ['sweep'][0]['peak_c'] - CONJ['sweep'][-1]['peak_c']:.1f} °C（约 "
+    f"{100 * (CONJ['sweep'][0]['peak_c'] - CONJ['sweep'][-1]['peak_c']) / CONJ['sweep'][0]['peak_c']:.0f}%）；"
+    f"其中 {CONJ['sweep'][0]['q_lpm']}→{CONJ['sweep'][1]['q_lpm']} L/min 的首段即占 "
+    f"{CONJ['sweep'][0]['peak_c'] - CONJ['sweep'][1]['peak_c']:.1f} °C，此后 100 倍流量"
+    f"仅再降 {CONJ['sweep'][1]['peak_c'] - CONJ['sweep'][-1]['peak_c']:.1f} °C，"
+    f"{CONJ['sweep'][2]['q_lpm']} L/min 以上更只余 "
+    f"{CONJ['sweep'][2]['peak_c'] - CONJ['sweep'][-1]['peak_c']:.1f} °C——热侧迅速饱和，"
+    "而压降随流量近似线性增长，水力侧始终敏感。")
 
 paper.h2("4.2 多热源：等钉住口径下的比较")
 # multi_source_summary.json packs layout and budget into one `case` string;
@@ -438,25 +499,29 @@ _MS_SKIPPED = [r for r in _MS_ROWS if "skipped" in r]
 _MS_SWEEP = [r for r in _MS_OK if r["budget"] in MS["budgets"]]
 _MS_LAYOUTS = ["2 chips, 20 mm apart", "3 chips, triangle",
                "4 chips, corners", "5 chips, corners+centre"]
-_worst = min(_MS_SWEEP, key=lambda r: r["dT_max_tree_minus_ctrl"])
-_best = max(_MS_SWEEP, key=lambda r: r["dT_max_tree_minus_ctrl"])
+# 逐档差值 -3.16 / -3.74 / -1.82 / -2.08 / -4.69 / -2.74 / -0.92 / -1.09 与
+# 高温区 1427/1352、1519/1516 均取自 multi_source_summary.json 的对应 case，
+# 并与下方表5 逐行一致（表5 由同一 _MS_SWEEP 生成）。
 paper.p(
     f"在 2/3/4/5 芯片布局、等钉住口径下扫描预算 "
     f"{min(MS['budgets'])}–{max(MS['budgets'])} 格，共 {len(_MS_ROWS)} 组设计点，"
-    f"其中 {len(_MS_SWEEP)} 组成功求解、{len(_MS_SKIPPED)} 组被 C1 门跳过（均为 5 芯片"
-    "布局—— budget 不足时树无法同时进入全部五个 footprint，见 4.4.4 节）；另有 8 组"
-    "间距扫描。表5 给出代表工况：树在全部成功布局上 $T_{max}$ 低于“一管一芯片”的径向"
-    f"基线，差值由 {_worst['dT_max_tree_minus_ctrl']:+.2f} °C"
-    f"（{_worst['layout']}、{_worst['budget']} 格）变化至 "
-    f"{_best['dT_max_tree_minus_ctrl']:+.2f} °C（{_best['layout']}、"
-    f"{_best['budget']} 格），优势随预算增大而收窄；代价是压降比随预算上升，最大达 "
-    f"{max(r['dp_ratio_tree_over_ctrl'] for r in _MS_SWEEP):.0f}×。"
-    "等钉住约束的满足情况由 "
-    f"{sum(1 for r in _MS_SWEEP if r['tree_pinned'] == r['ctrl_pinned'])}/"
-    f"{len(_MS_SWEEP)} 组逐格相等保证。")
+    f"其中 {len(_MS_SWEEP)} 组成功求解、{len(_MS_SKIPPED)} 组被 N4b 几何门跳过（均为 5 "
+    "芯片布局——真实 17×17 footprint 下中心块与四角块相接，五个源块融合为单一连通区、"
+    "逐芯片指标无定义，见 4.4.4 节）；另有 8 组间距扫描。表5 给出全部 18 组成功布局："
+    "树在全部成功布局上 Tmax 低于“一管一芯片”的径向基线，差值由 -4.69 °C"
+    "（3 chips, triangle、700 格）变化至 -0.92 °C（4 chips, corners、600 格）。"
+    "优势并非随预算单调：2 芯片在 600–700 格达到最大（-3.74 °C），更小（400 格，"
+    "-3.16 °C）与更大预算（1000–1300 格，-1.82 至 -2.08 °C）均收窄；3 芯片在中段 "
+    "700 格最深（-4.69 °C）；4 芯片在 400 格最深（-2.74 °C）而在 600 格最浅"
+    "（-0.92 °C），到 1300 格仅缓慢回到 -1.09 °C。代价是压降比，18 组落在 "
+    "28.6×–96.9× 区间（全部 26 个成功 case 为 27.8×–96.9×）。等钉住约束的满足情况由 "
+    "18/18 组逐格相等保证，且每个芯片均被触及（最大芯片距 0）。两处例外需说明："
+    "3 芯片/400 格时树的高温区 1427 mm²、对照组 1352 mm²；4 芯片/600 格时 1519 mm² "
+    "对 1516 mm²——这是 26 个 case 中仅有的两处树/对照高温区比值大于 1"
+    "（比值区间 0.47–1.06）。")
 _c5ms = []
 for _lay in _MS_LAYOUTS[:3]:
-    for _bud in (400, 1300):
+    for _bud in sorted(MS["budgets"]):
         _hit = [r for r in _MS_SWEEP
                 if r["layout"] == _lay and r["budget"] == _bud]
         if _hit:
@@ -471,16 +536,15 @@ paper.table(
     headers=["布局", "预算(格)", "钉住(树=对照)", "树 $T_{max}$ (°C)",
              "对照 $T_{max}$ (°C)", "$\\Delta T_{max}$ (°C)", "$\\Delta p$ 比"],
     data=_c5ms,
-    caption=f"表5 等钉住口径下树与径向基线比较（{len(_MS_SWEEP)} 组成功扫描中的"
-            "代表工况）",
+    caption=f"表5 等钉住口径下树与径向基线的比较（全部 {len(_MS_SWEEP)} 组成功布局）",
 )
 
 paper.h2("4.3 多热源：等总占用格点口径下的比较")
 paper.p(
     "等钉住口径允许两侧材料量不同（树通道可复用主干）。更严格的 C5 口径要求两侧通道"
     "占用总格点数逐格相等，此时只有排列方式不同。表6 给出代表工况：格状网在峰值温度"
-    "上整体不劣于树，且压降低 2–3 个数量级；径向通道在 3/4 芯片下因无法均衡供水而 "
-    "$T_{max}$ 偏高，但压降最低；树在温度上仅对径向有优势，代价是压降高出约三个"
+    "上整体不劣于树，且压降低 2–3 个数量级；径向通道在 3/4 芯片下 $T_{max}$ 略高于"
+    "树（0.2–0.7 °C），但压降最低；树在温度上仅对径向有微弱优势，代价是压降高出约三个"
     "数量级。以 3 芯片、1300 格为例，树 "
     f"{[r for r in C5['rows'] if r['case'].startswith('3 chips') and r['budget'] == 1300][0]['tree_T_max']:.3f} °C "
     "对格状 "
@@ -509,42 +573,62 @@ paper.table(
     caption="表6 等总占用格点口径下三类拓扑比较（温度 °C；压降为对照组）",
 )
 paper.p(
-    "须说明径向通道在 3/4 芯片下 INFEASIBLE 的成因：该构造按芯片顺序分配预算，小预算下"
-    "先建管道的芯片独占预算，后续芯片的 C1 门无法满足。这是流顺序构造的产物，不是"
-    "物理不可行，故表中相应格留空并在 4.4 节作为方法学局限讨论。")
+    "径向对照已改用跨芯片轮询的均衡分配，早期按芯片顺序分配导致后续芯片缺水的缺陷"
+    "已修复，故 3/4 芯片下不再存在 C1 不可行行。")
 
 paper.h2("4.4 格状网基线与优势边界的再检验")
 paper.h3("4.4.1 等压降材料代价")
 paper.p(
     "“树省料”的说法需在等压降下检验。以等钉住、等压降为约束重算材料量，树的材料"
-    "用量为格状网的数倍至两个数量级（原结论 277–350×），故本文不主张树省料，只讨论"
+    "用量为格状网的 33–42 倍（4/4 反向），故本文不主张树省料，只讨论"
     "温度与压降的权衡。")
 paper.h3("4.4.2 非均功率与 pitch 扫描")
+# 口径注记（2026-10-24）：UPOW['cases'] 的顺序是 [1/1/1, 1/1/5, 3/1/1, 1/2/3]，
+# 不是文档叙述顺序；tree_minus_best_Tmax = 树 − 最优格状网，负值表示树更低。
+# 旧稿取 cases[3]（=1/2/3 的 0.7411）却标注“1/1/5”，且把 1/1/1 下“树低 1.2158”
+# 反向写成“格状网低 1.2158”，并将最优 pitch 写成空洞的“p13 与 p13”。三处已按工件
+# 与 doc3 §10 改正（1/1/5 实为 0.4170；最优 pitch 只在 3/1/1 落到 p10）。
+_up = {"/".join(str(int(v)) for v in c["powers"]): c for c in UPOW["cases"]}
+_up_abs = [abs(c["tree_minus_best_Tmax"]) for c in UPOW["cases"]]
+_up_pitch = sorted({c["best_Tmax_pitch"] for c in UPOW["cases"]})
+_up_low = [c for c in UPOW["cases"] if c["best_Tmax_pitch"] == min(_up_pitch)][0]
+_up_label = "/".join(str(int(v)) for v in _up_low["powers"])
+_up_win = sum(1 for c in UPOW["cases"] if c["tree_minus_best_Tmax"] < 0)
 paper.p(
-    "把“等功率”假设去掉后，树的自适应只在部分功率配比下成立。在 "
-    f"{UPOW['layout']}、预算 {UPOW['budget']} 格、{len(UPOW['pitches'])} 个 pitch "
+    "把“等功率”假设去掉后，树在峰值温度上的优势并未消失，但“自适应”的强度依赖功率分布。"
+    f"在 {UPOW['layout']}、预算 {UPOW['budget']} 格、{len(UPOW['pitches'])} 个 pitch "
     f"（pitch {min(UPOW['pitches'])}–{max(UPOW['pitches'])}）上重扫：等功率配比 "
-    "（1/1/1）下最优格状网的 $T_{max}$ 比树低 "
-    f"{abs(UPOW['cases'][0]['tree_minus_best_Tmax']):.4f} °C，热点面积差 "
-    f"{UPOW['cases'][0]['tree_minus_best_hotspot']:+.1f} mm²；而在极端配比 "
-    "（1/1/5）下树反低 "
-    f"{abs(UPOW['cases'][3]['tree_minus_best_Tmax']):.4f} °C。最优 pitch 随功率配比"
-    f"在 p{UPOW['cases'][0]['best_Tmax_pitch']} 与 p{UPOW['cases'][3]['best_Tmax_pitch']} "
-    "之间移动，说明“树自适应”不是稳健结论，而是与功率分布、pitch 选择耦合的条件性"
-    "结论。")
+    "（1/1/1）下树的 $T_{max}$ 比最优格状网低 "
+    f"{abs(_up['1/1/1']['tree_minus_best_Tmax']):.4f} °C，热点面积差 "
+    f"{_up['1/1/1']['tree_minus_best_hotspot']:+.1f} mm²；换到极端配比 （1/1/5），树仍低 "
+    f"{abs(_up['1/1/5']['tree_minus_best_Tmax']):.4f} °C，但热点面积差转为 "
+    f"{_up['1/1/5']['tree_minus_best_hotspot']:+.1f} mm²（最优格状网把两颗低功率芯片压到 "
+    f"0 mm²，集中保 5 倍功率那颗）。四个配比下树 {_up_win}/{len(UPOW['cases'])} 全胜（"
+    f"−{min(_up_abs):.4f} 至 −{max(_up_abs):.4f} °C）；最优 pitch 随功率配比在 "
+    f"p{max(_up_pitch)} 与 p{min(_up_pitch)} 之间移动（仅 {_up_label} 取 "
+    f"p{min(_up_pitch)}），“树自适应”因此部分成立：在本布局与预算下温度方向一致，"
+    "集中度与热点面积仍与功率分布、pitch 选择耦合。")
 paper.h3("4.4.3 有限对流边界")
+# 此处原用 max(|dT_max|) 作为“差值变化上限”，但该量等于拓扑差本身的量级（≈4.6 °C），
+# 对“理想冷汇无害”不构成信息量；改用 10 档 h 下 dT_max 的极差（0.0671 °C）。
+_dT_robin = [r["dT_max"] for r in ROBIN["multi"]]
 paper.p(
     "把边界从理想冷汇改为有限对流（$h_{conv}$ 扫描 0–0.3 W/(mm²·K)），树与对照的"
     "$T_{max}$ 同步平移，差值变化不超过 "
-    f"{max(abs(r['dT_max']) for r in ROBIN['multi']):.4f} °C，"
+    f"{max(_dT_robin) - min(_dT_robin):.4f} °C，"
     "证明理想冷汇是一个无害近似——它不改变方向性结论，只整体抬高温度水平。")
-paper.h3("4.4.4 预算不足时的漏连失效模式")
+paper.h3("4.4.4 5 芯片布局被排除的原因：footprint 融合，而非预算不足")
 paper.p(
-    "C1 门（见 2.5 节）在预算不足时会如实拒绝设计：5 芯片布局在全部六个预算档上均被"
-    f"跳过（{len(_MS_SKIPPED)}/{len(_MS_ROWS)} 组），因为 $N_{{leaves}}=5$ 时根半径"
-    "已占去相当预算，末梢无法同时覆盖五个 footprint。这是树形拓扑的真实失效模式，"
-    "而非求解器缺陷——它给出了树形方案的预算下界，也说明“树更优”的适用区间本身受"
-    "预算约束。")
+    "本文不报告任何 5 芯片工况，原因是几何性的而非水力性的。每个裸片在真实 footprint "
+    "下是 17×17 的块。在“四角+中心”布局中，角块到中心块的偏移为 (13, 13) 格，因此"
+    "半宽 8 的块在每轴上重叠 4 格：每个角块与中心块共享 16 格，五个块渗透成一个 1381 "
+    "格的单一连通区（5×289 − 4×16），此时“芯片到最近树格的距离”以及由此定义的逐芯片"
+    "指标归一化都无定义。因此全部六个预算档在任何水力比较之前即被几何有效性门"
+    "（代码中的 N4b）排除——不是被 C1 钉住门排除，也不是因为预算太小。2/3/4 芯片布局"
+    f"中没有类似情况：全部 {len(_MS_SWEEP)} 个成功求解的 case 逐格钉住数相等，最大芯片"
+    "距为 0。五芯片几何超出了本 footprint 模型能解析的范围；更小的裸片（小于 17×17 "
+    "格），或任一轴上大于 17 格的角–中心偏移，都会使各块重新分离。该实验留待后续，"
+    "它界定了 4.2 节多热源结论适用的布局范围。")
 
 paper.h2("4.5 约束驱动生成器的 Pareto 前沿")
 paper.p(
@@ -559,9 +643,9 @@ paper.p(
     f"{FRONTS['3 chip']['tree']['front'][0]['dp_pa']:.0f} 升至 "
     f"{FRONTS['3 chip']['tree']['front'][-1]['dp_pa']:.0f} Pa，涨幅 "
     f"{FRONTS['3 chip']['tree']['front'][-1]['dp_pa'] / FRONTS['3 chip']['tree']['front'][0]['dp_pa']:.1f}×。"
-    "把等总口径对照放进同一框架后，树在四个布局上均被支配：对照在持平或更优的 "
-    "$T_{max}$ 下压降低 2–3 个数量级（3/4 芯片的径向对照因流顺序构造不可行，见 "
-    "4.3 节）。")
+    "把等总口径对照放进同一框架后：格状网在四个布局上均支配树（温度持平或更优、"
+    "压降低 2–3 个数量级）；径向通道在 3/4 芯片下温度略高（0.2–0.7 °C），压降同样"
+    "低 2–3 个数量级。")
 _frows = []
 for lab in ["1 chip", "2 chip d=16", "3 chip", "4 chip"]:
     e = FRONTS[lab]
@@ -608,13 +692,13 @@ paper.table(
     caption="表8 膝盖点对热容忍度的敏感性（四个布局，六个容忍度）",
 )
 paper.image(os.path.join(HERE, "outputs", "generator_front_compare.png"),
-            caption="图3 3 芯片布局等总口径前沿：峰值温度与压降随总占用格点变化",
-            width_cm=13)
+            caption="图3 3 芯片布局等总口径可行设计：峰值温度与压降随总占用格点变化",
+            width_cm=15.2)
 
 paper.h2("4.6 讨论与局限")
 paper.p(
-    "本结果的工程含义是明确的：树形冷板只在多热源、且对照无法均衡供水的场景下对温度"
-    "有边际收益，代价是压降高出数个数量级；在单热源与等总占用口径下不具备优势。这与"
+    "本结果的工程含义是明确的：树形冷板在多热源场景下对径向仅有 0.2–0.7 °C 的微弱"
+    "温度收益、对格状被支配，代价是压降高出数个数量级；在单热源与等总占用口径下不具备优势。这与"
     "文献中“树形普遍更优”的印象相左，根源在于既有比较常未对齐预算口径。")
 paper.p(
     "局限须如实说明：（1）压降为纯黏性项（式 (3)），未含接头局部损失与 0.2–0.5 mm "
@@ -622,8 +706,10 @@ paper.p(
     "恰是局部损失最集中处，真实差距可能更大；（2）2D 模型缺封装层、对流膜系数与 398 "
     "处接头的局部损失，压降结论是上界估计；（3）黏度取 20 °C 值作用于 25 °C 工况，"
     "压降偏高约 12.6%；（4）最冷设计距泵限仅 1.2–1.7 倍余量，泵选型应取非零热容忍度"
-    "的膝盖点；（5）径向对照在 3/4 芯片下的不可行是流顺序构造产物，需改用均衡分配"
-    "算法后重测。这些均不改变“树在公平口径下不占优”的方向性结论。")
+    "的膝盖点；（5）本文未做打印或实验实测，通道连通性、接头密封与承压能力均未经"
+    "直接验证，仅由 STL 边界边为 0、有向体积闭合等几何指标间接支持。冷板工程实践"
+    "指出，承压设计不足会导致密封失效，或与芯片贴合不良而抬高界面热阻[19]，故本文的"
+    "压降与热阻结论仍需实验标定。这些均不改变“树在公平口径下不占优”的方向性结论。")
 
 # ===========================================================================
 # 5. Conclusions
@@ -644,8 +730,8 @@ paper.pm("（4）模型经网格无关性（细网格 GCI 0.067%–3.14%）、�
          "全部数值可一键复现。")
 paper.p(
     "本文的贡献是可复现的公平比较协议与约束驱动生成装置，而非树形拓扑的性能优势——"
-    "实测恰相反。这为仿生散热结构的筛选提供了判据：树形冷板仅在多热源且对照无法均衡"
-    "供水时值得考虑，单热源场景可直接排除。")
+    "实测恰相反。这为仿生散热结构的筛选提供了判据：树形冷板仅在多热源且对照为径向"
+    "直管时才有 0.2–0.7 °C 的微弱温度收益，单热源场景可直接排除。")
 
 # ===========================================================================
 # Closing statements (journal conventions)
@@ -690,7 +776,7 @@ for ref in [
     "network in path finding by true slime mold[J]. Journal of Theoretical Biology, "
     "2007, 244(4): 553-564.",
     "[6] Bonifaci V, Mehlhorn K, Varma G. Physarum can compute shortest paths[J]. "
-    "Journal of Theoretical Biology, 2018, 309: 121-133.",
+    "Journal of Theoretical Biology, 2012, 309: 121-133.",
     "[7] Jing D, Song S, He L. Reexamination of Murray's law for tree-like rectangular "
     "microchannel network with constant channel height[J]. International Journal of "
     "Heat and Mass Transfer, 2019, 128: 1344-1350.",
@@ -748,5 +834,6 @@ for cmd in [
     paper.pm(f"`{cmd}`")
 
 paper.check_numbering()
+add_ai_label(paper.doc)
 paper.save()
 print("OK ->", OUT_PATH)
