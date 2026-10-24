@@ -2418,6 +2418,10 @@ paper.pm('（13）**把预算从自由参数改成约束解之后，树在等总
 # ============================================================
 paper.h1('19 复现')
 
+paper.p('**协议载体。** 本研究的判定协议——判据 R1–R26 的原文、通过门槛、作废项与逐步修复记录——'
+        '由仓库根目录的 `DEFECT_REMEDIATION_PLAN.md` 承载，该文件随仓库公开分发，并包含在参考文献 [21] '
+        '所引的 Zenodo 归档内。下列命令与其产物清单对应协议的执行部分；判据本身不在此重复，以免两处漂移。')
+
 paper.p('Python 部分：')
 paper.p('`python heat_tree.py` — 默认中心热源、400 节点、8 根对照直通道')
 paper.p('`python heat_tree.py --source-x 10` — 换热源位置，验证树形跟着变')
@@ -2495,9 +2499,9 @@ paper.p('**不可得与作废。** `tree_dynamic.stl` 的 MATLAB 生成器未入
         '引用旧值前须先核对该表。')
 paper.p('**第三方材料。** `src_extract/` 与 `参考论文/` 为他人论文的 LaTeX 源码与 PDF，不在本数据集许可范围内，'
         '也未列入 `MANIFEST.sha256`；二者已由 `.gitignore` 排除，不随本仓库或归档记录分发。')
-paper.p('**托管状态。** 本数据集的 v1.0.0（版本 DOI 10.5281/zenodo.23620419）与 v1.0.1'
-        '（版本 DOI 10.5281/zenodo.23621256）两份快照均已于 2026-10-24 永久归档于 Zenodo；'
-        '概念 DOI 10.5281/zenodo.23620418 始终解析到最新归档版本。同一快照亦公开托管于 '
+paper.p('**托管状态。** 本数据集已永久归档于 Zenodo，概念 DOI 10.5281/zenodo.23620418 始终解析到最新归档版本；'
+        '已归档快照的版本 DOI 包括 v1.0.0（10.5281/zenodo.23620419）与 v1.0.1（10.5281/zenodo.23621256），'
+        '后续修订沿用同一概念 DOI，不再改变本段的表述。同一快照亦公开托管于 '
         'https://github.com/ice917/bionic-tree-microchannel。按 TOP 2025 的操作化定义，'
         '"公开托管 + 持久标识 + 参考文献引用"三项条件均已具备，数据集引用见参考文献 [21]。'
         '作者姓名与版权人已由占位符替换为 Wu, Haoran。')
@@ -2516,12 +2520,13 @@ paper.p('**构建依赖。** Python 3.13.9、numpy 2.3.5、scipy 1.16.3、matplo
         '论文 docx 由 `generate_heat_tree_paper.py` 生成，只依赖同目录的 `paper_template.py`，'
         '不读取仓库外的绝对路径。')
 paper.p('**已知不可复现项。** `tree_dynamic.stl` 的生成器未入库；该文件不参与可制造性主张。')
-paper.p('**托管状态。** 代码与数据同处上述 Zenodo 记录（v1.0.0 版本 DOI 10.5281/zenodo.23620419、'
-        'v1.0.1 版本 DOI 10.5281/zenodo.23621256、概念 DOI 10.5281/zenodo.23620418）'
+paper.p('**托管状态。** 代码与数据同处上述 Zenodo 记录（概念 DOI 10.5281/zenodo.23620418 始终指向最新归档版本；'
+        '已归档快照的版本 DOI 包括 v1.0.0 的 10.5281/zenodo.23620419 与 v1.0.1 的 10.5281/zenodo.23621256）'
         '与 GitHub 仓库 https://github.com/ice917/bionic-tree-microchannel，满足 Nature Portfolio'
         '"发表后即可得且带持久标识"中"可取回"的部分；数据集已在参考文献 [21] 中正式引用。'
-        '推荐引用格式为：Wu H. 仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账（v1.0.1）'
-        '[CP/OL]. Zenodo, 2026. https://doi.org/10.5281/zenodo.23621256。')
+        '推荐引用格式为：Wu H. 仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账'
+        '[CP/OL]. Zenodo, 2026. https://doi.org/10.5281/zenodo.23620418'
+        '（概念 DOI，始终指向最新归档版本）。')
 
 # ============================================================
 paper.h1('参考文献')
@@ -2589,8 +2594,9 @@ paper.reference('[19] FiberMall. Deep dive into NVIDIA GB200 liquid cooling plat
                 'https://www.fibermall.com/blog/nvidia-gb200-liquid-cooling-plate.htm, 2026-10-18.')
 paper.reference('[20] EngineerLaboratory. Dynamic viscosity of water[EB/OL]. '
                 'https://www.enginelaboratory.com/tables/dynamic-viscosity-of-water, 2026-10-18.')
-paper.reference('[21] Wu H. 仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账（v1.0.1）'
-                '[DS/OL]. Zenodo, 2026. https://doi.org/10.5281/zenodo.23621256.')
+paper.reference('[21] Wu H. 仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账'
+                '[DS/OL]. Zenodo, 2026. https://doi.org/10.5281/zenodo.23620418'
+                '（概念 DOI，始终解析到最新归档版本）.')
 
 paper.save()
 print('OK ->', OUT_FILE)
