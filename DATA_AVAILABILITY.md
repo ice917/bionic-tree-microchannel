@@ -12,7 +12,8 @@ The source code and all numerical artefacts that support the findings of this
 study — including the Python/MATLAB reproduction scripts, the raw results in
 `outputs/` (JSON/CSV/TXT files), the figures (PNG), and the manufacturable
 geometry (STL) — are openly available in the Zenodo repository at `[DOI: to be
-assigned]` and in the GitHub repository at `[URL: to be assigned]`. The code is
+assigned]` and in the GitHub repository at
+`https://github.com/ice917/bionic-tree-microchannel`. The code is
 licensed under MIT (`LICENSE`); the data and documentation are licensed under
 CC BY 4.0 (`LICENSE-DATA`). Every number in the manuscript is loaded at run time
 from these artefacts and can be reproduced end-to-end by running the commands
@@ -32,7 +33,8 @@ the electrical model is instead guaranteed by the network construction code
 
 支撑本研究发现的源代码与全部数值工件——包括 Python/MATLAB 复现脚本、`outputs/`
 下的原始结果（JSON/CSV/TXT）、图（PNG）与可制造几何（STL）——已在 Zenodo 仓库
-`[DOI：待分配]` 与 GitHub 仓库 `[URL：待分配]` 开放获取。代码采用 MIT 许可
+`[DOI：待分配]` 与 GitHub 仓库 `https://github.com/ice917/bionic-tree-microchannel`
+开放获取。代码采用 MIT 许可
 （`LICENSE`），数据与文档采用 CC BY 4.0（`LICENSE-DATA`）。本文全部数值均在运行时
 从这些工件加载，可依据附录「复现命令」端到端复现；所有随附文件的 SHA-256 校验值
 记录于 `MANIFEST.sha256`。三个 Simulink 模型（`*.slx`）随仓库分发，但不纳入该校验
@@ -45,5 +47,5 @@ the electrical model is instead guaranteed by the network construction code
 
 1. ~~作者姓名、单位、ORCID~~（已填：Haoran Wu / Wuchang University of Technology / 0009-0005-1975-1511）。
 2. Zenodo DOI（`.zenodo.json` 上传后自动生成，回填声明中的 `[DOI]`）。
-3. GitHub 仓库 URL（如有）。
+3. ~~GitHub 仓库 URL~~（已填：https://github.com/ice917/bionic-tree-microchannel，main 分支已推送）。
 4. `.zenodo.json` 的 `version` 由 `0.1.0-draft` 改为正式版本号。
