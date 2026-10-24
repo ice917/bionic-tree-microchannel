@@ -121,13 +121,14 @@ print('rewritten =', n)
 
 作者：Wu, Haoran（武昌理工学院 / Wuchang University of Technology），ORCID [0009-0005-1975-1511](https://orcid.org/0009-0005-1975-1511)。
 
-本仓库已在 Zenodo 永久归档（v1.0.0 与 v1.0.1 于 2026-10-24 发布，v1.0.2 为当前投稿版本）：
+本仓库已在 Zenodo 永久归档（v1.0.0、v1.0.1、v1.0.2 均于 2026-10-24 发布，v1.0.2 为投稿版本）：
 
 - 概念 DOI（始终指向最新归档版本，**推荐引用**）：[10.5281/zenodo.23620418](https://doi.org/10.5281/zenodo.23620418)
+- v1.0.2 的版本 DOI（当前投稿版）：[10.5281/zenodo.23622141](https://doi.org/10.5281/zenodo.23622141)
 - v1.0.1 的版本 DOI（含生成式 AI 声明）：[10.5281/zenodo.23621256](https://doi.org/10.5281/zenodo.23621256)
 - v1.0.0 的版本 DOI（不含生成式 AI 声明）：[10.5281/zenodo.23620419](https://doi.org/10.5281/zenodo.23620419)
 
-v1.0.2 的版本 DOI 由 Zenodo 在该版本归档完成后分配，因此不可能出现在本文件所属的 v1.0.2 归档快照内；它在归档后补记于 main 分支的 README 与 `CITATION.cff`。概念 DOI 不受此限制，始终解析到最新归档版。
+v1.0.2 的版本 DOI 由 Zenodo 在该版本归档完成后分配，故不可能出现在 v1.0.2 归档快照内的 README 与 `CITATION.cff` 中；归档后已补记于 main 分支的这两个文件（此处即该补记）。概念 DOI 不受此限制，始终解析到最新归档版。
 
 推荐引用格式：
 
