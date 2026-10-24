@@ -236,13 +236,21 @@ def heatmap(T, path, title, edges=None, grid_x=50, src=None):
                                    xs.max() - xs.min() + 1, ys.max() - ys.min() + 1,
                                    fill=False, edgecolor="cyan", lw=1.2))
     if edges is not None:
-        ys, xs = [], []
+        # One LineCollection entry per segment. A single ax.plot() over the
+        # concatenated endpoints joins the end of one segment to the start of
+        # the next; because `edges` is an unordered list that draws long chords
+        # across the plate (the "ball of wool" artefact).
+        from matplotlib.collections import LineCollection
+
+        segs = []
         for p, ch in edges:
             py, px = divmod(p, grid_x)
             cy, cx = divmod(ch, grid_x)
-            ys += [py, cy]
-            xs += [px, cx]
-        ax.plot(xs, ys, color="cyan", lw=0.8, alpha=0.9)
+            segs.append([(px, py), (cx, cy)])
+        ax.add_collection(LineCollection(segs, colors="black", alpha=0.55,
+                                         linewidths=2.4, zorder=3))
+        ax.add_collection(LineCollection(segs, colors="cyan", alpha=1.0,
+                                         linewidths=0.9, zorder=4))
     ax.set_title(title)
     ax.set_xlabel("x [mm]")
     ax.set_ylabel("y [mm]")

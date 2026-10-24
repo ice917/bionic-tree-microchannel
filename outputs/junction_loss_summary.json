@@ -1,0 +1,39 @@
+{
+  "tree": "single-source b=400 (61 leaves, 56 forks)",
+  "pure_viscous_dp_pa": 80.248475,
+  "pure_viscous_dp_kpa": 0.080248,
+  "junction_amplification_range_x": [
+    2.606,
+    98.8
+  ],
+  "models": [
+    {
+      "model": "J1_rennels_split",
+      "note": "下界（湍流外推）",
+      "dp_pure_viscous_pa": 80.248475,
+      "dp_viscous_pa": 80.248475,
+      "dp_junctions_pa": 141.497157,
+      "dp_total_pa": 209.1122,
+      "amplification_x": 2.606
+    },
+    {
+      "model": "J2_const_1p8",
+      "note": "中间参考",
+      "dp_pure_viscous_pa": 80.248475,
+      "dp_viscous_pa": 80.248475,
+      "dp_junctions_pa": 3817.464468,
+      "dp_total_pa": 3880.742301,
+      "amplification_x": 48.359
+    },
+    {
+      "model": "J3_laminar_clip",
+      "note": "上界（层流插值）",
+      "dp_pure_viscous_pa": 80.248475,
+      "dp_viscous_pa": 80.248475,
+      "dp_junctions_pa": 7865.262438,
+      "dp_total_pa": 7928.540271,
+      "amplification_x": 98.8
+    }
+  ],
+  "verdict": "计入接头局部损失后，树的压降由纯黏性下界 0.0802 kPa 放大 2.6–98.8 倍（J1 下界 ~0.2091 kPa，J3 上界 ~7.9285 kPa）。直通道/径向无分叉，接头项≈0，故接头损失只会进一步拉大树 vs 对照的压降差距——纯黏性下界已足够证伪树，计入接头项结论方向不变且更强。K 在层流微通道 Re<150 无可靠标定，此为 order-of-magnitude 区间。"
+}

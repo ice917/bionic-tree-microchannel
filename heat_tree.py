@@ -24,27 +24,47 @@ import verify as V
 OUT = Path(__file__).resolve().parent / "outputs"
 
 
-def save_heatmap(T: np.ndarray, path: Path, title: str, edges=None, grid_x=None):
+def _draw_tree_edges(ax, edges, grid_x: int, pitch_mm: float) -> None:
+    """Draw each tree segment independently.
+
+    A single ax.plot() over concatenated endpoint arrays joins the end of one
+    segment to the start of the next, which for an unordered edge list draws
+    long chords across the plate. One LineCollection entry per segment is the
+    only faithful rendering.
+    """
+    from matplotlib.collections import LineCollection
+
+    segs = []
+    for p, c in edges:
+        py, px = divmod(p, grid_x)
+        cy, cx = divmod(c, grid_x)
+        segs.append([((px + 0.5) * pitch_mm, (py + 0.5) * pitch_mm),
+                     ((cx + 0.5) * pitch_mm, (cy + 0.5) * pitch_mm)])
+    # dark halo first so the channels stay visible over the bright source core
+    ax.add_collection(LineCollection(segs, colors="black", alpha=0.55,
+                                     linewidths=2.4, zorder=3))
+    ax.add_collection(LineCollection(segs, colors="cyan", alpha=1.0,
+                                     linewidths=0.9, zorder=4))
+
+
+def save_heatmap(T: np.ndarray, path: Path, title: str, edges=None, grid_x=None,
+                 pitch_mm: float = 1.0):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
+    plate = T.shape[1] * pitch_mm
     fig, ax = plt.subplots(figsize=(6, 5.4), dpi=140)
-    im = ax.imshow(T, cmap="inferno", origin="lower")
+    im = ax.imshow(T, cmap="inferno", origin="lower",
+                   extent=(0.0, plate, 0.0, plate))
     fig.colorbar(im, ax=ax, label="T [C]")
     if edges is not None:
-        ys, xs = [], []
-        for p, c in edges:
-            py, px = divmod(p, grid_x)
-            cy, cx = divmod(c, grid_x)
-            ys += [py, cy]
-            xs += [px, cx]
-        ax.plot(xs, ys, color="cyan", lw=0.8, alpha=0.9)
+        _draw_tree_edges(ax, edges, grid_x, pitch_mm)
     ax.set_title(title)
     ax.set_xlabel("x [mm]")
     ax.set_ylabel("y [mm]")
     fig.tight_layout()
-    fig.savefig(path)
+    fig.savefig(path, dpi=600)
     plt.close(fig)
 
 
@@ -179,13 +199,17 @@ def main() -> None:
     # ---------------- outputs ----------------
     if not args.no_fig:
         print("[figures] writing png/csv ...")
-        save_heatmap(T, OUT / "step1_heatmap.png", "Step 1: steady heat field (peak 100 C)")
-        save_heatmap(T, OUT / "step2_tree.png", "Step 2: heat-seeking tree", edges, grid)
+        save_heatmap(T, OUT / "step1_heatmap.png", "Step 1: steady heat field (peak 100 C)",
+                     pitch_mm=pitch_mm)
+        save_heatmap(T, OUT / "step2_tree.png", "Step 2: heat-seeking tree", edges, grid,
+                     pitch_mm=pitch_mm)
         save_heatmap(T_off, OUT / "step2b_tree_offsource.png",
-                     "Step 2b: off-centre source -> different tree", edges_off, grid)
-        save_heatmap(tg.T, OUT / "step5_tree_cooled.png", "Step 5: tree group, channels at 25 C")
+                     "Step 2b: off-centre source -> different tree", edges_off, grid,
+                     pitch_mm=pitch_mm)
+        save_heatmap(tg.T, OUT / "step5_tree_cooled.png", "Step 5: tree group, channels at 25 C",
+                     pitch_mm=pitch_mm)
         save_heatmap(sg.T, OUT / "step5_straight_cooled.png",
-                     "Step 5: straight group, channels at 25 C")
+                     "Step 5: straight group, channels at 25 C", pitch_mm=pitch_mm)
 
     with open(OUT / "tree_edges.csv", "w", newline="") as f:
         w = csv.writer(f)

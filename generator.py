@@ -249,15 +249,16 @@ def control_front(centers, grid: int = 50, radius: float = F.SRC_RADIUS_REAL,
     two-objective trade, the straight control has none. The front is
     therefore degenerate BY MEASUREMENT, not by construction error.
 
-    Also measured: the radial control FAILS C1 below target=200 on this
-    layout. `radial_group_pinned` allocates its cell budget to chips in
-    cluster order and its bisection trims from the far ends, so at small
-    budgets the first chip's pipes consume everything and later chips get
-    no channel at all (measured: block distance 18 cells, 16, 13 for
-    targets 25/100/150). That is a construction artifact of the control
-    builder, not a physical infeasibility, and the C1 gate filters it
-    correctly -- but it means the control's feasible range starts at a
-    budget the tree already meets at 55 leaves.
+    Also measured: before the 2026-10-24 balance fix the radial control
+    FAILED C1 below target=200 on this layout, because
+    `radial_group_pinned` allocated its budget in cluster order and its
+    bisection kept a PREFIX of one flat pipe list, so the first chip's pipes
+    consumed everything and later chips got no channel at all (measured:
+    block distance 18, 16, 13 cells for targets 25/100/150). Pipes are now
+    recorded per chip and the bisection keeps the first k pipes OF EACH CHIP;
+    re-measured, block_to_tree is 0 for targets 25/50/100/150/200, so the
+    control's feasible range starts where the tree's does and the C1 gate no
+    longer discriminates against the builder's allocation order.
 
     dp is computed in REAL units with the SAME control convention the
     paper's authoritative comparison uses -- `calibrate.report()` (line
@@ -428,18 +429,15 @@ def control_front_total(centers, grid: int = 50,
     included, they are occupancy even when not pinned). C2 is vacuous as
     in `control_front`.
 
-    MEASURED (2026-10-19): on 3+ chip layouts `radial_group_total` FAILS
-    C1 at EVERY swept target -- its cell stream is built chip-by-chip in
-    cluster order (each chip contributes full-span rows/columns), so the
-    first two chips consume the entire target before later chips get any
-    cells (measured block distances 14/8/3 for targets 200/800/1309 on
-    the 3-chip layout; 2 and 4 on the 4-chip layout). That is a stream-
-    ordering artifact of the builder, not a physical infeasibility --
-    the missing chip's rows would fit inside the plate with room to
-    spare. `lattice_group_total` has no such defect (rows/cols are
-    global) and passes C1 everywhere. The radial C5 front therefore only
-    exists for 1-2 chip layouts, and the C5 comparison for 3-4 chips
-    rests on the lattice alone.
+    FIXED (2026-10-21): `radial_group_total` now builds its cell stream
+    ROUND-ROBIN across chips (every chip contributes one fan line at each
+    offset level before any advances), so the centre line of every chip is
+    placed before the target is exhausted and C1 is satisfiable on 3+ chip
+    layouts. `lattice_group_total` now returns its true cell list through
+    `channel_cells` (baseline grid + centre-out completion), so C1 and
+    `n_cells` are measured on the exact occupancy the builder produced
+    rather than a bisection-only reconstruction that omitted the completion
+    step and shrank the lattice front to a single point.
     """
     ok, why = SSS.layout_is_valid(centers, grid=grid, radius=radius)
     if not ok:
@@ -465,41 +463,13 @@ def control_front_total(centers, grid: int = 50,
         elif kind == "lattice":
             g = V.lattice_group_total(T, src, target, area_mm2, grid, grid,
                                       strength=strength)
-            # lattice_group_total returns no cell list; its geometry is
-            # deterministic (rows+cols at the chosen pitch plus centre-
-            # out completion). The pinned mask undercounts by the block
-            # cells, so use total_area convention: n_cells == target by
-            # construction, and the cells are the full line set.
-            ccells = []   # filled below from the group's own geometry
+            # lattice_group_total now returns its TRUE cell list via
+            # channel_cells (baseline grid + centre-out completion), so
+            # C1 and n_cells are measured on the exact occupancy the
+            # builder produced -- no reconstruction.
+            ccells = g.channel_cells or []
         else:
             raise ValueError(f"unknown control kind: {kind}")
-
-        # C1 on TRUE occupancy. For the lattice, reconstruct the line
-        # set: rows/cols at every pitch up to the completion density.
-        if not ccells:
-            cellset = set()
-            # densest possible is pitch 1; the builder chose the smallest
-            # pitch with total(p) <= target. Recover it by bisection on
-            # the combinatorial count (no field solve needed).
-            def lines(p):
-                rows = list(range(0, grid, p))
-                cols = list(range(0, grid, p))
-                cs = set()
-                for y in rows:
-                    cs.update((y, x) for x in range(grid))
-                for x in cols:
-                    cs.update((y, x) for y in range(grid))
-                return cs
-            lo, hi, chosen = 1, grid, None
-            while lo <= hi:
-                mid = (lo + hi) // 2
-                if len(lines(mid)) <= target:
-                    chosen = mid
-                    hi = mid - 1
-                else:
-                    lo = mid + 1
-            cellset = lines(chosen) if chosen else lines(1)
-            ccells = sorted(cellset)
 
         r_blk = int(radius)
         block_d = []

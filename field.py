@@ -281,46 +281,106 @@ def solve_heat_3d(
     tol: float = 1e-6,
     source_center: tuple[int, int] | None = None,
     k: float = 1.0,
+    channels_2d: np.ndarray | None = None,
+    T_cool: float = 25.0,
+    channel_top_gap: int = 0,
+    h_base: float | None = None,
 ) -> FieldResult:
-    """Steady field on a grid x grid x depth block.
+    """Steady conduction on a grid x grid x depth block, physically a cold plate.
 
-    The 2D solver is the depth -> infinity limit of this. 3D matters because
-    in 2D a point source decays as -ln(r) (see sanity_check_log_decay), so
-    the field falls off far more slowly than in 3D, where it decays as 1/r.
-    Every conclusion drawn on the 2D field therefore rests on an assumption
-    that has not been tested.
+    This is the CORRECT 3D analogue of the 2D model (the previous version used
+    fixed-temperature on all six faces and a source column through the full
+    depth, which the paper records as 'pseudo-3D' with no z-direction
+    spreading). The physical model here is:
 
-    Discretisation: 7-point Laplacian on a uniform grid,
-        T_P = (6 neighbours)/6 + q*h^2/6
-    with fixed-temperature boundaries on all six faces.
+      * bottom face z=0      : fixed temperature T_boundary (cooled base)
+      * top face z=depth-1   : adiabatic, with the heat source on the top layer
+                               (the chip sits on top and dissipates downward)
+      * side faces x/y       : adiabatic (insulated package)
+
+    In 2D a point source decays as -ln(r), in 3D as 1/r; every conclusion drawn
+    on the 2D field therefore rests on an assumption that this solver exists to
+    test. Discretisation: 7-point Laplacian in the interior; adiabatic faces are
+    enforced by first-order mirror (zero normal flux).
+
+    Two idealisations are lifted by keyword, both OFF by default so every
+    stored result is reproduced bit-for-bit:
+
+      channel_top_gap > 0
+          Clamp the channel columns only below the top skin, i.e. z in
+          [0, depth-1-gap), leaving `gap` solid layers carrying the source.
+          With the default 0 the clamp runs through the full depth; because
+          the tree sprouts from the hottest cell and the straight group
+          always spans the source footprint, the mask then covers every
+          source cell, the injected heat is overwritten by T_cool on the
+          first sweep, and the solver converges in one iteration to the
+          uniform field T_cool. That degeneracy is why a full-depth clamp
+          cannot be used for a tree-vs-straight comparison.
+
+      h_base (finite convection at the cooled base)
+          None keeps the base isothermal at T_boundary (infinite sink).
+          h_base > 0 makes the base an unknown exchanging heat with the
+          coolant at T_boundary, with the same Bi = h*PITCH_MM/k convention
+          as the 2D Robin branch in _solve_poisson:
+
+              (sum of 4 in-plane + 1 vertical conduction neighbours
+               + Bi*T_boundary) / (5 + Bi)
+
+          i.e. one conduction conductance is replaced by a convective one.
     """
     if grid < 5 or depth < 3:
         raise ValueError("grid too small or depth too shallow")
+    if not 0 <= channel_top_gap <= depth - 2:
+        raise ValueError("channel_top_gap must leave at least one source layer")
+    if h_base is not None and h_base < 0.0:
+        raise ValueError("h_base must be non-negative")
 
     cy, cx = source_center if source_center is not None else ((grid - 1) // 2, (grid - 1) // 2)
     yy, xx = np.mgrid[0:grid, 0:grid]
     mask2 = (np.abs(yy - cy) <= source_radius) & (np.abs(xx - cx) <= source_radius)
-    # the source is a column through the full depth: a chip on top of the
-    # plate dissipates through it, so every layer sees the same heat
+    # source only on the TOP layer (z=depth-1): the chip injects heat at the
+    # top surface, which then conducts down to the cooled base.
     src = np.zeros((depth, grid, grid), dtype=bool)
-    src[:, mask2] = True
+    src[depth - 1, mask2] = True
 
     T = np.full((depth, grid, grid), float(T_init))
+    c = q * PITCH_MM**2 / (6.0 * k)
+    Bi_base = 0.0 if h_base is None else h_base * PITCH_MM / k
     it = 0
     converged = False
     residual = np.inf
-    c = q * PITCH_MM**2 / (6.0 * k)
     while it < max_iter:
         Tn = T.copy()
+        # interior z=1..depth-2: 7-point Laplacian (no source here)
         Tn[1:-1, 1:-1, 1:-1] = (
             T[2:, 1:-1, 1:-1] + T[:-2, 1:-1, 1:-1]
             + T[1:-1, 2:, 1:-1] + T[1:-1, :-2, 1:-1]
             + T[1:-1, 1:-1, 2:] + T[1:-1, 1:-1, :-2]
-        ) / 6.0 + c * src[1:-1, 1:-1, 1:-1]
-        for sl in (0, -1):
-            Tn[sl, :, :] = T_boundary
-            Tn[:, sl, :] = T_boundary
-            Tn[:, :, sl] = T_boundary
+        ) / 6.0
+        # top layer z=depth-1: adiabatic top face (mirror -> duplicate the
+        # lower z-neighbour) + the surface source term
+        Tn[-1, 1:-1, 1:-1] = (
+            T[-1, 1:-1, 2:] + T[-1, 1:-1, :-2]
+            + T[-1, 2:, 1:-1] + T[-1, :-2, 1:-1]
+            + 2.0 * T[-2, 1:-1, 1:-1]
+        ) / 6.0 + c * src[-1, 1:-1, 1:-1]
+        # bottom face z=0: isothermal sink, or finite convection to the coolant
+        if h_base is None:
+            Tn[0, :, :] = T_boundary
+        else:
+            Tn[0, 1:-1, 1:-1] = (
+                T[0, 1:-1, 2:] + T[0, 1:-1, :-2]
+                + T[0, 2:, 1:-1] + T[0, :-2, 1:-1]
+                + T[1, 1:-1, 1:-1] + Bi_base * T_boundary
+            ) / (5.0 + Bi_base)
+        # side faces x/y: adiabatic (mirror)
+        Tn[:, 0, :] = Tn[:, 1, :]
+        Tn[:, -1, :] = Tn[:, -2, :]
+        Tn[:, :, 0] = Tn[:, :, 1]
+        Tn[:, :, -1] = Tn[:, :, -2]
+        # channels: fixed-temperature columns below the solid top skin
+        if channels_2d is not None:
+            Tn[:depth - channel_top_gap, channels_2d] = T_cool
         residual = float(np.max(np.abs(Tn - T)))
         T = Tn
         it += 1

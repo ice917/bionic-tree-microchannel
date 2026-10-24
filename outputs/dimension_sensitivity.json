@@ -1,0 +1,167 @@
+{
+  "model": "3D conduction, source on the top layer, adiabatic top and sides, cooled base, channels as isothermal columns below a solid top skin; no streamwise flow model",
+  "grid": 30,
+  "depth": 10,
+  "source_radius": 2.0,
+  "channel_top_gap": 1,
+  "equal_occupancy": {
+    "tree_cells": 150,
+    "straight_cells": 150,
+    "straight_columns": 5,
+    "constraint_C5": "exact (asserted)"
+  },
+  "source_coverage": {
+    "tree": 25,
+    "straight": 25,
+    "of": 25
+  },
+  "runs": [
+    {
+      "h_base": null,
+      "Bi": null,
+      "bare_top_C": 26.245431,
+      "bare_note": null,
+      "tree_top_C": 25.471363,
+      "straight_top_C": 25.472431,
+      "dT_tree_minus_straight_C": -0.001068,
+      "iters": {
+        "bare": 1261,
+        "tree": 46,
+        "straight": 438
+      },
+      "tree_unique_top_values": 397,
+      "straight_unique_top_values": 784
+    },
+    {
+      "h_base": 0.0,
+      "Bi": 0.0,
+      "bare_top_C": null,
+      "bare_note": "no steady state: adiabatic base and no channel in the mask means the source heat has no escape path",
+      "tree_top_C": 25.471363,
+      "straight_top_C": 25.472443,
+      "dT_tree_minus_straight_C": -0.00108,
+      "iters": {
+        "bare": null,
+        "tree": 46,
+        "straight": 970
+      },
+      "tree_unique_top_values": 397,
+      "straight_unique_top_values": 784
+    },
+    {
+      "h_base": 1.0,
+      "Bi": 1.0,
+      "bare_top_C": 26.265402,
+      "bare_note": null,
+      "tree_top_C": 25.471363,
+      "straight_top_C": 25.472433,
+      "dT_tree_minus_straight_C": -0.00107,
+      "iters": {
+        "bare": 1530,
+        "tree": 46,
+        "straight": 482
+      },
+      "tree_unique_top_values": 397,
+      "straight_unique_top_values": 784
+    },
+    {
+      "h_base": 10.0,
+      "Bi": 10.0,
+      "bare_top_C": 26.247523,
+      "bare_note": null,
+      "tree_top_C": 25.471363,
+      "straight_top_C": 25.472431,
+      "dT_tree_minus_straight_C": -0.001068,
+      "iters": {
+        "bare": 1287,
+        "tree": 46,
+        "straight": 442
+      },
+      "tree_unique_top_values": 397,
+      "straight_unique_top_values": 784
+    }
+  ],
+  "primary_h_base": 1.0,
+  "grid_check": {
+    "grid": 40,
+    "tree_cells": 200,
+    "straight_cells": 200,
+    "runs": [
+      {
+        "h_base": null,
+        "Bi": null,
+        "bare_top_C": 26.237899,
+        "bare_note": null,
+        "tree_top_C": 25.471362,
+        "straight_top_C": 25.472429,
+        "dT_tree_minus_straight_C": -0.001067,
+        "iters": {
+          "bare": 1146,
+          "tree": 28,
+          "straight": 410
+        },
+        "tree_unique_top_values": 491,
+        "straight_unique_top_values": 1444
+      },
+      {
+        "h_base": 0.0,
+        "Bi": 0.0,
+        "bare_top_C": null,
+        "bare_note": "no steady state: adiabatic base and no channel in the mask means the source heat has no escape path",
+        "tree_top_C": 25.471362,
+        "straight_top_C": 25.472439,
+        "dT_tree_minus_straight_C": -0.001078,
+        "iters": {
+          "bare": null,
+          "tree": 28,
+          "straight": 1178
+        },
+        "tree_unique_top_values": 491,
+        "straight_unique_top_values": 1444
+      },
+      {
+        "h_base": 1.0,
+        "Bi": 1.0,
+        "bare_top_C": 26.253945,
+        "bare_note": null,
+        "tree_top_C": 25.471362,
+        "straight_top_C": 25.47243,
+        "dT_tree_minus_straight_C": -0.001069,
+        "iters": {
+          "bare": 1386,
+          "tree": 28,
+          "straight": 455
+        },
+        "tree_unique_top_values": 491,
+        "straight_unique_top_values": 1444
+      },
+      {
+        "h_base": 10.0,
+        "Bi": 10.0,
+        "bare_top_C": 26.239635,
+        "bare_note": null,
+        "tree_top_C": 25.471362,
+        "straight_top_C": 25.472429,
+        "dT_tree_minus_straight_C": -0.001068,
+        "iters": {
+          "bare": 1169,
+          "tree": 28,
+          "straight": 415
+        },
+        "tree_unique_top_values": 491,
+        "straight_unique_top_values": 1444
+      }
+    ]
+  },
+  "legacy_full_depth_clamp": {
+    "tree_top_C": 25.0,
+    "straight_top_C": 25.0,
+    "iters": [
+      1,
+      1
+    ],
+    "defect": "channel clamp covered the source layer, the injected heat was overwritten, and both runs converged in one iteration to a uniform field at the coolant temperature; the published 25.0000/25.0000 tie was a degenerate solve, not a physical result"
+  },
+  "dT_tree_minus_straight_3d": -0.00107,
+  "verdict": "With the source kept live (solid top skin) and equal occupancy (tree 150 cells = straight 150 cells, both covering 25/25 source cells), the 3D peak difference is -0.0011 C at Bi=1 and spans [-0.0011, -0.0011] C over Bi in {0, 1, 10} plus the isothermal-base limit; the sign is stable across the sweep. Rebuilding at grid 40 moves each difference by at most 2.0e-06 C. On a peak that the channels lower by 0.7940 C against the bare plate, |dT| is 0.14% of the cooling effect. Because occupancy AND source coverage are equalised by construction, this comparison cannot attribute the tie to coverage; what it does establish is that the tie survives the third dimension rather than being an artefact of the 2D reduction."
+}

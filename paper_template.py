@@ -499,10 +499,12 @@ class PaperTemplate:
         p = self.doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         run = p.add_run()
-        run.add_picture(path)
+        pic = run.add_picture(path)
         if width_cm:
             from docx.shared import Emu
-            run.width = Emu(int(width_cm * 360000))
+            # 必须设在 InlineShape 上：python-docx 的 Run 无 width 属性，
+            # 赋值到 run 会静默丢失，导致图宽恒等于「像素/文件内dpi」。
+            pic.width = Emu(int(width_cm * 360000))
         p.paragraph_format.space_after = Pt(6)
         if caption:
             cp = self.doc.add_paragraph()

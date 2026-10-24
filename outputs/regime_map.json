@@ -1,0 +1,104 @@
+{
+  "rows": [
+    {
+      "d_mm": 6,
+      "dT_max_C": -3.5461,
+      "dT_mean_C": -1.2549,
+      "dp_ratio": 27.8,
+      "tree_T_max": 31.846,
+      "ctrl_T_max": 35.3921,
+      "tree_pinned": 209,
+      "ctrl_pinned": 209
+    },
+    {
+      "d_mm": 8,
+      "dT_max_C": -3.5041,
+      "dT_mean_C": -1.3429,
+      "dp_ratio": 31.1,
+      "tree_T_max": 31.2209,
+      "ctrl_T_max": 34.725,
+      "tree_pinned": 178,
+      "ctrl_pinned": 178
+    },
+    {
+      "d_mm": 10,
+      "dT_max_C": -2.9461,
+      "dT_mean_C": -1.0214,
+      "dp_ratio": 36.0,
+      "tree_T_max": 30.64,
+      "ctrl_T_max": 33.586,
+      "tree_pinned": 151,
+      "ctrl_pinned": 151
+    },
+    {
+      "d_mm": 12,
+      "dT_max_C": -2.4203,
+      "dT_mean_C": -0.7356,
+      "dp_ratio": 39.7,
+      "tree_T_max": 30.3049,
+      "ctrl_T_max": 32.7252,
+      "tree_pinned": 129,
+      "ctrl_pinned": 129
+    },
+    {
+      "d_mm": 16,
+      "dT_max_C": -2.0075,
+      "dT_mean_C": -0.5743,
+      "dp_ratio": 46.9,
+      "tree_T_max": 28.8168,
+      "ctrl_T_max": 30.8243,
+      "tree_pinned": 107,
+      "ctrl_pinned": 107
+    },
+    {
+      "d_mm": 20,
+      "dT_max_C": -3.7362,
+      "dT_mean_C": -1.5639,
+      "dp_ratio": 56.5,
+      "tree_T_max": 27.7329,
+      "ctrl_T_max": 31.4691,
+      "tree_pinned": 135,
+      "ctrl_pinned": 135
+    },
+    {
+      "d_mm": 24,
+      "dT_max_C": -2.0874,
+      "dT_mean_C": -0.9709,
+      "dp_ratio": 53.4,
+      "tree_T_max": 27.7488,
+      "ctrl_T_max": 29.8363,
+      "tree_pinned": 176,
+      "ctrl_pinned": 176
+    },
+    {
+      "d_mm": 30,
+      "dT_max_C": -1.0203,
+      "dT_mean_C": -0.6075,
+      "dp_ratio": 76.8,
+      "tree_T_max": 27.621,
+      "ctrl_T_max": 28.6413,
+      "tree_pinned": 228,
+      "ctrl_pinned": 228
+    }
+  ],
+  "verdict": {
+    "small_spacing_mm": [
+      6,
+      8,
+      10,
+      12,
+      16
+    ],
+    "large_spacing_mm": [
+      24,
+      30
+    ],
+    "small_spacing_min_advantage_C": 2.0075,
+    "large_spacing_max_advantage_C": 2.0874,
+    "small_spacing_max_dp_ratio": 46.9,
+    "large_spacing_min_dp_ratio": 53.4,
+    "non_monotonic_rebound_C": 1.7287,
+    "non_monotonic_at_mm": 20,
+    "regime_statement": "The tree's thermal advantage over the radial baseline decays overall as the chips spread apart (non-monotonic: a 1.73 C rebound at d = 20 mm where the grown topology changes branch): at small spacing (d <= 16 mm) the advantage is >= 2.01 C at a pressure-drop cost of <= 46.9 x; at large spacing (d >= 24 mm) it is <= 2.09 C at a cost of >= 53.4 x. The useful regime is therefore multi-source, small spacing."
+  }
+}

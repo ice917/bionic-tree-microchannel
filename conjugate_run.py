@@ -91,7 +91,7 @@ def run():
     print(f"    peak    {peak_pin:.4f} C   R_th(peak) = {rth_peak_pin:.4f} C/W")
     print(f"    T_mean  {mean_pin:.4f} C   R_th(mean) = {rth_mean_pin:.4f} C/W")
     print(f"  published cold-plate band: {C.R_COLDPLATE_BEST:.4f} - "
-          f"{C.R_COLDPLATE_MICRO:.4f} C/W")
+          f"{C.R_COLDPLATE_OCP_HI:.4f} C/W")
     print(f"  applied power {cal.total_power_w:.0f} W, "
           f"{int(pinned.sum())} pinned channel cells")
 
@@ -134,7 +134,7 @@ def run():
         print(f"    T_mean      {r['T_mean_c']:8.4f} C  (pinned {mean_pin:.4f}, "
               f"delta {r['T_mean_vs_pinned']:+.4f})")
         print(f"    R_th(mean)  {r['r_th_mean']:8.4f} C/W "
-              f"{'INSIDE band' if C.R_COLDPLATE_BEST <= r['r_th_mean'] <= C.R_COLDPLATE_MICRO else 'OUTSIDE band'}")
+              f"{'INSIDE band' if C.R_COLDPLATE_BEST <= r['r_th_mean'] <= C.R_COLDPLATE_OCP_HI else 'OUTSIDE band'}")
         print(f"    coolant rise along the tree  {r['coolant_rise_c']:9.6f} C")
         print(f"    tree outlet                  {r['coolant_out_c']:9.4f} C")
         print(f"    single-passage outlet        {r['single_pass_outlet_c']:9.4f} C")
@@ -179,7 +179,7 @@ def run():
         print(f"       Q={r['q_lpm']:<7} dT_mean = {r['T_mean_vs_pinned']:+.4f} C")
     print("R17: R_th against the published band, using T_mean:")
     for r in rows:
-        inside = C.R_COLDPLATE_BEST <= r["r_th_mean"] <= C.R_COLDPLATE_MICRO
+        inside = C.R_COLDPLATE_BEST <= r["r_th_mean"] <= C.R_COLDPLATE_OCP_HI
         print(f"       Q={r['q_lpm']:<7} R_th(mean) = {r['r_th_mean']:.4f} C/W "
               f"{'INSIDE' if inside else 'OUTSIDE'}")
     print("R18: materiality of the channel-side idealisation")
@@ -199,7 +199,7 @@ def run():
                     "pinned_T_mean_c": round(mean_pin, 4),
                     "pinned_r_th_peak": round(rth_peak_pin, 4),
                     "pinned_r_th_mean": round(rth_mean_pin, 4),
-                    "band": [C.R_COLDPLATE_BEST, C.R_COLDPLATE_MICRO],
+                    "band": [C.R_COLDPLATE_BEST, C.R_COLDPLATE_OCP_HI],
                     "sweep": rows}, indent=2), encoding="utf-8")
 
     # The R15 guard is a property of the SAME run (Q->inf limit vs the

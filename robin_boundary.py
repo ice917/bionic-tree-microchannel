@@ -33,6 +33,7 @@ import field as F
 import grow as G
 import multi_source as MS
 import radius as R
+import spread_source_scan as SS
 import verify as V
 
 OUT = Path(__file__).resolve().parent / "outputs"
@@ -91,18 +92,28 @@ def sweep_multi():
     print("B2: multi source (3 chips), tree vs radial control, RAW field")
     print("=" * 78)
     centers = MS.LAYOUTS["3 chips, triangle"]
+    # Same per-die power as spread_source_scan (25 units per die spread over
+    # the 17x17 footprint), i.e. q = 25*n_dies/n_src_cells = 0.086505/cell.
+    # Leaving q at 1.0/cell would run this sweep at 11.56x the die power of
+    # §4.3 -- the exact caliber defect documented in §10.
+    q = SS.q_per_cell(F.SRC_RADIUS_REAL, centers=centers, grid=GRID)
+    strength = F.source_strength_multi(GRID, centers,
+                                       F.SRC_RADIUS_REAL) * q
     rows = []
     for h in H_SWEEP:
         res = F.solve_heat_sources(grid=GRID, centers=centers,
-                                   source_radius=F.SRC_RADIUS_REAL, h_conv=h)
+                                   source_radius=F.SRC_RADIUS_REAL, q=q,
+                                   h_conv=h)
         T = res.T                      # NO normalisation
         src = F.source_mask_multi(GRID, centers, radius=F.SRC_RADIUS_REAL)
         edges = G.grow_tree(T, max_nodes=600)
         radii = R.assign_radii(edges, grid=GRID, r0=0.5)
-        tg = V.tree_group(T, src, edges, radii, grid_x=GRID, h_conv=h)
+        tg = V.tree_group(T, src, edges, radii, grid_x=GRID, strength=strength,
+                          h_conv=h)
         rg = V.radial_group_pinned(T, src, target_pinned=tg.pinned_cells,
                                    total_area_mm2=tg.total_area_mm2,
-                                   grid_x=GRID, grid_y=GRID, h_conv=h)
+                                   grid_x=GRID, grid_y=GRID,
+                                   strength=strength, h_conv=h)
         rows.append({
             "h_conv": h, "Bi": round(h * F.PITCH_MM, 5),
             "iters": res.iterations,

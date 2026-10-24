@@ -279,7 +279,7 @@ def radial_group_pinned(T: np.ndarray, src: np.ndarray, target_pinned: int,
                         hotspot_frac: float = 0.25,
                         strength: np.ndarray | None = None,
                         h_conv: float = 0.0, T_ambient: float | None = None) -> Group:
-    """One straight pipe per chip, scaled to a target number of PINNED cells.
+    """Straight pipes, one family per chip, scaled to the tree's PINNED count.
 
     `radial_group` fixes the cell budget and lets the pinned count fall out
     of it, which is unfair in the multi-source case: a tree that grows
@@ -290,21 +290,36 @@ def radial_group_pinned(T: np.ndarray, src: np.ndarray, target_pinned: int,
     Here the budget is set so that len(cells) - (cells inside a source
     block) == target_pinned exactly. Same occupancy, same exemption rule,
     both sides.
+
+    BALANCE FIX (2026-10-24). Two defects made the multi-chip control serve
+    only the first chip:
+      * `exempt_per_chip` was a hard-wired 25, left over from the 5x5
+        synthetic block. On the real 17x17 footprint (SRC_RADIUS_REAL=8) a
+        block is 289 cells, so the budget was over-estimated by ~20% and the
+        per-chip pipe count was ~5x too high;
+      * Stage 1 bisected one FLAT `per_pipe` list built from the concatenated
+        cell stream, i.e. it kept a PREFIX of the pipes in generation order.
+        Measured on "3 chips, triangle" / budget 600: 13 vertical pipes in
+        x=15..27, all belonging to chip (15,15); the other two chips got zero
+        pinned cells inside their blocks.
+    Pipes are now recorded per chip (`pipes_by_chip`) and the budget is
+    expressed in EFFECTIVE pinned length -- a pipe starts inside its chip
+    block, so only `span - (blk_half + 1)` of its cells can ever pin.
     """
     centers = _cluster_centers(src)
     n_src = max(1, len(centers))
     src_cells = int(src.sum())
 
-    # each chip block is 5x5=25 cells; a pipe aimed at a chip starts inside it
-    exempt_per_chip = 25
-    need = int(target_pinned) + src_cells - n_src * exempt_per_chip
-    need = max(n_src, need)
-    per_src = max(1, need // n_src)
-    r = float(np.sqrt(total_area_mm2 / (need * np.pi)))
+    per_chip_src = max(1, src_cells // n_src)
+    blk_side = int(round(np.sqrt(per_chip_src)))
+    blk_half = max(0, (blk_side - 1) // 2)
 
-    cells: list[tuple[int, int]] = []
-    lengths: list[int] = []
-    for cy, cx in centers:
+    target = int(target_pinned)
+    per_chip_target = target / n_src
+
+    pipes_by_chip: dict[int, list[list[tuple[int, int]]]] = {}
+    pipe_len_by_chip: dict[int, list[int]] = {}
+    for ci, (cy, cx) in enumerate(centers):
         cy, cx = int(round(cy)), int(round(cx))
         d_top, d_bot = cy, grid_y - 1 - cy
         d_left, d_right = cx, grid_x - 1 - cx
@@ -318,44 +333,73 @@ def radial_group_pinned(T: np.ndarray, src: np.ndarray, target_pinned: int,
         else:
             orient, span, up = "h", d_right + 1, False
 
-        # Pipe count is NOT capped by `span`: the original `min(span, ...)`
-        # silently dropped pipes once the budget exceeded the chip-to-edge
-        # distance, so the control could not reach the tree's pinned count at
-        # high budgets (measured -369 cells at 5 chips / budget 1300).
-        #
-        # Instead of wrapping symmetrically (which overlaps near the chip and
-        # loses cells to de-duplication), the columns march monotonically
-        # AWAY from the chip: j, j+1, j+2, ... Each extra pipe adds a fresh
-        # parallel track, and the direction reverses once it hits the plate
-        # edge, so no two pipes ever share a column.
-        k = max(1, per_src // max(1, span) + (1 if per_src % max(1, span) else 0))
+        # A pipe that starts inside the chip block can only pin the part of
+        # its run that lies OUTSIDE the block: it leaves the chip after
+        # `blk_half + 1` cells, so its effective length is span - blk_half - 1.
+        pinned_per_pipe = max(1, span - (blk_half + 1))
+        k = max(1, int(np.ceil(per_chip_target / pinned_per_pipe)))
+
+        pipes: list[list[tuple[int, int]]] = []
+        lens: list[int] = []
+        # Offsets are emitted CENTRE-OUT: 0, +1, -1, +2, -2, ... so the pipe
+        # bundle is symmetric about the chip centroid, matching
+        # `radial_group_c5` below. The previous rule (off = j, i.e. all pipes
+        # on ONE side of the centroid) put the whole cooled bundle 2-3 cells
+        # off-axis and cooled the control 0.09 C more than it should; it also
+        # made the result depend on which side of the plate was nearer.
+        # Centre-out is also PREFIX-SAFE: Stage 1 keeps the first k pipes per
+        # chip, and every prefix of this fan is still centred, whereas a
+        # literal `j - k//2` prefix drifts back to one side when k is cut.
+        # Runs past the plate edge are simply clipped (`min`/`max` below);
+        # they add no new track, which is why pipes alone cannot cover a wide
+        # plate.
+        fan: list[int] = [0]
+        for d_ in range(1, k + 1):
+            fan += [d_, -d_]
         for j in range(k):
+            off = fan[j]
             if orient == "v":
-                off = j if j < span else (span - 1 - (j - span))
                 x = min(grid_x - 1, max(0, cx + off))
                 ys = range(cy, -1, -1) if up else range(cy, grid_y)
-                cells += [(y, x) for y in ys]
-                lengths.append(len(ys))
+                pipe = [(y, x) for y in ys]
             else:
-                off = j if j < span else (span - 1 - (j - span))
                 y = min(grid_y - 1, max(0, cy + off))
                 xs = range(cx, -1, -1) if up else range(cx, grid_x)
-                cells += [(y, x) for x in xs]
-                lengths.append(len(xs))
+                pipe = [(y, x) for x in xs]
+            pipes.append(pipe)
+            lens.append(len(pipe))
+        pipes_by_chip[ci] = pipes
+        pipe_len_by_chip[ci] = lens
 
-    seen: set[tuple[int, int]] = set()
-    uniq = [c for c in cells if not (c in seen or seen.add(c))]
+    def cells_for(kk: int) -> list[tuple[int, int]]:
+        out: list[tuple[int, int]] = []
+        seen_: set[tuple[int, int]] = set()
+        for ci_ in sorted(pipes_by_chip):
+            for p in pipes_by_chip[ci_][:kk]:
+                for c in p:
+                    if c not in seen_:
+                        seen_.add(c)
+                        out.append(c)
+        return out
+
+    def lens_for(kk: int) -> list[int]:
+        return [n for ci_ in sorted(pipe_len_by_chip)
+                for n in pipe_len_by_chip[ci_][:kk]]
+
+    max_k = max(len(v) for v in pipes_by_chip.values())
+    uniq = cells_for(max_k)
+    lengths = lens_for(max_k)
 
     Tc, pinned = apply_channels(T, uniq, src, T_cool, strength=strength,
                                 h_conv=h_conv, T_ambient=T_ambient)
 
-    # The algebra above is an estimate: pipes overlap near the shared plate
-    # centre and clip against the grid edge, leaving a residual gap (measured
-    # at -19..-546 cells on the 3-chip layout). Correct it by BISECTING THE
-    # PIPE COUNT, not by deleting cells one at a time -- removing one pipe
-    # moves the pinned count by ~20-50, so a bisection over the pipe count
-    # reaches the target in O(log n) re-solves, whereas per-cell deletion
-    # needs one re-solve per cell and takes minutes.
+    # The algebra above is an estimate: the block edge is not exactly
+    # `blk_half + 1` cells from the centroid, and pipes clip against the grid
+    # edge, leaving a residual gap. Correct it by BISECTING THE PER-CHIP PIPE
+    # COUNT, not by deleting cells one at a time -- removing one pipe moves the
+    # pinned count by several cells, so a bisection over k reaches the target
+    # in O(log k) re-solves, whereas per-cell deletion needs one re-solve per
+    # cell and takes minutes.
     def solve_with(pipe_list: list[tuple[int, int]]) -> tuple[np.ndarray, np.ndarray, int]:
         s: set[tuple[int, int]] = set()
         for c in pipe_list:
@@ -364,42 +408,32 @@ def radial_group_pinned(T: np.ndarray, src: np.ndarray, target_pinned: int,
                                  h_conv=h_conv, T_ambient=T_ambient)
         return Tc_, p_, int(p_.sum())
 
-    # per-pipe cell lists, so a pipe can be dropped as a unit
-    per_pipe: list[list[tuple[int, int]]] = []
-    acc: list[tuple[int, int]] = []
-    prev = None
-    for c in uniq:
-        if prev is not None and (abs(c[0] - prev[0]) + abs(c[1] - prev[1])) > 1:
-            per_pipe.append(acc)
-            acc = []
-        acc.append(c)
-        prev = c
-    if acc:
-        per_pipe.append(acc)
-
-    target = int(target_pinned)
     cur_cells = list(uniq)
     Tc, pinned, got = solve_with(cur_cells)
 
-    # Stage 1: bisect the pipe count. Dropping a pipe moves the pinned count
-    # by ~20-50 cells, so this gets within one pipe of the target in O(log n)
-    # re-solves.
-    if got != target and per_pipe:
-        lo, hi = 1, len(per_pipe)
+    # Stage 1: bisect k = pipes retained PER CHIP. Every chip keeps its first
+    # k pipes, so no chip can be starved -- the old prefix bisection on one
+    # flat list dropped whole chips. `best_gap` guards non-monotonicity
+    # (overlapping or edge-clipped pipes can make the count flat).
+    if got != target:
+        lo, hi = 1, max_k
         best_cells, best_Tc, best_p, best_got = cur_cells, Tc, pinned, got
         best_gap = abs(got - target)
+        best_k = max_k
         while lo <= hi:
             mid = (lo + hi) // 2
-            trial_cells = [c for p in per_pipe[:mid] for c in p]
+            trial_cells = cells_for(mid)
             t_Tc, t_p, g = solve_with(trial_cells)
             if abs(g - target) < best_gap:
                 best_cells, best_Tc, best_p, best_got = trial_cells, t_Tc, t_p, g
                 best_gap = abs(g - target)
+                best_k = mid
             if g >= target:
                 hi = mid - 1
             else:
                 lo = mid + 1
         cur_cells, Tc, pinned, got = best_cells, best_Tc, best_p, best_got
+        lengths = lens_for(best_k)
 
     # Stage 2: shave individual cells until the gap is exactly zero. The
     # bisection alone can only land within ~one pipe of the target (measured
@@ -471,7 +505,15 @@ def radial_group_pinned(T: np.ndarray, src: np.ndarray, target_pinned: int,
         Tc, pinned, got = solve_with(cur_cells)
 
     uniq = cur_cells
-    L = float(np.mean(lengths)) if lengths else float(grid_y)
+    # CONSISTENCY FIX (2026-10-24): r used the BUDGET (`need`) while the flow
+    # was split over the MEASURED cell count (`len(uniq)`), so dp carried a
+    # spurious (need/len(uniq))^2 factor -- 20.1x on "3 chips, triangle" /
+    # budget 600 (915 vs 204 cells), which made the reported 5.3x tree/control
+    # ratio an artefact. `straight_group`, `radial_group`, `lattice_group` and
+    # `radial_group_total` all back-calculate r from the cells they actually
+    # place; this function now does the same.
+    r = float(np.sqrt(total_area_mm2 / (max(1, len(uniq)) * np.pi)))
+    L = (float(np.mean(lengths)) * pitch_mm) if lengths else float(grid_y) * pitch_mm
     dp = 8.0 * MU * L * (Q_TOTAL / max(1, len(uniq))) / (np.pi * r ** 4)
     return Group.from_field(f"radial-per-chip x{len(uniq)}", Tc, pinned, dp,
                             total_area_mm2, len(uniq), len(uniq), T_cool,
@@ -630,7 +672,9 @@ def radial_group_total(T: np.ndarray, src: np.ndarray, target_total: int,
     """
     centers = _cluster_centers(src)
     target = int(target_total)
-    stream: list[tuple[int, int]] = []
+
+    # Per-chip geometry: orientation and the fan-offset order around it.
+    plans = []
     for cy, cx in centers:
         cy, cx = int(round(cy)), int(round(cx))
         d_top, d_bot = cy, grid_y - 1 - cy
@@ -640,7 +684,21 @@ def radial_group_total(T: np.ndarray, src: np.ndarray, target_total: int,
         offs = [0]
         for k in range(1, max(grid_x, grid_y)):
             offs += [k, -k]
-        for off in offs:
+        plans.append((cy, cx, orient, offs))
+
+    # Round-robin stream: at each fan offset every chip contributes one line
+    # before any chip advances to the next offset. This places every chip's
+    # centre line (offset 0) before the target is exhausted, so C1 is
+    # satisfiable on 3+ chip layouts. The old chip-by-chip concatenation
+    # starved later chips of any cells and made radial C1 fail at every
+    # swept target.
+    stream: list[tuple[int, int]] = []
+    max_offs = max(len(p[3]) for p in plans)
+    for k in range(max_offs):
+        for cy, cx, orient, offs in plans:
+            if k >= len(offs):
+                continue
+            off = offs[k]
             if orient == "v":
                 x = cx + off
                 if not (0 <= x < grid_x):
@@ -651,6 +709,7 @@ def radial_group_total(T: np.ndarray, src: np.ndarray, target_total: int,
                 if not (0 <= y < grid_y):
                     continue
                 stream += [(y, x) for x in range(grid_x)]
+
     seen: set[tuple[int, int]] = set()
     uniq: list[tuple[int, int]] = []
     for c in stream:
@@ -753,7 +812,7 @@ def lattice_group_total(T: np.ndarray, src: np.ndarray, target_total: int,
     dp = 8.0 * MU * L * (Q_TOTAL / n_ch) / (np.pi * r ** 4) if r > 0 else 0.0
     return Group.from_field(f"lattice-total p{pitch} x{len(cells)}", Tc,
                             pinned, dp, total_area_mm2, len(cells), n_ch,
-                            T_cool, hotspot_frac, pitch_mm)
+                            T_cool, hotspot_frac, pitch_mm, cells=cell_list)
 
 
 def _cluster_centers(src: np.ndarray) -> list[tuple[int, int]]:
