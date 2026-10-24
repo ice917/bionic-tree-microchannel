@@ -1,0 +1,11 @@
+# 行尾统一为 LF。
+# 目的：MANIFEST.sha256 记录的是工作树字节的 SHA-256；若由 core.autocrlf 在 checkout 时
+# 把 LF 改写为 CRLF，克隆后哈希必然失配。固定 eol=lf 后，任意平台克隆的字节一致。
+* text=auto eol=lf
+
+# 二进制工件：禁止任何文本/EOL 转换
+*.docx binary
+*.png  binary
+*.stl  binary
+*.slx  binary
+*.zip  binary
