@@ -121,13 +121,15 @@ print('rewritten =', n)
 
 作者：Wu, Haoran（武昌理工学院 / Wuchang University of Technology），ORCID [0009-0005-1975-1511](https://orcid.org/0009-0005-1975-1511)。
 
-本仓库的 v1.0.0 快照已于 2026-10-24 永久归档于 Zenodo：
+本仓库已在 Zenodo 永久归档（v1.0.0 于 2026-10-24 发布，v1.0.1 为当前投稿版本）：
 
-- 版本 DOI（引用此版本时使用）：[10.5281/zenodo.23620419](https://doi.org/10.5281/zenodo.23620419)
-- 概念 DOI（始终指向最新版本）：[10.5281/zenodo.23620418](https://doi.org/10.5281/zenodo.23620418)
+- 概念 DOI（始终指向最新归档版本，**推荐引用**）：[10.5281/zenodo.23620418](https://doi.org/10.5281/zenodo.23620418)
+- v1.0.0 的版本 DOI（该版不含生成式 AI 声明）：[10.5281/zenodo.23620419](https://doi.org/10.5281/zenodo.23620419)
 
 推荐引用格式：
 
-> Wu H. 仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账（v1.0.0）[CP/OL]. Zenodo, 2026. https://doi.org/10.5281/zenodo.23620419.
+> Wu H. 仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账（v1.0.1）[CP/OL]. Zenodo, 2026. https://doi.org/10.5281/zenodo.23620418.
+
+v1.0.1 的版本 DOI 在其 Zenodo 记录页给出；上列概念 DOI 永久有效，无需随版本更替而更新引用。
 
 `CITATION.cff` 尚未创建；在创建之前，以上文字即为本仓库的规范引用格式。
