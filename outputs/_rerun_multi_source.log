@@ -1,0 +1,22 @@
+﻿[layout] 2 chips, 20 mm apart: chips=2, src_cells=578, strength_sum=50.0000
+          connected from budget 400: dT_mean=-1.2053 C, dT_max=-3.1681 C, dp_ratio=70.3
+          budget 1300: dT_mean=-0.7745 C, dT_max=-2.0856 C, dp_ratio=72.3, max_chip_dist=0
+[layout] 3 chips, triangle: chips=3, src_cells=867, strength_sum=75.0000
+          connected from budget 400: dT_mean=-1.7192 C, dT_max=-4.2537 C, dp_ratio=47.5
+          budget 1300: dT_mean=-1.2542 C, dT_max=-2.9661 C, dp_ratio=122.1, max_chip_dist=0
+[layout] 4 chips, corners: chips=4, src_cells=1156, strength_sum=100.0000
+          connected from budget 400: dT_mean=-0.5861 C, dT_max=-0.8987 C, dp_ratio=42.4
+          budget 1300: dT_mean=-0.8228 C, dT_max=-1.0934 C, dp_ratio=97.0, max_chip_dist=0
+[layout] 5 chips, corners+centre: chips=1, src_cells=1381, strength_sum=130.7929, 6 rows N4b-skipped
+          all 6 budgets N4b-skipped: N4b: source blocks fuse into 1 connected region(s) instead of 5 -- per-die metrics are undefined at radius 8.0
+[sweep] two chips, spacing d:
+  d=  d=6mm: dT_mean=-2.1435 C, dT_max=-5.2263 C, dp_ratio=33.1
+  d=  d=8mm: dT_mean=-1.9430 C, dT_max=-4.6933 C, dp_ratio=36.6
+  d= d=10mm: dT_mean=-1.5923 C, dT_max=-3.9025 C, dp_ratio=39.7
+  d= d=12mm: dT_mean=-0.8077 C, dT_max=-2.5923 C, dp_ratio=42.0
+  d= d=16mm: dT_mean=-0.8928 C, dT_max=-2.6030 C, dp_ratio=46.9
+  d= d=20mm: dT_mean=-1.0673 C, dT_max=-2.8292 C, dp_ratio=61.5
+  d= d=24mm: dT_mean=-1.0756 C, dT_max=-2.2742 C, dp_ratio=76.2
+  d= d=30mm: dT_mean=-0.6231 C, dT_max=-1.0473 C, dp_ratio=76.8
+
+Done. 32 cases -> outputs/multi_source_results.csv

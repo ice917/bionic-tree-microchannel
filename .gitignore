@@ -7,3 +7,22 @@ __pycache__/
 
 # MATLAB 会话中间产物（非输入非结果，体积大且可再生产）
 m_*.mat
+
+# 第三方材料（版权不随仓库分发）
+# ScienceDirect 下载的论文 PDF 与 MinerU 中间产物，约 390 MB
+参考论文/
+# 他人论文的 LaTeX 源码；公开托管前须移除，见 REPORTING_COMPLIANCE.md B2-05
+src_extract/
+
+# 本地一次性脚本、备份与日志（不进仓库，仅保留在本机）
+_work/
+_work_probe_upow.log
+code_and_data.zip
+
+# 编辑器与工具临时文件
+*.autosave
+*.bak_*
+*~$*
+
+# 投稿打包产物（每次构建字节不同，不可复现）
+论文/*.zip

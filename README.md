@@ -29,9 +29,9 @@ PROJECT.md                项目方案与目标（历史文档，结论以 REPOR
 DEFECT_REMEDIATION_PLAN.md 缺陷台账：机制、证据、修复、作废项
 DATA_DICTIONARY.md        每个输出文件的生成脚本、字段与单位状态
 REPORTING_COMPLIANCE.md   报告合规性对照（TOP 2025 七项 / Nature 数据与代码可用性）
-MANIFEST.sha256           全部随附文件（源码/工件/文档/论文）的 SHA-256 清单（132 项）
+MANIFEST.sha256           全部随附文件的 SHA-256 清单（182 项 = git 索引全集减 3 个 .slx）
 DATA_AVAILABILITY.md      数据可用性声明模板（中英）
-src_extract/              Physarum 参考文献的 LaTeX 源码（第三方材料）
+src_extract/              第三方论文 LaTeX 源码（本地保留，不随仓库分发）
 ```
 
 ## 环境与复现
@@ -115,7 +115,7 @@ print('rewritten =', n)
 
 - 代码（`*.py`、`*.m`、`*.slx`）：MIT，见 [LICENSE](LICENSE)。
 - 数据与文档（`outputs/`、`*.md`、`论文/`）：CC BY 4.0，见 [LICENSE-DATA](LICENSE-DATA)。
-- `src_extract/` 为第三方论文源码，**不在上述许可覆盖范围内**，版权归原作者。
+- `src_extract/` 为第三方论文的 LaTeX 源码，版权归原作者，**已从仓库移除、不随仓库分发**（本地保留仅供研究参考）。
 
 ## 引用与作者
 

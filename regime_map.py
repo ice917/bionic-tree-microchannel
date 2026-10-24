@@ -96,7 +96,7 @@ i20 = ds.index(20)
 ax1.annotate("branch change at $d$ = 20 mm\n"
              "(pinned cells %d $\\rightarrow$ %d)"
              % (rows[i20 - 1]["tree_pinned"], rows[i20]["tree_pinned"]),
-             xy=(20, dTmax[i20]), xytext=(21.0, dTmax[i20] - 1.15),
+             xy=(20, dTmax[i20]), xytext=(21.6, -3.72),
              arrowprops=dict(arrowstyle="->", color="0.3", lw=0.9),
              ha="left", va="top", fontsize=7.5, color="0.25")
 
@@ -113,7 +113,7 @@ ax1.legend(h1 + h2, l1 + l2, loc="lower center", bbox_to_anchor=(0.5, 1.005),
            ncol=3, fontsize=7.5, frameon=False, handlelength=1.8,
            columnspacing=1.4)
 fig.tight_layout()
-fig.savefig(OUT / "regime_map.png", bbox_inches="tight")
+fig.savefig(OUT / "regime_map.png", dpi=600, bbox_inches="tight")
 plt.close(fig)
 
 # ------------------------------------------------------------------ verdict
