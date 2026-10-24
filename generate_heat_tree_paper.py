@@ -2495,12 +2495,13 @@ paper.p('**不可得与作废。** `tree_dynamic.stl` 的 MATLAB 生成器未入
         '引用旧值前须先核对该表。')
 paper.p('**第三方材料。** `src_extract/` 与 `参考论文/` 为他人论文的 LaTeX 源码与 PDF，不在本数据集许可范围内，'
         '也未列入 `MANIFEST.sha256`；二者已由 `.gitignore` 排除，不随本仓库或归档记录分发。')
-paper.p('**托管状态。** 本数据集的 v1.0.0 快照已于 2026-10-24 永久归档于 Zenodo，'
-        '版本 DOI 为 10.5281/zenodo.23620419，概念 DOI 为 10.5281/zenodo.23620418'
-        '（始终解析到最新归档版本）；同一快照亦公开托管于 '
+paper.p('**托管状态。** 本数据集的 v1.0.0（版本 DOI 10.5281/zenodo.23620419）与 v1.0.1'
+        '（版本 DOI 10.5281/zenodo.23621256）两份快照均已于 2026-10-24 永久归档于 Zenodo；'
+        '概念 DOI 10.5281/zenodo.23620418 始终解析到最新归档版本。同一快照亦公开托管于 '
         'https://github.com/ice917/bionic-tree-microchannel。按 TOP 2025 的操作化定义，'
-        '数据已具备"公开托管 + 持久标识"，即 Level 2 的共享条件；本文参考文献未列入数据集条目，'
-        '故引用条款仍待期刊排版时补齐。作者姓名与版权人已由占位符替换为 Wu, Haoran。')
+        '"公开托管 + 持久标识 + 参考文献引用"三项条件均已具备，数据集引用见参考文献 [21]。'
+        '作者姓名与版权人已由占位符替换为 Wu, Haoran。')
+paper.p('**研究注册。** 本研究为纯计算研究，未进行预注册。')
 
 # ============================================================
 paper.h1('21 代码可用性')
@@ -2515,11 +2516,12 @@ paper.p('**构建依赖。** Python 3.13.9、numpy 2.3.5、scipy 1.16.3、matplo
         '论文 docx 由 `generate_heat_tree_paper.py` 生成，只依赖同目录的 `paper_template.py`，'
         '不读取仓库外的绝对路径。')
 paper.p('**已知不可复现项。** `tree_dynamic.stl` 的生成器未入库；该文件不参与可制造性主张。')
-paper.p('**托管状态。** 代码与数据同处上述 Zenodo 记录（v1.0.0，DOI 10.5281/zenodo.23620419）'
+paper.p('**托管状态。** 代码与数据同处上述 Zenodo 记录（v1.0.0 版本 DOI 10.5281/zenodo.23620419、'
+        'v1.0.1 版本 DOI 10.5281/zenodo.23621256、概念 DOI 10.5281/zenodo.23620418）'
         '与 GitHub 仓库 https://github.com/ice917/bionic-tree-microchannel，满足 Nature Portfolio'
-        '"发表后即可得且带持久标识"中"可取回"的部分；本论文参考文献尚未列入数据集条目，'
-        '推荐引用格式为：Wu H. 仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账（v1.0.0）'
-        '[CP/OL]. Zenodo, 2026. https://doi.org/10.5281/zenodo.23620419。')
+        '"发表后即可得且带持久标识"中"可取回"的部分；数据集已在参考文献 [21] 中正式引用。'
+        '推荐引用格式为：Wu H. 仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账（v1.0.1）'
+        '[CP/OL]. Zenodo, 2026. https://doi.org/10.5281/zenodo.23621256。')
 
 # ============================================================
 paper.h1('参考文献')
@@ -2587,6 +2589,8 @@ paper.reference('[19] FiberMall. Deep dive into NVIDIA GB200 liquid cooling plat
                 'https://www.fibermall.com/blog/nvidia-gb200-liquid-cooling-plate.htm, 2026-10-18.')
 paper.reference('[20] EngineerLaboratory. Dynamic viscosity of water[EB/OL]. '
                 'https://www.enginelaboratory.com/tables/dynamic-viscosity-of-water, 2026-10-18.')
+paper.reference('[21] Wu H. 仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账（v1.0.1）'
+                '[DS/OL]. Zenodo, 2026. https://doi.org/10.5281/zenodo.23621256.')
 
 paper.save()
 print('OK ->', OUT_FILE)

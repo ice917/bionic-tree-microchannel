@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite it as below."
+type: software
+title: >-
+  仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账
+  (Bionic adaptive network: generation, comparison and defect ledger of chip
+  heat-dissipation channel trees)
+abstract: >-
+  Generator, comparison framework and defect ledger for tree-shaped bionic
+  microchannel chip cooling networks, including the solver, scan scripts,
+  MATLAB cross-validation scripts and all numerical artefacts reported in the
+  accompanying manuscript. Code is released under the MIT licence; data and
+  documentation are released under CC BY 4.0 (see LICENSE and LICENSE-DATA).
+  Third-party material is not distributed with this repository.
+authors:
+  - family-names: Wu
+    given-names: Haoran
+    affiliation: Wuchang University of Technology, No. 16 Jiangxia Avenue, Jiangxia District, Wuhan 430223, China
+    orcid: "https://orcid.org/0009-0005-1975-1511"
+version: 1.0.1
+date-released: "2026-10-24"
+license: MIT
+license-url: "https://github.com/ice917/bionic-tree-microchannel/blob/main/LICENSE"
+repository-code: "https://github.com/ice917/bionic-tree-microchannel"
+url: "https://doi.org/10.5281/zenodo.23620418"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23621256
+    description: Version DOI of v1.0.1
+  - type: doi
+    value: 10.5281/zenodo.23620419
+    description: Version DOI of v1.0.0
+  - type: doi
+    value: 10.5281/zenodo.23620418
+    description: Concept DOI, always resolves to the latest archived version
+keywords:
+  - microchannel heat sink
+  - bionic tree-shaped network
+  - Murray's law
+  - constructal theory
+  - fair comparison framework
+  - conjugate heat transfer
+  - reproducibility
