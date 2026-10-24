@@ -29,7 +29,7 @@ PROJECT.md                项目方案与目标（历史文档，结论以 REPOR
 DEFECT_REMEDIATION_PLAN.md 缺陷台账：机制、证据、修复、作废项
 DATA_DICTIONARY.md        每个输出文件的生成脚本、字段与单位状态
 REPORTING_COMPLIANCE.md   报告合规性对照（TOP 2025 七项 / Nature 数据与代码可用性）
-MANIFEST.sha256           全部随附文件的 SHA-256 清单（182 项 = git 索引全集减 3 个 .slx）
+MANIFEST.sha256           全部随附文件的 SHA-256 清单（183 项 = git 索引全集 187 减 3 个 .slx 与清单自身）
 DATA_AVAILABILITY.md      数据可用性声明模板（中英）
 src_extract/              第三方论文 LaTeX 源码（本地保留，不随仓库分发）
 ```
@@ -121,14 +121,16 @@ print('rewritten =', n)
 
 作者：Wu, Haoran（武昌理工学院 / Wuchang University of Technology），ORCID [0009-0005-1975-1511](https://orcid.org/0009-0005-1975-1511)。
 
-本仓库已在 Zenodo 永久归档（v1.0.0、v1.0.1、v1.0.2 均于 2026-10-24 发布，v1.0.2 为投稿版本）：
+本仓库已在 Zenodo 永久归档（v1.0.0、v1.0.1、v1.0.2、v1.0.3 均于 2026-10-24/25 发布，v1.0.4 为本轮投稿版本）：
 
 - 概念 DOI（始终指向最新归档版本，**推荐引用**）：[10.5281/zenodo.23620418](https://doi.org/10.5281/zenodo.23620418)
-- v1.0.2 的版本 DOI（当前投稿版）：[10.5281/zenodo.23622141](https://doi.org/10.5281/zenodo.23622141)
+- v1.0.3 的版本 DOI：[10.5281/zenodo.23622506](https://doi.org/10.5281/zenodo.23622506)
+- v1.0.2 的版本 DOI：[10.5281/zenodo.23622141](https://doi.org/10.5281/zenodo.23622141)
 - v1.0.1 的版本 DOI（含生成式 AI 声明）：[10.5281/zenodo.23621256](https://doi.org/10.5281/zenodo.23621256)
 - v1.0.0 的版本 DOI（不含生成式 AI 声明）：[10.5281/zenodo.23620419](https://doi.org/10.5281/zenodo.23620419)
+- v1.0.4 的版本 DOI：由 Zenodo 在本版本归档完成后分配，随后补记于本文件与 `CITATION.cff`
 
-v1.0.2 的版本 DOI 由 Zenodo 在该版本归档完成后分配，故不可能出现在 v1.0.2 归档快照内的 README 与 `CITATION.cff` 中；归档后已补记于 main 分支的这两个文件（此处即该补记）。概念 DOI 不受此限制，始终解析到最新归档版。
+版本 DOI 由 Zenodo 在对应版本归档完成后才分配，故不可能出现在该版本自身的归档快照内（实测：v1.0.2 归档包内 `23622141` 与 v1.0.3 归档包内 `23622506` 均 0 命中）；每次归档后于 main 分支补记。概念 DOI 不受此限制，始终解析到最新归档版。
 
 推荐引用格式：
 

@@ -3,7 +3,8 @@
 > 投稿时按期刊要求把对应语言的一段贴进论文（IJHMT / Applied Thermal Engineering
 > 等 Elsevier 期刊用英文，正文 References 之前新增「Data Availability」节）。
 > DOI 与仓库 URL 均已回填为真实值（v1.0.0 记录 23620419、v1.0.1 记录 23621256、
-> v1.0.2 记录 23622141，均于 2026-10-24 发布；v1.0.2 为当前投稿版本）。
+> v1.0.2 记录 23622141、v1.0.3 记录 23622506，分别于 2026-10-24 / 2026-10-25 发布；
+> v1.0.4 为本轮投稿版本）。
 > 概念 DOI `10.5281/zenodo.23620418` 始终指向最新归档版本。
 
 ## English（英文版，供 Elsevier 期刊）
@@ -16,7 +17,8 @@ study — including the Python/MATLAB reproduction scripts, the raw results in
 geometry (STL) — are openly available in the Zenodo repository at
 `https://doi.org/10.5281/zenodo.23620418` (concept DOI, which always resolves to the
 latest archived version; each archived snapshot also carries its own version DOI,
-for example `https://doi.org/10.5281/zenodo.23622141` for v1.0.2,
+for example `https://doi.org/10.5281/zenodo.23622506` for v1.0.3,
+`https://doi.org/10.5281/zenodo.23622141` for v1.0.2,
 `https://doi.org/10.5281/zenodo.23621256` for v1.0.1 and
 `https://doi.org/10.5281/zenodo.23620419` for v1.0.0) and in the GitHub repository at
 `https://github.com/ice917/bionic-tree-microchannel`. The code is
@@ -40,7 +42,8 @@ the electrical model is instead guaranteed by the network construction code
 支撑本研究发现的源代码与全部数值工件——包括 Python/MATLAB 复现脚本、`outputs/`
 下的原始结果（JSON/CSV/TXT）、图（PNG）与可制造几何（STL）——已在 Zenodo 仓库
 `https://doi.org/10.5281/zenodo.23620418`（概念 DOI，始终指向最新归档版本；各归档快照
-另带版本 DOI，例如 v1.0.2 为 `https://doi.org/10.5281/zenodo.23622141`、v1.0.1 为
+另带版本 DOI，例如 v1.0.3 为 `https://doi.org/10.5281/zenodo.23622506`、v1.0.2 为
+`https://doi.org/10.5281/zenodo.23622141`、v1.0.1 为
 `https://doi.org/10.5281/zenodo.23621256`、v1.0.0 为
 `https://doi.org/10.5281/zenodo.23620419`）与 GitHub 仓库
 `https://github.com/ice917/bionic-tree-microchannel`
@@ -56,6 +59,6 @@ the electrical model is instead guaranteed by the network construction code
 ## 提交前待办（占位符清单）
 
 1. ~~作者姓名、单位、ORCID~~（已填：Haoran Wu / Wuchang University of Technology / 0009-0005-1975-1511）。
-2. ~~Zenodo DOI~~（已填：概念 DOI `10.5281/zenodo.23620418`（引用用）；v1.0.2 版本 DOI `10.5281/zenodo.23622141`（记录 23622141，2026-10-24T16:14:08Z 发布，当前投稿版）；v1.0.1 版本 DOI `10.5281/zenodo.23621256`（记录 23621256，2026-10-24T15:29:28Z 发布）；v1.0.0 版本 DOI `10.5281/zenodo.23620419`（记录 23620419，2026-10-24T14:45:14Z 发布，不含 AI 声明））。
+2. ~~Zenodo DOI~~（已填：概念 DOI `10.5281/zenodo.23620418`（引用用）；v1.0.3 版本 DOI `10.5281/zenodo.23622506`（记录 23622506，2026-10-24T16:36:43Z 发布）；v1.0.2 版本 DOI `10.5281/zenodo.23622141`（记录 23622141，2026-10-24T16:14:08Z 发布）；v1.0.1 版本 DOI `10.5281/zenodo.23621256`（记录 23621256，2026-10-24T15:29:28Z 发布）；v1.0.0 版本 DOI `10.5281/zenodo.23620419`（记录 23620419，2026-10-24T14:45:14Z 发布，不含 AI 声明）。v1.0.4 为本轮投稿版，其版本 DOI 待归档后回填）。
 3. ~~GitHub 仓库 URL~~（已填：https://github.com/ice917/bionic-tree-microchannel，main 分支已推送）。
-4. ~~`.zenodo.json` 的 `version` 由 `0.1.0-draft` 改为正式版本号~~（v1.0.0 已发布；现为 `1.0.2`）。
+4. ~~`.zenodo.json` 的 `version` 由 `0.1.0-draft` 改为正式版本号~~（v1.0.0 已发布；现为 `1.0.4`）。
