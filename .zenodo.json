@@ -1,9 +1,9 @@
 {
   "title": "仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账",
-  "description": "<p>在 50×50 二维导热网格上，以热寻路生长与 Murray 定径生成冷却通道树，并在同一功率、同一网格、同一钉住规则下与放射状通道和均匀格状网逐案比较。仓库包含全部 Python/MATLAB 源码、70 个原始输出文件（CSV/JSON/TXT/PNG/STL）、逐节对比台账（REPORT.md）、缺陷修复台账（DEFECT_REMEDIATION_PLAN.md）、数据字典（DATA_DICTIONARY.md）、公平比较 benchmark 数据集（benchmark_dataset.json）与期刊投稿版稿件（docx/PDF/独立图件）。</p><p>核心结果（N4c 修复后）：18 个可采纳 case 中，树对最优格状网的峰值温度为 11 胜 7 负；4 芯片布局 0/6 胜，是真实拓扑劣势。物理标定 253 W 下峰值 60.5 °C、R_th = 0.1403 °C/W；该值含 N=50 网格约 41% 的温升偏高，且与公开冷板数据口径不可比。顶刊补强（2026-10-21）：接头局部损失已用 Kiser/Rennels K 模型量化（树压降放大 2.6–98.8×）；三维冷板传导下树与直通道仍打平（维度不敏感，2D 结论在 3D 保持）；树对径向基线的优势随热源间距增大而衰减的 regime map（图4）。</p><p>许可为混合：代码 MIT（LICENSE），数据与文档 CC BY 4.0（LICENSE-DATA）；第三方材料（src_extract/、参考论文/）不随本记录分发。DOI 尚未确定，以 TODO 占位。</p>",
+  "description": "<p>在 50×50 二维导热网格上，以热寻路生长与 Murray 定径生成冷却通道树，并在同一功率、同一网格、同一钉住规则下与放射状通道和均匀格状网逐案比较。仓库包含全部 Python/MATLAB 源码、outputs/ 下 74 个随附输出文件（JSON 27、CSV 12、TXT 10、PNG 20、STL 3、MD 1、LOG 1）、逐节对比台账（REPORT.md）、缺陷修复台账（DEFECT_REMEDIATION_PLAN.md）、数据字典（DATA_DICTIONARY.md）、公平比较 benchmark 数据集（benchmark_dataset.json）与期刊投稿版稿件（docx/PDF/独立图件）。</p><p>核心结果（N4c 修复后）：18 个可采纳 case 中，树对最优格状网的峰值温度为 11 胜 7 负；4 芯片布局 0/6 胜，是真实拓扑劣势。物理标定 253 W 下峰值 60.5 °C、R_th = 0.1403 °C/W；该值含 N=50 网格约 41% 的温升偏高，且与公开冷板数据口径不可比。顶刊补强（2026-10-21）：接头局部损失已用 Kiser/Rennels K 模型量化（树压降放大 2.6–98.8×）；三维冷板传导下树与直通道仍打平（维度不敏感，2D 结论在 3D 保持）；树对径向基线的优势随热源间距增大而衰减的 regime map（图4）。</p><p>许可为混合：代码 MIT（LICENSE），数据与文档 CC BY 4.0（LICENSE-DATA）；第三方材料（src_extract/、参考论文/）不随本记录分发。</p>",
   "creators": [
     {
-      "name": "Haoran Wu",
+      "name": "Wu, Haoran",
       "affiliation": "Wuchang University of Technology",
       "orcid": "0009-0005-1975-1511"
     }
@@ -14,7 +14,7 @@
     "id": "other-open"
   },
   "language": "zho",
-  "version": "0.1.0-draft",
+  "version": "1.0.0",
   "keywords": [
     "constructal theory",
     "Murray's law",
@@ -25,5 +25,5 @@
     "generative design",
     "reproducibility"
   ],
-  "notes": "Mixed licensing: code under MIT (LICENSE); data and documentation under CC BY 4.0 (LICENSE-DATA). Third-party material (src_extract/, 参考论文/) is not distributed with this record. This record is a pre-release: the DOI is not yet assigned and must be replaced before any claim of formal publication or archiving."
+  "notes": "Mixed licensing: code under MIT (LICENSE); data and documentation under CC BY 4.0 (LICENSE-DATA). Third-party material (src_extract/, 参考论文/) is not distributed with this record."
 }
