@@ -39,10 +39,11 @@ purpose, including commercially, under the following terms:
   technological measures that legally restrict others from doing anything
   the license permits.
 
-Suggested attribution string (replace the placeholder author before release):
+Suggested attribution string:
 
-  TODO: 作者姓名 (2026). 仿生自适应网络芯片散热与布线: data and documentation.
+  Wu, Haoran (2026). 仿生自适应网络芯片散热与布线: data and documentation.
   Licensed under CC BY 4.0.
+  https://doi.org/10.5281/zenodo.23620419
 
 Notes
 -----

@@ -1,10 +1,10 @@
 # 报告合规性对照（B2）
 
-核验日期：2026-10-18
-核验对象：本仓库工作树（HEAD `44e33ae`，`main` 分支；核验时点有 88 项未提交变更，生成本文件后该数只增不减）
+核验日期：2026-10-24（第二次核验；首次为 2026-10-18）
+核验对象：本仓库工作树（`main` 分支；核验起点 HEAD `fa01e46`，该时点 `git status --porcelain` 为 0 行；本文件的 2026-10-24 修正随其后的一个提交入库）
 判定对象：论文《仿生自适应网络用于芯片散热与布线》及其随附数据与代码
 
-**版本注记（2026-10-24）**：本文件除本行外，其余数值均为 2026-10-18 核验时点的快照，未回改。此后 `MANIFEST.sha256` 刷新为 132 项（`outputs/` 70 项、37 个 `.py`、10 个 `.m`、7 个根目录 `.md`、`LICENSE`、`LICENSE-DATA`、`.zenodo.json` 与 `论文/` 下 5 项），3 个 `.slx` 因包内含每次保存变化的时间戳与随机生成的模型/调度 UUID 而移出清单（理由与替代验证方式见 `DATA_AVAILABILITY.md`）。
+**版本注记（2026-10-24 复验）**：本文件已按 2026-10-24 实测值回改。2026-10-18 首次核验的三项主要判定——"零项 L2""无 DOI""未托管"——因 Zenodo 记录 `23620419`（v1.0.0，2026-10-24T14:45:14Z 发布）而失效，现按实测重判。凡保留的历史值一律以"（2026-10-18：…）"标注，不作静默替换。
 
 本文件只回答一个问题：**按公开的期刊透明性标准，本项目现在处于哪一级，缺什么。**
 所有等级均按论文层面判定；仓库层面的补充事实单列。凡无仓库内证据支持的，一律标为"未声明"，不按"应该已经具备"推定。
@@ -39,12 +39,12 @@
 | 1 | Study Registration | 全文无"是否注册"声明 | 无注册记录 | **未达 L1**（研究类型为计算设计，应声明"不适用/未注册"） | 论文加一句不适用声明；无需注册 |
 | 2 | Study Protocol | §19"复现"列出全部命令与产物（[generate_heat_tree_paper.py](generate_heat_tree_paper.py#L2389-L2411)），但未声明"协议可获取、位于何处" | `DEFECT_REMEDIATION_PLAN.md` 记录方法、判据 R1–R26 与修复过程 | **L1（弱）**：步骤已披露，缺显式可得性声明 | 在论文中写明协议载体与版本；托管并引用 |
 | 3 | Analysis Plan | 无预先注册的分析计划；判据是事后台账 | `DEFECT_REMEDIATION_PLAN.md`（判定规则与作废项）、`REPORT.md` | **L1** | 分析计划无法追溯为"事前"；只能以"追溯性披露"托管并说明 |
-| 4 | Materials Transparency | 论文 §20 声明数值结果、图与几何文件位于 `outputs/` | `outputs/tree.stl`、`outputs/manifold_assembly.stl`、`manifold_geometry.json`、全部几何/求解源码；`README.md` 目录段列出。`tree_dynamic.stl` 生成器未入库、不可复现，不列为可得材料 | **L1**（已披露，未托管） | 托管 + DOI + 参考文献引用 |
-| 5 | Data Transparency | 论文 §20 声明数据集位置、规模与单位警告 | `outputs/` 59 个文件、4.76 MB（4,763,033 字节）；`DATA_DICTIONARY.md` 逐文件说明 | **L1**（已披露，未托管） | 托管 + DOI + 数据引用；单位误标清单须随数据一同发布（已具备） |
-| 6 | Analytic Code Transparency | 论文 §19 给出命令，§21 声明代码位置、许可与构建依赖 | 26 个 `.py`（含 `paper_template.py`）、13 个 `.m`/`.slx`；`LICENSE`（MIT）；`README.md` 复现段 | **L1**（已披露，未托管） | 托管 + DOI + 引用；docx 构建链已自包含（模板入仓、同目录相对导入） |
+| 4 | Materials Transparency | 论文 §20 声明数值结果、图与几何文件位于 `outputs/` | `outputs/tree.stl`、`outputs/manifold_assembly.stl`、`manifold_geometry.json`、全部几何/求解源码；`README.md` 目录段列出。`tree_dynamic.stl` 生成器未入库、不可复现，不列为可得材料 | **托管与 DOI 已具备，缺参考文献引用** | 在参考文献中列入数据集条目 |
+| 5 | Data Transparency | 论文 §20 声明数据集位置、规模与单位警告 | `outputs/` 74 个文件、7,778,123 字节（7.42 MB）；`DATA_DICTIONARY.md` 逐文件说明；Zenodo 记录 `23620419` + GitHub 公开托管 | **托管与 DOI 已具备，缺参考文献引用** | 在参考文献中列入数据集条目；单位误标清单须随数据一同发布（已具备） |
+| 6 | Analytic Code Transparency | 论文 §19 给出命令，§21 声明代码位置、许可与构建依赖 | 46 个 `.py`、10 个 `.m`、3 个 `.slx`；`LICENSE`（MIT）；`README.md` 复现段；与数据同处 Zenodo 记录 `23620419` | **托管与 DOI 已具备，缺参考文献引用** | 在参考文献中列入数据集条目；docx 构建链已自包含（模板入仓、同目录相对导入） |
 | 7 | Reporting Transparency | 未声明是否使用报告指南 | 无适用清单记录 | **未达 L1** | 论文加一句"未找到适用于计算传热/生成式设计的报告清单，故未使用" |
 
-**计数：L1 = 5 项（第 2–6），未达 L1 = 2 项（第 1、7），L2 = 0 项，L3 = 0 项。**
+**计数（2026-10-24）：L1 = 2 项（第 2–3），未达 L1 = 2 项（第 1、7），"托管 + DOI 已具备但缺参考文献引用" = 3 项（第 4–6），严格满足三项条件的 L2 = 0 项，L3 = 0 项。**（2026-10-18：L1 = 5 项、L2 = 0 项。）
 
 ---
 
@@ -61,31 +61,32 @@
 
 | 条款 | 要求 | 现状 | 判定 |
 |---|---|---|---|
-| Data availability statement | 所有原创研究论文必须包含 | 论文 §20「数据可用性」已存在：数据集位置与规模、单位警告、不可得与作废、第三方材料、托管状态五段，标题位于 `19 复现` 与 `参考文献` 之间（docx 段落索引 384） | **形式要件满足**；托管与 DOI 不满足 |
-| Code availability（独立小节） | 位于 data availability 之后、参考文献之前，说明获取方式与限制 | 论文 §21「代码可用性」已存在：代码位置、许可、构建依赖、已知不可复现项、托管状态五段（docx 段落索引 391，紧随 §20 之后） | **形式要件满足**；托管与 DOI 不满足 |
-| 代码存入 DOI 铸造仓库并引用 | Zenodo / Code Ocean 等，参考文献列出 | `.zenodo.json` 仅为待上传元数据，无 DOI、无 `publication_date` | **不满足**（未托管） |
-| OSI 认可许可证 | 鼓励 | `LICENSE` 为 MIT（[LICENSE](LICENSE#L1-L3)） | **满足**（但版权人仍为占位符） |
-| 材料可得 | 无不当限制 | STL（`tree.stl`、`manifold_assembly.stl`）、源码在仓库；`tree_dynamic.stl` 不可复现，不作为可得材料主张；`src_extract/` 为第三方论文源码，明确排除在许可外（[LICENSE-DATA](LICENSE-DATA#L51-L53)） | **部分满足**：第三方材料不得随附再分发，须在上传前移除或取得授权 |
-| 数据引用 | 数据集以正式引用列入参考文献 | 无数据集 DOI，参考文献中无数据引用 | **不满足** |
+| Data availability statement | 所有原创研究论文必须包含 | 论文 §20「数据可用性」已存在：数据集位置与规模、单位警告、不可得与作废、第三方材料、托管状态五段，标题位于 `19 复现` 与 `参考文献` 之间（docx 段落索引 379） | **形式要件与实质要件均满足**（托管 + 可解析 DOI 已写入该段） |
+| Code availability（独立小节） | 位于 data availability 之后、参考文献之前，说明获取方式与限制 | 论文 §21「代码可用性」已存在：代码位置、许可、构建依赖、已知不可复现项、托管状态五段（docx 段落索引 386，紧随 §20 之后） | **形式要件与实质要件均满足** |
+| 代码存入 DOI 铸造仓库并引用 | Zenodo / Code Ocean 等，参考文献列出 | 已存入 Zenodo（记录 `23620419`，v1.0.0）；`.zenodo.json` 的 `version` 为 `1.0.0`，记录含 `related_identifiers` 指向 GitHub tag | **部分满足**：托管与 DOI 已满足，参考文献尚未列入数据集条目 |
+| OSI 认可许可证 | 鼓励 | `LICENSE` 为 MIT，版权人已由占位符改为 `Haoran Wu (Wuchang University of Technology)`（[LICENSE](LICENSE#L3)） | **满足** |
+| 材料可得 | 无不当限制 | STL（`tree.stl`、`manifold_assembly.stl`）、源码随仓库及 Zenodo 归档公开；`tree_dynamic.stl` 不可复现，不作为可得材料主张；`src_extract/`、`参考论文/` 已由 `.gitignore` 排除，不随分发（[LICENSE-DATA](LICENSE-DATA#L51-L53)） | **满足**（第三方材料已不随附） |
+| 数据引用 | 数据集以正式引用列入参考文献 | 数据集 DOI 已存在（版本 `10.5281/zenodo.23620419` / 概念 `10.5281/zenodo.23620418`），但参考文献中仍无该条目 | **不满足**（仅缺引用动作，非缺 DOI） |
 | Reporting summary | 物理科学仅对太阳能电池、激光声称等特定领域强制 | 本项目不属于强制领域 | **不适用** |
-| "promptly available without undue qualifications" | 发表后即可得 | 当前仅本地目录，未公开 | **不满足**（尚未发表，属预期状态，但不得声称已满足） |
+| "promptly available without undue qualifications" | 发表后即可得 | 已于 2026-10-24 公开托管于 Zenodo 与 GitHub，读者无需申请即可下载 | **满足**（发表前即可得，强于条款要求） |
 
 ---
 
 ## 5. 支撑判定的事实清单（均可在仓库内复核）
 
-1. **当前工作树不对应任何提交。** HEAD 为 `44e33ae81bb37ce58c7a76f745a7f864c6c0d735`（2026-10-15 17:57:50 +0800），`git status --porcelain` 本次核对计 88 行。N4c 修复、A2/A8/A9/A10 之后的论文、台账、`calibrate.py`、`ports_manifold.py` 均未提交。后果：无法用 commit 或 tag 唯一标识"产生这些数字的代码版本"。
-2. **无 `CITATION.cff`。** `Glob CITATION*` 返回 0；README 自述"尚未创建"（[README.md](README.md#L84-L86)）。
-3. **作者信息为占位符。** `LICENSE#L3`、`LICENSE-DATA#L42-L45`、`.zenodo.json#L4-L9` 均为 `TODO`；论文只有标题、摘要、关键词，无作者与单位行（[generate_heat_tree_paper.py](generate_heat_tree_paper.py#L24-L70)）。
-4. **无 DOI、无发布日期。** `.zenodo.json` 中 `version = 0.1.0-draft`，无 `doi`、无 `publication_date`、无 `related_identifiers`。
-5. **Zenodo 许可证字段无法表达混合许可。** `.zenodo.json#L12-L14` 为单值 `other-open`，而实际为 MIT + CC BY 4.0；说明写在 `description`/`notes`，机器不可读。可接受但不理想，L2 前应决定"拆分两条记录"或"保留 `other-open` + 说明"。
-6. **数据与代码规模已实测。** `outputs/` 59 个文件、4,763,033 字节（4.76 MB），其中 `manifold_assembly.stl` 与 `manifold_geometry.json` 为 A2 新增。
+1. **工作树与 HEAD 一致。** HEAD 为 `fa01e46`（`docs: 回填 Zenodo DOI…`），`git status --porcelain` 本次核对为 0 行。tag `v1.0.0` 指向 `3e02b70`，其 `MANIFEST.sha256` 182 项对该 tag 的逐文件校验为 `mismatch 0 / missing 0`。（2026-10-18：HEAD `44e33ae`，88 行未提交。）
+2. **无 `CITATION.cff`。** `Test-Path CITATION.cff` 为 `False`；README 已改为在创建前以 DOI 段落作为临时规范引用格式（[README.md](README.md#L120-L131)）。
+3. **作者信息已落实。** `LICENSE#L3` 为 `Copyright (c) 2026 Haoran Wu (Wuchang University of Technology)`；`LICENSE-DATA` 的署名样例已改为 `Wu, Haoran (2026)`；`.zenodo.json` 的 `creators` 为 `Wu, Haoran` + ORCID `0009-0005-1975-1511`，且已被 Zenodo 记录 `23620419` 实际采用。全仓库 `TODO: 作者姓名` 现为 0 命中。
+4. **DOI 已分配且可解析。** Zenodo 记录 `23620419`：`status=published`、`created=2026-10-24T14:45:14Z`、`version=1.0.0`、`doi=10.5281/zenodo.23620419`、`conceptdoi=10.5281/zenodo.23620418`、`license.id=other-open`；`related_identifiers` 含 GitHub tag `v1.0.0`（`isSupplementTo`）。两个 DOI 经 `doi.org` 均 302 → `zenodo.org/records/23620419`（200）。（2026-10-18：无 DOI、`version=0.1.0-draft`。）
+5. **Zenodo 许可证字段无法表达混合许可。** `.zenodo.json` 的 `license` 为单值 `other-open`，而实际为 MIT + CC BY 4.0；说明写在 `description` 与 `notes`，机器不可读。该选择已在记录 `23620419` 上生效（`license.id=other-open`）；若需机器可读，仍应拆成两条记录。
+6. **数据与代码规模已实测。** `outputs/` 74 个文件、7,778,123 字节（7.42 MB，按 `MANIFEST.sha256` 收录项统计）；另有 2 个 `*.bak_20261020_200638` 备份文件被 `.gitignore` 排除，不计入。（2026-10-18：59 个文件、4,763,033 字节。）
 7. **数据字典已披露单位陷阱。** `_C` 后缀不等于摄氏度；`DATA_DICTIONARY.md` 与 `README.md#L71-L76` 均列出三类单位状态。这是报告透明度的实质性加分项，但不改变 Data Transparency 的等级。
 8. **论文生成已自包含（原缺口已修）。** `paper_template.py` 已复制入仓，`generate_heat_tree_paper.py` 改为同目录相对导入，不再依赖 `D:\数学建模`；docx 可在干净环境按 README 重建。
 9. **第三方材料存在。** `src_extract/` 含他人论文的 `.tex`、`.eps`、`.sty`；`LICENSE-DATA#L51-L53` 明确不覆盖。任何公开托管前必须删除或取得再分发许可。
 10. **许可证范围已修正。** `LICENSE-DATA` 原先只列 `REPORT.md`、`DATA_DICTIONARY.md`、`DEFECT_REMEDIATION_PLAN.md`，漏掉 `README.md` 与 `PROJECT.md`，与 README"数据与文档（`*.md`）CC BY 4.0"的表述冲突；现已补入 `README.md`、`PROJECT.md` 与本文件。
-11. **完整性清单已生成。** `MANIFEST.sha256` 覆盖 `outputs/`（59 项）、26 个 `.py`（含新入仓的 `paper_template.py`）、13 个 `.m`/`.slx`、6 个根目录 `.md`、`LICENSE`、`LICENSE-DATA`、`.zenodo.json` 与论文 docx，共 108 项；校验 0 不匹配。`src_extract/` 为第三方材料，未纳入清单。
+11. **完整性清单已生成。** `MANIFEST.sha256` 共 182 项，构成为：`outputs/` 74 项、46 个 `.py`、10 个 `.m`、11 个 `.md`（10 个根目录 + `论文/_dump_journal.md`）、9 个 `.docx`、2 个 `.pdf`、22 个 `.tif`、`.zenodo.json`、`LICENSE`、`LICENSE-DATA`、`.gitattributes`、`.gitignore`、`gen_design/` 的 `.npz` 与 `.joblib` 各 1、`设备连接设计图.svg` 1；对 v1.0.0 tag 的逐文件校验为 `mismatch 0 / missing 0`。3 个 `.slx` 随仓库分发，但因其包内含每次保存变化的时间戳与随机 UUID 而不纳入清单（已在论文 §21 披露）。`src_extract/`、`参考论文/` 为第三方材料，已由 `.gitignore` 排除，不随仓库或归档分发。（2026-10-18：108 项。）
 12. **STL 几何已逐三角形核验。** `tree.stl` 与 `manifold_assembly.stl` 均闭合（边界边 0），但非流形边分别为 228 / 236 条，未执行布尔并集；`tree_dynamic.stl` 294 个连通分量、生成器未入库。故"闭合"不等于"流形"，更不等于"可打印"（`DATA_DICTIONARY.md` §6 第 6–7 条）。
+13. **提交作者身份。** `fa01e46` 及之前的提交作者为 `cms2026 <cms2026@local>`（本机默认身份），与论文署名不一致。**不改写历史**：tag `v1.0.0`（指向 `3e02b70`）与 Zenodo 记录 `23620419` 的归档 zip 均已固定在这些提交的对象哈希上，改写会使归档快照与仓库失去可核对的一一对应。处置为：仓库级 `user.name`/`user.email` 改为 `Haoran Wu` / `3973349767@qq.com`，仅对后续提交生效；历史提交的身份不一致本文件如实披露。
 
 ---
 
@@ -95,14 +96,14 @@
 
 | ID | 缺口 | 具体动作 | 验收标准 |
 |---|---|---|---|
-| B2-01 | 作者/单位占位 | 替换 `LICENSE`、`LICENSE-DATA`、`.zenodo.json` 中全部 `TODO` | 全仓库 `TODO: 作者姓名` 0 命中 |
-| B2-02 | 工作树未提交 | 提交 N4c 后的全部改动，打 tag（建议 `v0.1.0`） | `git status --porcelain` 为空；tag 指向该提交 |
-| B2-03 | 无引用元数据 | 新建 `CITATION.cff`，含作者、标题、版本、许可证、仓库 URL | `cffconvert` 或等价校验通过 |
-| B2-04 | ~~论文缺 Data/Code availability~~ **已闭环（2026-10-18）** | 已在 §19 之后、参考文献之前插入 §20 数据可用性、§21 代码可用性 | 已验收：docx 标题顺序为 `19 复现`(363) → `20 数据可用性`(384) → `21 代码可用性`(391) → `参考文献`(397)，两节均存在且顺序正确 |
-| B2-05 | 未托管、无 DOI | 先移除/取得 `src_extract/` 授权，再上传 Zenodo，取得 DOI | DOI 可解析；`.zenodo.json` 与 README 写入 DOI |
-| B2-06 | 混合许可与单值字段 | 二选一：拆成"代码"与"数据/文档"两条 Zenodo 记录；或保留 `other-open` 并在说明中逐项列明 | 元数据与实际许可一致，无歧义 |
+| B2-01 | ~~作者/单位占位~~ **已闭环（2026-10-24）** | 已替换 `LICENSE`、`LICENSE-DATA`、`.zenodo.json` 中全部占位符 | 已验收：全仓库 `TODO: 作者姓名` 0 命中；Zenodo 记录 `23620419` 的 `creators` 为 `Wu, Haoran` + ORCID `0009-0005-1975-1511` |
+| B2-02 | ~~工作树未提交~~ **已闭环（2026-10-24）** | 发布前改动已提交（`3e02b70`）并打 tag `v1.0.0`；DOI 回填提交为 `fa01e46` | 已验收：核验时点 `git status --porcelain` 为 0 行；`v1.0.0` 指向 `3e02b70`，其 MANIFEST 182 项校验 `mismatch 0 / missing 0` |
+| B2-03 | 无引用元数据 | 新建 `CITATION.cff`，含作者、标题、版本、许可证、仓库 URL | `cffconvert` 或等价校验通过（**仍未完成**） |
+| B2-04 | ~~论文缺 Data/Code availability~~ **已闭环（2026-10-18）** | 已在 §19 之后、参考文献之前插入 §20 数据可用性、§21 代码可用性 | 已验收：docx 标题顺序为 `19 复现`(357) → `20 数据可用性`(379) → `21 代码可用性`(386) → `参考文献`(392)，两节均存在且顺序正确 |
+| B2-05 | ~~未托管、无 DOI~~ **已闭环（2026-10-24）** | 第三方材料（`src_extract/`、`参考论文/`）改由 `.gitignore` 排除而非取得授权；数据集已随 tag `v1.0.0` 归档至 Zenodo（记录 `23620419`） | 已验收：`doi.org` 对 `10.5281/zenodo.23620419` 与 `10.5281/zenodo.23620418` 均 302 → `zenodo.org/records/23620419`（200）；DOI 已写入 `.zenodo.json`、`README.md`、`DATA_AVAILABILITY.md` 与论文 §20 |
+| B2-06 | ~~混合许可与单值字段~~ **已闭环（2026-10-24，采用第二方案）** | 保留 `other-open`，在 `.zenodo.json` 的 `description` 与 `notes` 中逐项写明 MIT（代码）+ CC BY 4.0（数据与文档）及第三方材料不分发 | 已验收：记录 `23620419` 的 `license.id=other-open`；两条许可文字均在记录元数据内。机器可读性仍不足，属已披露的残留限制 |
 | B2-07 | ~~生成链不自洽~~ **已闭环（2026-10-18）** | `paper_template.py` 已复制入仓、`generate_heat_tree_paper.py` 改为同目录相对导入 | 从干净环境按 README 能重建 docx（已实测：改相对导入后 `python generate_heat_tree_paper.py` 成功生成 docx） |
-| B2-08 | 无版本化数值基线 | `MANIFEST.sha256` 已生成并自校验通过，但尚未提交 | 随 B2-02 一并提交；校验命令 0 失败 |
+| B2-08 | ~~无版本化数值基线~~ **已闭环（2026-10-24）** | `MANIFEST.sha256` 182 项已随 `3e02b70` 提交，并重新对 `v1.0.0` 逐文件校验 | 已验收：对 tag `v1.0.0` 的 `git show` 内容重算，`182 verified / mismatch 0 / missing 0` |
 
 ### 6.2 不阻塞 L2、但应在投稿前完成
 
@@ -117,13 +118,13 @@
 
 ## 7. 结论
 
-**核实事实**：TOP 2025 七项中，5 项处于 Level 1，2 项未达 Level 1，0 项达到 Level 2；两项 Verification Practices 均未验证；Nature Portfolio 的 Data availability 与 Code availability 两节的形式要件已补齐（论文 §20、§21，docx 回读顺序为 `19 复现` → `20 数据可用性` → `21 代码可用性` → `参考文献`），但托管、DOI 与数据引用仍缺失；当前工作树有至少 88 项未提交变更，不对应任何 commit。
+**核实事实**：TOP 2025 七项中，2 项处于 Level 1（第 2–3），2 项未达 Level 1（第 1、7），3 项（第 4–6）已具备"公开托管 + 持久标识（DOI）"但缺参考文献引用；严格满足三项条件的 Level 2 = 0 项，Level 3 = 0 项；两项 Verification Practices 均未验证。Nature Portfolio 的 Data availability 与 Code availability 两节的形式要件已具备（docx 段落索引 379 / 386，标题顺序 357 → 379 → 386 → 392）；实质要件中"发表后即可得、无不当限制、带持久标识"已由 Zenodo 记录 `23620419`（2026-10-24T14:45:14Z 发布）与 GitHub 公共仓库满足；唯一未满足的是"数据集以正式引用列入参考文献"。
 
-**推理链**：Level 2 的定义要求"公开托管 + 持久标识 + 引用"。本仓库所有数据与代码只存在于本地目录，`.zenodo.json` 无 DOI，参考文献无数据引用，故任何一项都不可能达到 Level 2；即使文件齐全、许可证正确，也不能替代托管与标识。Nature 的条款分两层：形式要件是"论文包含两节声明"，已由 §20/§21 满足；实质要件是"发表后即可得、无不当限制、带持久标识"，因未托管、无 DOI 而不满足。作者与版权人均为 `TODO`，意味着许可在法律上尚无权利人，托管也无法完成归属登记。
+**推理链**：Level 2 的三项条件为"公开托管 + 持久标识 + 在参考文献中引用"，三者缺一不可。前两项已由 Zenodo 版本 DOI `10.5281/zenodo.23620419`（概念 DOI `10.5281/zenodo.23620418`，二者经 `doi.org` 均 302 → `zenodo.org/records/23620419` 200）满足；第三项因参考文献中无数据集条目而未满足，故第 4–6 项只能判为"接近 L2 但非 L2"。Nature 的条款不要求在参考文献引用之外的额外动作：托管、DOI、无限制下载、OSI 许可（MIT）均已具备，故其实质要件仅在数据引用一项上缺失。作者与版权人已由占位符改为 `Wu, Haoran`，许可在法律上已有权利人；Zenodo 记录的 `creators` 亦为该姓名与 ORCID `0009-0005-1975-1511`。
 
-**唯一结论**：**本项目当前是"TOP Level 1（5/7）+ 两项未达 L1 + 零项 L2"的预发布状态；Nature Portfolio 的数据与代码可用性条款仅满足形式要件，实质要件（托管与 DOI）不满足。** 在 B2-01 至 B2-06 完成前，不得声称"已归档""已正式发布""符合 TOP Level 2""数据与代码已公开可用"或"完全可复现"；也不得因为存在 §20/§21 就声称"满足 Nature 数据与代码可用性要求"。
+**唯一结论**：**本项目当前为"TOP 2025：2 项 L1 + 2 项未达 L1 + 3 项'托管与 DOI 已具备、缺参考文献引用'，严格 L2 = 0、L3 = 0"；Nature Portfolio 的数据与代码可用性条款除"参考文献引用数据集"外均已满足。** 可以声称"数据与代码已公开归档并取得可解析 DOI"；不得声称"符合 TOP Level 2"或"已满足 Nature 全部数据与代码条款"。补齐路径只剩一步：在参考文献中增列数据集条目（`CITATION.cff` 为加分项，非 L2 的必要条件）。
 
-**可以准确声称的**：论文已包含独立的 Data availability 与 Code availability 两节，并按 Nature 的位置要求排在参考文献之前；数值结果可在本机按 README 命令重跑；数据与代码以 MIT + CC BY 4.0 随仓库提供（第三方 `src_extract/` 除外）；单位陷阱与失败记录已公开披露；DOI 与作者信息尚未分配。
+**可以准确声称的**：数据与代码已以 v1.0.0 快照永久归档于 Zenodo（版本 DOI `10.5281/zenodo.23620419` / 概念 DOI `10.5281/zenodo.23620418`），并公开托管于 GitHub；作者、单位、ORCID 与许可权利人已落实到文件；论文含独立的 Data availability 与 Code availability 两节且位置符合 Nature 要求；数值结果可按 README 命令在本机重跑；单位陷阱、失败与作废记录已公开披露；3 个 `.slx` 因含易变时间戳而未纳入 MANIFEST（已在论文 §21 披露）。**不能声称**的：第三方独立复现、第三方认证、TOP Level 2、以及"归档 zip 与仓库 tag 字节级相同"（同 tag 重新打包体积即不同，该命题不成立）。
 
 ---
 
@@ -132,9 +133,10 @@
 ```powershell
 git rev-parse HEAD; git status --porcelain | Measure-Object -Line
 (Get-ChildItem outputs -Recurse -File | Measure-Object Length -Sum)
-Select-String -Path generate_heat_tree_paper.py -Pattern "数据可用性|代码可用性"
-python -c "from docx import Document; d=Document(r'论文\仿生自适应网络芯片散热与布线.docx'); t=[p.text.strip() for p in d.paragraphs]; print([t.index(x) for x in ('19 复现','20 数据可用性','21 代码可用性','参考文献')])"
+(Get-Content MANIFEST.sha256 | Measure-Object -Line)
 Test-Path CITATION.cff
+python -c "from docx import Document; d=Document(r'论文\submission_ijts\Manuscript_IJTS.docx'); t=[p.text.strip() for p in d.paragraphs]; i=t.index('References'); print(i, t[i-1])"
+python -c "import fitz; s=''.join(p.get_text() for p in fitz.open(r'论文\submission_ijts\Manuscript_IJTS.pdf')); print('10.5281/zenodo.23620419' in s, '10.5281/zenodo.23620418' in s)"
 ```
 
-预期：HEAD 为 `44e33ae`、dirty 行数 ≥88（核验时点为 88）、`outputs` 为 59 文件 / 4,763,033 字节、`MANIFEST.sha256` 为 108 项且校验 0 不匹配、生成脚本命中 2 处可用性标题、docx 中四个标题索引严格递增（核验时点为 363 / 384 / 391 / 397）、`CITATION.cff` 不存在。任一预期变化，本文件的对应判定即需重做。
+预期：`git status --porcelain` 为 0 行；`outputs` 磁盘为 76 文件 / 8,041,323 字节（其中 2 个 `*.bak_*` 被 `.gitignore` 排除），`MANIFEST.sha256` 收录 74 文件 / 7,778,123 字节、共 182 行；`CITATION.cff` 不存在（`False`）；IJTS 稿件的 `References` 前一段为生成式 AI 声明，且 `References` 索引随声明插入而较 196 后移；PDF 文本层同时含版本 DOI 与概念 DOI。任一预期变化，本文件的对应判定即需重做。

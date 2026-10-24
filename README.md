@@ -119,4 +119,15 @@ print('rewritten =', n)
 
 ## 引用与作者
 
-作者、单位与 DOI 尚未分配，仓库中以 `TODO` 占位。**在占位符被替换、DOI 分配之前，不得声称本仓库已完成正式发布或归档。** 引用格式待作者信息确定后补入 `CITATION.cff`（尚未创建）。
+作者：Wu, Haoran（武昌理工学院 / Wuchang University of Technology），ORCID [0009-0005-1975-1511](https://orcid.org/0009-0005-1975-1511)。
+
+本仓库的 v1.0.0 快照已于 2026-10-24 永久归档于 Zenodo：
+
+- 版本 DOI（引用此版本时使用）：[10.5281/zenodo.23620419](https://doi.org/10.5281/zenodo.23620419)
+- 概念 DOI（始终指向最新版本）：[10.5281/zenodo.23620418](https://doi.org/10.5281/zenodo.23620418)
+
+推荐引用格式：
+
+> Wu H. 仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账（v1.0.0）[CP/OL]. Zenodo, 2026. https://doi.org/10.5281/zenodo.23620419.
+
+`CITATION.cff` 尚未创建；在创建之前，以上文字即为本仓库的规范引用格式。

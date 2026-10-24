@@ -2481,10 +2481,10 @@ paper.table(
 paper.h1('20 数据可用性')
 
 paper.p('本节与下一节按 Nature Portfolio 的 Data availability / Code availability 条款撰写。'
-        '两节只陈述截至 2026-10-18 的实际状态，不作"已公开可用"的主张。')
+        '两节只陈述截至 2026-10-24 的实际状态，不作超出证据的主张。')
 paper.p('**数据集位置与规模。** 全部数值结果、图与几何文件位于随论文提供的 `outputs/` 目录，'
-        '共 59 个文件、4,763,033 字节。每个文件的生成脚本、字段含义与单位状态见 `DATA_DICTIONARY.md`；'
-        '完整性由 `MANIFEST.sha256` 校验（108 项，SHA-256，覆盖 `outputs/`、全部源码与本文 docx）。')
+        '共 74 个文件、7,778,123 字节。每个文件的生成脚本、字段含义与单位状态见 `DATA_DICTIONARY.md`；'
+        '完整性由 `MANIFEST.sha256` 校验（182 项，SHA-256，覆盖 `outputs/`、全部源码与本文 docx）。')
 paper.p('**单位警告（使用数据前必读）。** 文件名带 `_C` 后缀**不**表示摄氏度。'
         '`bionic_placement_results.csv`、`multisource_coupled_results.csv` 等 MATLAB 口径文件'
         '采用"峰值归一化到 100 后生长"的无量纲标度，`T_max_C = 27.5962` 是标度值而非温度。'
@@ -2493,18 +2493,21 @@ paper.p('**单位警告（使用数据前必读）。** 文件名带 `_C` 后缀
 paper.p('**不可得与作废。** `tree_dynamic.stl` 的 MATLAB 生成器未入库，其几何不可复现，'
         '不参与任何可制造性主张；已作废的数字与结论集中登记在 §16b 的作废台账，'
         '引用旧值前须先核对该表。')
-paper.p('**第三方材料。** `src_extract/` 为他人论文的 LaTeX 源码，不在本数据集许可范围内，'
-        '也未列入 `MANIFEST.sha256`；公开托管前须移除或取得再分发许可。')
-paper.p('**托管状态。** 截至 2026-10-18，数据尚未上传至 DOI 铸造仓库（Zenodo / Code Ocean），'
-        'DOI 未分配。按 TOP 2025 的操作化定义，本数据集当前为 Level 1（已披露），未达 Level 2。'
-        '作者姓名与版权人仍为占位符（见 `LICENSE` 与 `LICENSE-DATA`），'
-        '在完成托管前不得声称数据已公开可用。')
+paper.p('**第三方材料。** `src_extract/` 与 `参考论文/` 为他人论文的 LaTeX 源码与 PDF，不在本数据集许可范围内，'
+        '也未列入 `MANIFEST.sha256`；二者已由 `.gitignore` 排除，不随本仓库或归档记录分发。')
+paper.p('**托管状态。** 本数据集的 v1.0.0 快照已于 2026-10-24 永久归档于 Zenodo，'
+        '版本 DOI 为 10.5281/zenodo.23620419，概念 DOI 为 10.5281/zenodo.23620418'
+        '（始终解析到最新归档版本）；同一快照亦公开托管于 '
+        'https://github.com/ice917/bionic-tree-microchannel。按 TOP 2025 的操作化定义，'
+        '数据已具备"公开托管 + 持久标识"，即 Level 2 的共享条件；本文参考文献未列入数据集条目，'
+        '故引用条款仍待期刊排版时补齐。作者姓名与版权人已由占位符替换为 Wu, Haoran。')
 
 # ============================================================
 paper.h1('21 代码可用性')
 
-paper.p('**代码位置。** 求解、扫描、绘图与论文生成脚本（26 个 `.py`）与 MATLAB 交叉验证脚本'
-        '（13 个 `.m` / `.slx`）位于仓库根目录，全部列入 `MANIFEST.sha256`。'
+paper.p('**代码位置。** 求解、扫描、绘图与论文生成脚本（46 个 `.py`）与 MATLAB 交叉验证脚本'
+        '（10 个 `.m`）位于仓库根目录与 `gen_design/`，全部列入 `MANIFEST.sha256`；'
+        '3 个 `.slx` 模型随仓库分发，但因其包内含每次保存变化的时间戳与随机 UUID 而不纳入该校验清单。'
         '复现命令见 §19，产物与来源的对应关系见表40。')
 paper.p('**许可。** 代码采用 MIT 许可证（`LICENSE`）；数据与文档采用 CC BY 4.0（`LICENSE-DATA`）。'
         '第三方材料 `src_extract/` 不受上述许可覆盖。')
@@ -2512,9 +2515,11 @@ paper.p('**构建依赖。** Python 3.13.9、numpy 2.3.5、scipy 1.16.3、matplo
         '论文 docx 由 `generate_heat_tree_paper.py` 生成，只依赖同目录的 `paper_template.py`，'
         '不读取仓库外的绝对路径。')
 paper.p('**已知不可复现项。** `tree_dynamic.stl` 的生成器未入库；该文件不参与可制造性主张。')
-paper.p('**托管状态。** 截至 2026-10-18，代码尚未上传至 DOI 铸造仓库，DOI 未分配，'
-        '因此当前不满足 Nature Portfolio "发表后即可得且带持久标识"的条款。'
-        '托管完成后本节将补 DOI 与推荐引用格式。')
+paper.p('**托管状态。** 代码与数据同处上述 Zenodo 记录（v1.0.0，DOI 10.5281/zenodo.23620419）'
+        '与 GitHub 仓库 https://github.com/ice917/bionic-tree-microchannel，满足 Nature Portfolio'
+        '"发表后即可得且带持久标识"中"可取回"的部分；本论文参考文献尚未列入数据集条目，'
+        '推荐引用格式为：Wu H. 仿生自适应网络：芯片散热通道树的生成、对照与缺陷台账（v1.0.0）'
+        '[CP/OL]. Zenodo, 2026. https://doi.org/10.5281/zenodo.23620419。')
 
 # ============================================================
 paper.h1('参考文献')
