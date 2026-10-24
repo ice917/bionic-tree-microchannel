@@ -82,11 +82,12 @@
 6. **数据与代码规模已实测。** `outputs/` 74 个文件、7,778,123 字节（7.42 MB，按 `MANIFEST.sha256` 收录项统计）；另有 2 个 `*.bak_20261020_200638` 备份文件被 `.gitignore` 排除，不计入。（2026-10-18：59 个文件、4,763,033 字节。）
 7. **数据字典已披露单位陷阱。** `_C` 后缀不等于摄氏度；`DATA_DICTIONARY.md` 与 `README.md#L71-L76` 均列出三类单位状态。这是报告透明度的实质性加分项，但不改变 Data Transparency 的等级。
 8. **论文生成已自包含（原缺口已修）。** `paper_template.py` 已复制入仓，`generate_heat_tree_paper.py` 改为同目录相对导入，不再依赖 `D:\数学建模`；docx 可在干净环境按 README 重建。
-9. **第三方材料存在。** `src_extract/` 含他人论文的 `.tex`、`.eps`、`.sty`；`LICENSE-DATA#L51-L53` 明确不覆盖。任何公开托管前必须删除或取得再分发许可。
+9. **第三方材料已隔离。** `src_extract/` 含他人论文的 `.tex`、`.eps`、`.sty`；`LICENSE-DATA#L51-L53` 明确不覆盖。处置方式为"不随仓库分发"而非"取得再分发许可"：`src_extract/` 与 `参考论文/` 已由 `.gitignore` 排除，`git ls-files` 0 命中，归档 zip 内亦 0 命中（已用 GitHub codeload zip 核对，`forbidden hits 0`）。本地文件仍存在，但不在任何公开产物中。
 10. **许可证范围已修正。** `LICENSE-DATA` 原先只列 `REPORT.md`、`DATA_DICTIONARY.md`、`DEFECT_REMEDIATION_PLAN.md`，漏掉 `README.md` 与 `PROJECT.md`，与 README"数据与文档（`*.md`）CC BY 4.0"的表述冲突；现已补入 `README.md`、`PROJECT.md` 与本文件。
 11. **完整性清单已生成。** `MANIFEST.sha256` 共 182 项，构成为：`outputs/` 74 项、46 个 `.py`、10 个 `.m`、11 个 `.md`（10 个根目录 + `论文/_dump_journal.md`）、9 个 `.docx`、2 个 `.pdf`、22 个 `.tif`、`.zenodo.json`、`LICENSE`、`LICENSE-DATA`、`.gitattributes`、`.gitignore`、`gen_design/` 的 `.npz` 与 `.joblib` 各 1、`设备连接设计图.svg` 1；对 v1.0.0 tag 的逐文件校验为 `mismatch 0 / missing 0`。3 个 `.slx` 随仓库分发，但因其包内含每次保存变化的时间戳与随机 UUID 而不纳入清单（已在论文 §21 披露）。`src_extract/`、`参考论文/` 为第三方材料，已由 `.gitignore` 排除，不随仓库或归档分发。（2026-10-18：108 项。）
 12. **STL 几何已逐三角形核验。** `tree.stl` 与 `manifold_assembly.stl` 均闭合（边界边 0），但非流形边分别为 228 / 236 条，未执行布尔并集；`tree_dynamic.stl` 294 个连通分量、生成器未入库。故"闭合"不等于"流形"，更不等于"可打印"（`DATA_DICTIONARY.md` §6 第 6–7 条）。
 13. **提交作者身份。** `fa01e46` 及之前的提交作者为 `cms2026 <cms2026@local>`（本机默认身份），与论文署名不一致。**不改写历史**：tag `v1.0.0`（指向 `3e02b70`）与 Zenodo 记录 `23620419` 的归档 zip 均已固定在这些提交的对象哈希上，改写会使归档快照与仓库失去可核对的一一对应。处置为：仓库级 `user.name`/`user.email` 改为 `Haoran Wu` / `3973349767@qq.com`，仅对后续提交生效；历史提交的身份不一致本文件如实披露。
+14. **v1.0.1 已归档，用于消除"归档稿件无 AI 声明"的不一致。** v1.0.0（记录 `23620419`）的归档树不含生成式 AI 声明，与投稿件不符；为此发布 tag `v1.0.1`（指向提交 `2b45125`）及对应 GitHub Release，Zenodo 自动生成记录 `23621256`：`status=published`、`created=2026-10-24T15:29:28Z`、`version=1.0.1`、`doi=10.5281/zenodo.23621256`、`conceptdoi=10.5281/zenodo.23620418`、`creators=['Wu, Haoran']`、`license.id=other-open`、`files=[('ice917/bionic-tree-microchannel-v1.0.1.zip', 35291943)]`、`related_identifiers` 含 GitHub tag `v1.0.1`。概念 DOI 经 `doi.org` 302 链最终落到 `zenodo.org/records/23621256`（200），v1.0.0 的版本 DOI 仍独立可解析。**已知边界**：本文件在 v1.0.1 归档之后仍有提交（仅更新 DOI 记录与 README 引用行），这些提交的树与归档 zip 不同；归档 zip 的权威定义始终是 tag `v1.0.1` 指向的提交 `2b45125`，其后提交不含任何论文或数据内容的改动。
 
 ---
 
