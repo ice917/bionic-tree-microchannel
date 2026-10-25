@@ -22,14 +22,14 @@
 ```
 *.py                      Python 求解、扫描与论文生成脚本
 *.m / *.slx               MATLAB 交叉验证与 Simulink 模型
-outputs/                  全部数值结果、图、STL（70 个文件）
-论文/                      论文 docx 成品
+outputs/                  全部数值结果、图、STL（75 个文件，清单口径；磁盘 77 个含 2 个 `.bak_*` 备份）
+论文/                      论文 docx 成品与派生纯文本转储（`_dump_journal.md`）
 REPORT.md                 逐节对比台账（与论文互校）
 PROJECT.md                项目方案与目标（历史文档，结论以 REPORT.md 为准）
 DEFECT_REMEDIATION_PLAN.md 缺陷台账：机制、证据、修复、作废项
 DATA_DICTIONARY.md        每个输出文件的生成脚本、字段与单位状态
 REPORTING_COMPLIANCE.md   报告合规性对照（TOP 2025 七项 / Nature 数据与代码可用性）
-MANIFEST.sha256           全部随附文件的 SHA-256 清单（183 项 = git 索引全集 187 减 3 个 .slx 与清单自身）
+MANIFEST.sha256           全部随附文件的 SHA-256 清单（185 项 = git 索引全集 189 减 3 个 .slx 与清单自身）
 DATA_AVAILABILITY.md      数据可用性声明模板（中英）
 src_extract/              第三方论文 LaTeX 源码（本地保留，不随仓库分发）
 ```
@@ -103,6 +103,18 @@ print('rewritten =', n)
 ```
 
 该改写只作用于换行符，不改变任何其他字节；新增或删除文件后，应先更新清单条目再执行归一化。
+
+### 派生文本转储：`论文/_dump_journal.md`
+
+`论文/_dump_journal.md` 是 `论文/仿生树形微通道散热_期刊投稿版.docx` 的 pandoc 纯文本转储，**不是独立内容，不单独维护**。它与上游 docx 之间是单向派生关系，因此：
+
+- **上游变动即须同批重生成**。只要 `generate_heat_tree_paper_journal.py` 被改动或该 docx 被替换，就必须在同一次改动里重跑下面的命令；否则会退化为"看起来像论文、实则指向旧版本"的陈旧快照。实测（2026-10-25）：该文件曾长期未同步，落后到引用 `49.8859 °C`（当期工件为 `0.0671`）、表 5 只有 6 行（当期 18 行）、文献年份 `2018`（当期 `2012`）。
+- **换行必须先归一化**。pandoc 在 Windows 下写出 CRLF，须按上一节把 CRLF 改写为 LF，再重算清单。
+- **可自校验**。该命令对同一 docx 两次运行逐字节相同，故重跑一次并与工作树文件比对即可判断是否已同步。
+
+```powershell
+pandoc 论文/仿生树形微通道散热_期刊投稿版.docx -t markdown -o 论文/_dump_journal.md
+```
 
 ## 数据与单位（必读）
 
