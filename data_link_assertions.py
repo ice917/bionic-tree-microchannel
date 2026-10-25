@@ -13,12 +13,21 @@
       串行参考值 ~6.42 kPa（80× 过计），两参考字段必须都在场
   A5  field.solve_heat_sources 的 q 无条件缩放（q=2 的温升是 q=1 的 2 倍）
   A6  单源树与直通道峰值温度逐位相同（27.596 °C）
+  A7  三维共轭的外迭代全局上界 155、末值阻尼不是固定 0.5（conjugate_3d_flow.json）
+  A8  三份稿件不得出现已被代码证伪的口径（固定松弛 / 「每次均 122 次」/
+      按下游格数分流 / 「currently v1.0.x」时效枚举）；IJTS 稿更进一步，
+      全文不得出现任何 vN.N.N 字面（版本枚举在下次归档即失效）
+  A9  三份稿件必须出现已订正口径（下游叶数分流 / 155 次上界）
+
+A7–A9 的存在理由：稿件里的这三句一度只在中英文各一份里被订正，IJTS 稿滞后到
+v1.0.7 仍保留旧口径。把它们与 outputs 直接绑定，改稿不同步即 FAIL。
 
 退出码 0 = 全部 PASS；非 0 = 有 FAIL。挂到论文生成链路前执行。
 """
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -103,6 +112,76 @@ check("A6 单源树==直通道 T_max",
       approx(run["tree"]["T_max_C"], run["straight"]["T_max_C"], 1e-9)
       and approx(run["tree"]["T_max_C"], 27.596, 1e-3),
       "= %.3f °C" % run["tree"]["T_max_C"])
+
+# ------------------------------------------------------------------ A7
+# 三维共轭：稿件引用的两个结论性数字必须与 outputs 一致
+def _collect(node, key, out):
+    if isinstance(node, dict):
+        for k, v in node.items():
+            if k == key:
+                out.append(v)
+            else:
+                _collect(v, key, out)
+    elif isinstance(node, list):
+        for v in node:
+            _collect(v, key, out)
+    return out
+
+
+c3d = _load("conjugate_3d_flow.json")
+iters = _collect(c3d, "picard_iters", [])
+damps = _collect(c3d, "picard_damping_final", [])
+check("A7 外迭代全局上界 155", max(iters) == 155,
+      "max=%d n=%d" % (max(iters), len(iters)))
+check("A7 末值阻尼自适应（非固定 0.5）",
+      len(set(damps)) >= 2 and min(damps) < 0.5,
+      "min=%.4f distinct=%d" % (min(damps), len(set(damps))))
+
+# ------------------------------------------------------------------ A8/A9
+# 稿件口径守卫：单链 5 处缺陷（D-1/D-2/D-3）的复发拦截
+import docx
+
+MANUSCRIPTS = [
+    ("IJTS", ROOT / "论文/submission_ijts/Manuscript_IJTS.docx"),
+    ("CTS", ROOT / "论文/submission_cts/Manuscript_CTS_blinded.docx"),
+    ("CN", ROOT / "论文/仿生自适应网络芯片散热与布线.docx"),
+]
+
+FORBIDDEN = [
+    "number of cells in the downstream",      # D-1 错误口径
+    "(relaxation 0.5",                        # D-2 把自适应阻尼写成固定值
+    "within 122 outer iterations on every run",  # D-2 与 155 次实测冲突
+    "按下游子树的格数",                        # D-1 中文旧口径
+    "currently v1.0.",                        # D-3 时效枚举
+]
+
+REQUIRED = {
+    "IJTS": ["number of leaves in the downstream",
+             "within 155 outer iterations"],
+    "CTS": ["number of leaves in the downstream",
+            "within 155 outer iterations"],
+    "CN": ["下游子树的叶节点数", "155 次"],
+}
+
+for tag, path in MANUSCRIPTS:
+    check("A8 %s 稿件存在" % tag, path.exists(), str(path))
+    if not path.exists():
+        continue
+    text = "\n".join(p.text for p in docx.Document(str(path)).paragraphs)
+    for s in FORBIDDEN:
+        check("A8 %s 无 %r" % (tag, s), s not in text)
+    for s in REQUIRED[tag]:
+        check("A9 %s 有 %r" % (tag, s), s in text)
+
+# A8 补充：任何「vN.N.N」字面都是时效性真理断言，下一个版本归档那一刻即可能变假，
+# 这正是 D-3 的成因。IJTS 稿已改为「指向 Zenodo 记录页」的不去时效表述，故全文
+# 零版本号字面可以严格断言。中文稿的「包括…不再逐版更新本段」是非穷尽 + 自陈
+# 冻结，不构成时效断言，因此本条只对 IJTS 生效（不误报）。
+_ijts = ROOT / "论文/submission_ijts/Manuscript_IJTS.docx"
+if _ijts.exists():
+    _ijts_text = "\n".join(p.text for p in docx.Document(str(_ijts)).paragraphs)
+    _tokens = sorted(set(re.findall(r"v\d+\.\d+\.\d+", _ijts_text)))
+    check("A8 IJTS 零版本号字面（去时效）", not _tokens, "tokens=%s" % _tokens)
 
 # ------------------------------------------------------------------ 结果
 print("\n===== %d PASS / %d FAIL =====" % (PASS, len(FAIL)))
