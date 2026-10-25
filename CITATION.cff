@@ -25,6 +25,9 @@ repository-code: "https://github.com/ice917/bionic-tree-microchannel"
 url: "https://doi.org/10.5281/zenodo.23620418"
 identifiers:
   - type: doi
+    value: 10.5281/zenodo.23634618
+    description: Version DOI of v1.0.7
+  - type: doi
     value: 10.5281/zenodo.23633674
     description: Version DOI of v1.0.6
   - type: doi
