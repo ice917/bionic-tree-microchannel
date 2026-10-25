@@ -17,7 +17,7 @@ authors:
     given-names: Haoran
     affiliation: Wuchang University of Technology, No. 16 Jiangxia Avenue, Jiangxia District, Wuhan 430223, China
     orcid: "https://orcid.org/0009-0005-1975-1511"
-version: 1.0.5
+version: 1.0.6
 date-released: "2026-10-25"
 license: MIT
 license-url: "https://github.com/ice917/bionic-tree-microchannel/blob/main/LICENSE"
@@ -26,7 +26,7 @@ url: "https://doi.org/10.5281/zenodo.23620418"
 identifiers:
   - type: doi
     value: 10.5281/zenodo.23631211
-    description: Version DOI of v1.0.5 (version submitted with the accompanying manuscript)
+    description: Version DOI of v1.0.5
   - type: doi
     value: 10.5281/zenodo.23622840
     description: Version DOI of v1.0.4

@@ -672,6 +672,20 @@ outputs/lattice_pitch_summary.json 与
 outputs/unequal_power_pitch_summary.json、真实单位标定
 outputs/real_unit_calibration.txt。复现命令见附录。
 
+全部源码、上述工件与校验清单同时公开托管于 GitHub 仓库
+https://github.com/ice917/bionic-tree-microchannel；每个分发文件的
+SHA-256 校验值记录在仓库根目录的 MANIFEST.sha256
+中，可逐文件核对。数据集与代码已在 Zenodo 永久归档并作为参考文献 \[21\]
+引用；概念 DOI 10.5281/zenodo.23620418
+始终解析到最新归档版本，各归档快照的版本 DOI
+见该记录页。本研究为纯计算研究，未进行预注册。
+
+**代码可用性**
+
+本文全部求解、绘图与稿件生成代码以 MIT 许可发布（LICENSE），数据与文档以
+CC BY 4.0
+许可发布（LICENSE-DATA）；第三方材料（src_extract/、参考论文/）不随本文分发。复现全部表格与图件的命令见附录。
+
 **作者贡献**
 
 概念化、方法论、软件、验证、形式化分析、可视化与初稿撰写：全部作者。全部作者已阅读并同意稿件的最终版本。
@@ -760,6 +774,11 @@ efficient thermal management\[EB/OL\]. https://ecothermgroup.com/, 2026.
 
 \[20\] Alphacool. Laing DDC-Pump 12V DDC-1RT datasheet\[EB/OL\].
 https://www.alphacool.com/, 2026.
+
+\[21\] Wu H. Bionic adaptive network: generation, comparison and defect
+ledger of chip heat-dissipation channel trees\[DS/OL\]. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.23620418 （概念
+DOI，始终解析到最新归档版本）.
 
 **附录：复现命令**
 
